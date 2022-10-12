@@ -20,11 +20,10 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 zstyle ':autocomplete:*' min-input 1
-# zstyle ':autocomplete:*' insert-unambiguous no
 
 export LANG=en_US.UTF-8
 
-zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+#zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 alias vi="nvim"
 alias vim="nvim"
@@ -46,17 +45,18 @@ if grep -q "microsoft" /proc/version &>/dev/null; then
     export GPG_TTY=$(tty)
 fi
 
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
 [[ ! -f $XDG_CONFIG_HOME/p10k/.p10k.zsh ]] || source $XDG_CONFIG_HOME/p10k/.p10k.zsh
 
-__conda_setup="$("/home/nihilist/miniconda3/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
+__conda_setup="$("$HOME/miniconda3/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/nihilist/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/nihilist/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/nihilist/miniconda3/bin:$PATH"
+        export PATH="$HOME/nihilist/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
