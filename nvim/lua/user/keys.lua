@@ -40,6 +40,8 @@ M.general = {
     -- Move current line / block
     ["<A-j>"] = ":m .+1<CR>==",
     ["<A-k>"] = ":m .-2<CR>==",
+    -- select all
+    ["<C-a>"] = "gg<S-v>G",
   },
   ["v"] = {
     -- indenting
@@ -154,8 +156,10 @@ M.telescope = {
 
 M.hop = {
   ["n"] = {
-    ["<leader>t"] = "<cmd> HopWord <CR>",
-    ["<leader>T"] = "<cmd> HopLine <CR>",
+    ["<leader>k"] = "<cmd>HopLineBC<CR>",
+    ["<leader>j"] = "<cmd>HopLineAC<CR>",
+    ["<leader><leader>k"] = "<cmd>HopWordBC<CR>",
+    ["<leader><leader>j"] = "<cmd>HopWordAC<CR>",
   },
 }
 
@@ -240,6 +244,29 @@ M.nvimtree = {
 M.toggleterm = {
   ["t"] = {
     ["<C-x>"] = vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),
+  },
+}
+
+M.dap = {
+  ["n"] = {
+    ["<F5>"] = function()
+      require("dap").continue()
+    end,
+    ["<F10>"] = function()
+      require("dap").step_over()
+    end,
+    ["<F11>"] = function()
+      require("dap").step_into()
+    end,
+    ["<F12>"] = function()
+      require("dap").step_out()
+    end,
+    ["<leader>b"] = function()
+      require("dap").toggle_breakpoint()
+    end,
+    ["<leader>B"] = function()
+      require("dap").set_breakpoint()
+    end,
   },
 }
 

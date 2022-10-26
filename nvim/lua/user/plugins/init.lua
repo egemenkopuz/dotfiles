@@ -36,6 +36,13 @@ M = {
     end,
   },
 
+  ["nvim-treesitter/nvim-treesitter-context"] = {
+    after = "nvim-treesitter",
+    config = function()
+      require("treesitter-context").setup {}
+    end,
+  },
+
   ["lewis6991/gitsigns.nvim"] = {
     ft = "gitcommit",
     setup = function()
@@ -142,6 +149,21 @@ M = {
     config = function()
       require("user.plugins.configs.null_ls").setup()
     end,
+  },
+
+  ["mfussenegger/nvim-dap"] = {
+    config = function()
+      require("user.plugins.configs.dap").setup()
+    end,
+    setup = function()
+      require("user.utils").keys.load_section "dap"
+    end,
+  },
+  ["rcarriga/nvim-dap-ui"] = {
+    config = function()
+      require("user.plugins.configs.dapui").setup()
+    end,
+    requires = { "mfussenegger/nvim-dap" },
   },
 
   -- ["wbthomason/packer.nvim"] = {},

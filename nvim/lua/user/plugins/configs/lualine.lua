@@ -1,23 +1,10 @@
 local M = {}
 
-local colors = {
-  yellow = "#ECBE7B",
-  cyan = "#008080",
-  darkblue = "#081633",
-  green = "#98be65",
-  orange = "#FF8800",
-  violet = "#a9a1e1",
-  magenta = "#c678dd",
-  blue = "#51afef",
-  red = "#ec5f67",
-  gray = "#505A6C",
-}
-
 local options = {
   options = {
-    theme = "catppuccin",
-    component_separators = "",
-    section_separators = "",
+    theme = "auto",
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
     globalstatus = true,
     disabled_filetypes = { "alpha" },
   },
@@ -25,12 +12,14 @@ local options = {
     lualine_a = { "mode" },
     lualine_b = {
       "branch",
+    },
+    lualine_c = {
       {
         "diff",
         symbols = { added = "  ", modified = "  ", removed = "  " },
       },
+      "filename",
     },
-    lualine_c = { "filename" },
     lualine_x = {
       {
         "lsp_progress",
@@ -38,9 +27,9 @@ local options = {
           { "title", "percentage", "message" },
         },
         colors = {
-          percentage = colors.gray,
-          title = colors.gray,
-          message = colors.gray,
+          percentage = "#505A6C",
+          title = "#505A6C",
+          message = "#505A6C",
           use = true,
         },
       },
