@@ -145,6 +145,13 @@ M = {
     end,
   },
 
+  ["simrat39/rust-tools.nvim"] = {
+    after = "nvim-lspconfig",
+    config = function()
+      require("user.plugins.configs.rust_tools").setup()
+    end,
+  },
+
   ["jose-elias-alvarez/null-ls.nvim"] = {
     config = function()
       require("user.plugins.configs.null_ls").setup()
@@ -222,9 +229,11 @@ M = {
       require("user.utils").keys.load_section "telescope"
     end,
   },
+
   ["nvim-telescope/telescope-fzf-native.nvim"] = {
     run = "make",
   },
+
   ["phaazon/hop.nvim"] = {
     branch = "v2",
     config = function()

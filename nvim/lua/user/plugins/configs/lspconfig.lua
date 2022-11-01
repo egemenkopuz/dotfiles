@@ -10,6 +10,11 @@ function M.on_attach(client, bufnr)
   require("lsp_signature").on_attach({ bind = true }, bufnr)
 end
 
+local flags = {
+  allow_incremental_sync = true,
+  debounce_text_changes = 200,
+}
+
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
 M.capabilities.textDocument.completion.completionItem = {
@@ -53,6 +58,30 @@ function M.setup()
           },
           maxPreload = 100000,
           preloadFileSize = 10000,
+        },
+      },
+    },
+  }
+
+  lspconfig.rust_analyzer.setup {
+    flags = flags,
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = {
+          allFeatures = true,
+        },
+        checkOnSave = {
+          allFeatures = true,
+          command = "clippy",
+        },
+        procMacro = {
+          ignored = {
+            ["async-trait"] = { "async_trait" },
+            ["napi-derive"] = { "napi" },
+            ["async-recursion"] = { "async_recursion" },
+          },
         },
       },
     },

@@ -53,8 +53,6 @@ local options = {
   extensions_list = {
     "persisted",
     "projects",
-    "themes",
-    "terms",
     fzf = {
       fuzzy = true, -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter

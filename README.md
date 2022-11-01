@@ -9,7 +9,22 @@ for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6
 ```
 
 .zshenv
+
 ```bash
 ZDOTDIR=$HOME/.config/zsh
 skip_global_compinit=1
+```
+
+# Programing Language Specifics
+
+## Python
+
+```bash
+
+```
+
+## Rust
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```

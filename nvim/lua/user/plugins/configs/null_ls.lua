@@ -1,6 +1,18 @@
 local M = {}
 
-local async_formatting = function(bufnr)
+local async_formatting = function(client, bufnr)
+  -- if client.supports_method "textDocument/formatting" then
+  --   vim.api.nvim_create_autocmd("BufWritePre", {
+  --     group = vim.api.nvim_create_augroup("FORMATTING", { clear = true }),
+  --     buffer = bufnr,
+  --     callback = function()
+  --       vim.lsp.buf.format {
+  --         timeout_ms = 3000,
+  --         buffer = bufnr,
+  --       }
+  --     end,
+  --   })
+  -- end
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
   vim.lsp.buf_request(
@@ -11,7 +23,7 @@ local async_formatting = function(bufnr)
       if err then
         local err_msg = type(err) == "string" and err or err.message
         -- you can modify the log message / level (or ignore it completely)
-        vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
+        -- vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
         return
       end
 
@@ -58,6 +70,8 @@ function M.setup()
       },
       null_ls.builtins.formatting.prettierd,
       null_ls.builtins.code_actions.gitsigns,
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.rustfmt,
       -- null_ls.builtins.code_actions.refactoring,
     },
     debug = true,
@@ -68,7 +82,7 @@ function M.setup()
           group = augroup,
           buffer = bufnr,
           callback = function()
-            async_formatting(bufnr)
+            async_formatting(client, bufnr)
           end,
         })
       end

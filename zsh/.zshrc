@@ -36,6 +36,8 @@ alias mkdir="mkdir -pv"
 alias ps="ps -ef"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 if grep -q "microsoft" /proc/version &>/dev/null; then
@@ -44,8 +46,6 @@ if grep -q "microsoft" /proc/version &>/dev/null; then
     # Allows your gpg passphrase prompt to spawn (useful for signing commits).
     export GPG_TTY=$(tty)
 fi
-
-export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
 [[ ! -f $XDG_CONFIG_HOME/p10k/.p10k.zsh ]] || source $XDG_CONFIG_HOME/p10k/.p10k.zsh
 
