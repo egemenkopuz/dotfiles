@@ -15,7 +15,7 @@ ZDOTDIR=$HOME/.config/zsh
 skip_global_compinit=1
 ```
 
-# Programing Language Specifics
+# Programming Language Specifics
 
 ## Python
 
