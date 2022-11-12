@@ -268,6 +268,12 @@ M = {
     end,
   },
 
+  ["folke/which-key.nvim"] = {
+    config = function()
+      require("user.plugins.configs.whichkey").setup()
+    end,
+  },
+
   -- ["sam4llis/nvim-tundra"] = {
   --   config = function()
   --     require("user.plugins.configs.theme").setup()

@@ -6,6 +6,18 @@ local general_opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
 function M.keys.load(keys, additional_opts)
+  local wk_present, wk = pcall(require, "which-key")
+  local mapping_func
+  if wk_present then
+    mapping_func = function(mode, keybind, val, opts)
+      opts.mode = mode
+      wk.register({ [keybind] = val }, opts)
+    end
+  else
+    mapping_func = function(mode, keybind, val, opts)
+      vim.keymap.set(mode, keybind, val[1], opts)
+    end
+  end
   for mode, mapping in pairs(keys) do
     local opts
     if mode == "t" then
@@ -15,11 +27,15 @@ function M.keys.load(keys, additional_opts)
     end
     opts = merge_tb("force", opts, additional_opts or {})
     for key, val in pairs(mapping) do
-      if type(val) == "table" then
-        vim.keymap.set(mode, key, val[1], val[2])
-      else
-        vim.keymap.set(mode, key, val, opts)
+      opts = merge_tb("force", opts, val.opts or {})
+      if val.opts then
+        val.opts = nil
       end
+      -- if #val == 1 then
+      --   print(mode)
+      --   vim.keymap.set(mode, key, val[1], opts)
+      -- end
+      mapping_func(mode, key, val, opts)
     end
   end
 end
@@ -27,7 +43,7 @@ end
 function M.keys.load_section(section_name, additional_opts)
   local additional_opts = additional_opts or nil
   local present, keys = pcall(require, "user.keys")
-  if not present and keys[section_name] ~= nil then
+  if not present or keys[section_name] == nil then
     return
   end
   M.keys.load(keys[section_name], additional_opts)
