@@ -47,6 +47,8 @@ M.general = {
     -- indenting
     ["<"] = { "<gv", "indent left" },
     [">"] = { ">gv", "indent right" },
+    ["<leader>s"] = { ":sort<CR>", "sort ascending" },
+    ["<leader>S"] = { ":sort!<CR>", "sort descending" },
   },
   ["x"] = {
     -- Move current line / block with Alt-j/k ala vscode.
@@ -106,13 +108,13 @@ M.lspconfig = {
     --   end,
     --   "LSP Open Float",
     -- },
-    ["[d"] = {
+    ["<leader>dk"] = {
       function()
         vim.diagnostic.goto_prev()
       end,
       "LSP go to previous",
     },
-    ["d]"] = {
+    ["<leader>dj"] = {
       function()
         vim.diagnostic.goto_next()
       end,
@@ -153,7 +155,15 @@ M.lspconfig = {
 
 M.telescope = {
   ["n"] = {
-    ["<leader>ff"] = { "<cmd> Telescope find_files <CR>", "find file local" },
+    ["<leader>ff"] = {
+      function()
+        local status = pcall(vim.cmd, "Telescope git_files")
+        if not status then
+          vim.cmd "Telescope find_files"
+        end
+      end,
+      "find files",
+    },
     ["<leader>fa"] = {
       "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>",
       "find file global",
@@ -165,6 +175,7 @@ M.telescope = {
     ["<leader>tk"] = { "<cmd> Telescope keymaps <CR>", "key maps" },
     ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "git commit" },
     ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "git status" },
+    ["<leader>dl"] = { "<cmd> Telescope diagnostics <CR>", "diagnostics" },
   },
 }
 
@@ -202,14 +213,29 @@ M.trouble = {
     },
     ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "loclist" },
     ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "quickfix" },
-    ["gr"] = { "<cmd> TroubleToggle lsp_references <CR>", "LSP references" },
-    ["gi"] = {
-      "<cmd> TroubleToggle lsp_implementations <CR>",
+    -- ["gr"] = { "<cmd> TroubleToggle lsp_references <CR>", "LSP references" },
+    -- ["gi"] = {
+    --   "<cmd> TroubleToggle lsp_implementations <CR>",
+    --   "LSP implementations",
+    -- },
+    -- ["gd"] = { "<cmd> TroubleToggle lsp_definitions <CR>", "LSP definitions" },
+    -- ["D"] = {
+    --   "<cmd> TroubleToggle lsp_type_definitions <CR>",
+    --   "LSP type definitions",
+    -- },
+  },
+}
+
+M.glance = {
+  ["n"] = {
+    ["gr"] = { "<CMD>Glance references<CR>", "LSP references" },
+    ["gM"] = {
+      "<cmd>Glance implementations<CR>",
       "LSP implementations",
     },
-    ["gd"] = { "<cmd> TroubleToggle lsp_definitions <CR>", "LSP definitions" },
+    ["gd"] = { "<cmd>Glance definitions<CR>", "LSP definitions" },
     ["D"] = {
-      "<cmd> TroubleToggle lsp_type_definitions <CR>",
+      "<cmd>Glance type_definitions<CR>",
       "LSP type definitions",
     },
   },

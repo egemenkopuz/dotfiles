@@ -182,6 +182,7 @@ M = {
       require("user.plugins.configs.diffview").setup()
     end,
   },
+
   ["ray-x/lsp_signature.nvim"] = {
     config = function()
       require("user.plugins.configs.signature").setup()
@@ -196,6 +197,17 @@ M = {
       require("user.utils").keys.load_section "trouble"
     end,
   },
+
+  ["dnlhc/glance.nvim"] = {
+    cmd = require("user.plugins.configs.glance").lazy_commands,
+    config = function()
+      require("user.plugins.configs.glance").setup()
+    end,
+    setup = function()
+      require("user.utils").keys.load_section "glance"
+    end,
+  },
+
   ["karb94/neoscroll.nvim"] = {
     config = function()
       require("user.plugins.configs.neoscroll").setup()
@@ -234,8 +246,9 @@ M = {
     run = "make",
   },
 
-  ["phaazon/hop.nvim"] = {
-    branch = "v2",
+  -- ["phaazon/hop.nvim"] = {
+  ["aznhe21/hop.nvim"] = {
+    branch = "fix-some-bugs",
     config = function()
       require("user.plugins.configs.hop").setup()
     end,
@@ -249,7 +262,13 @@ M = {
       require("user.utils").keys.load_section "toggleterm"
     end,
   },
-
+  ["simrat39/symbols-outline.nvim"] = {
+    disable = true,
+    module = { "cmp", "cmp_nvim_lsp" },
+    setup = function()
+      require("user.plugins.configs.symbolsoutline").setup()
+    end,
+  },
   ["akinsho/bufferline.nvim"] = {
     tag = "v2.*",
     event = "BufWinEnter",
