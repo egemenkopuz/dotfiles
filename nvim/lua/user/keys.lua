@@ -228,7 +228,7 @@ M.trouble = {
 
 M.glance = {
   ["n"] = {
-    ["gr"] = { "<CMD>Glance references<CR>", "LSP references" },
+    ["gr"] = { "<cmd>Glance references<CR>", "LSP references" },
     ["gM"] = {
       "<cmd>Glance implementations<CR>",
       "LSP implementations",

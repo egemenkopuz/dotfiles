@@ -33,7 +33,7 @@ local options = {
           use = true,
         },
       },
-       "searchcount",
+      "searchcount",
       {
         "filetype",
         colored = false,
