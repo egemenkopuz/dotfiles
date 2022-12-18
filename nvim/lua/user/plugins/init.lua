@@ -293,6 +293,15 @@ M = {
     end,
   },
 
+  -- ["Pocco81/true-zen.nvim"] = {
+  --   config = function()
+  --     require("true-zen").setup()
+  --   end,
+  --   setup = function()
+  --     require("user.utils").keys.load_section "truezen"
+  --   end,
+  -- },
+
   -- ["sam4llis/nvim-tundra"] = {
   --   config = function()
   --     require("user.plugins.configs.theme").setup()

@@ -181,10 +181,12 @@ M.telescope = {
 
 M.hop = {
   ["n"] = {
-    ["<leader>k"] = { "<cmd>HopLineBC<CR>", "hop line up" },
-    ["<leader>j"] = { "<cmd>HopLineAC<CR>", "hop line down" },
-    ["<leader><leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
-    ["<leader><leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
+    -- ["<leader>k"] = { "<cmd>HopLineBC<CR>", "hop line up" },
+    -- ["<leader>j"] = { "<cmd>HopLineAC<CR>", "hop line down" },
+    -- ["<leader><leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
+    -- ["<leader><leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
+    ["<leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
+    ["<leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
   },
 }
 
@@ -321,6 +323,12 @@ M.nvimtree = {
   ["n"] = {
     -- toggle
     ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle tree" },
+  },
+}
+
+M.truezen = {
+  ["n"] = {
+    ["<leader>zn"] = { "<cmd> TZAtaraxis<CR>", "toggle zen mode" },
   },
 }
 

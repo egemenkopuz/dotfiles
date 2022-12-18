@@ -16,7 +16,7 @@ local options = {
     lualine_c = {
       {
         "diff",
-        symbols = { added = "  ", modified = "  ", removed = "  " },
+        symbols = { added = "+", modified = "~", removed = "-" },
       },
       "filename",
     },
