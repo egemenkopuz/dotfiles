@@ -42,6 +42,11 @@ M.general = {
     ["<A-k>"] = { ":m .-2<CR>==", "move current line/block up" },
     -- select all
     ["<C-a>"] = { "gg<S-v>G", "select all" },
+    -- centered page navigation
+    ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
+    ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
+    ["n"] = { "nzzzv", "Next searched" },
+    ["N"] = { "Nzzzv", "Previous searched" },
   },
   ["v"] = {
     -- indenting

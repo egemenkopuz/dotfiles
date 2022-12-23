@@ -41,7 +41,7 @@ function M.keys.load(keys, additional_opts)
 end
 
 function M.keys.load_section(section_name, additional_opts)
-  local additional_opts = additional_opts or nil
+  additional_opts = additional_opts or nil
   local present, keys = pcall(require, "user.keys")
   if not present or keys[section_name] == nil then
     return

@@ -208,11 +208,11 @@ M = {
     end,
   },
 
-  ["karb94/neoscroll.nvim"] = {
-    config = function()
-      require("user.plugins.configs.neoscroll").setup()
-    end,
-  },
+  -- ["karb94/neoscroll.nvim"] = {
+  --   config = function()
+  --     require("user.plugins.configs.neoscroll").setup()
+  --   end,
+  -- },
 
   ["RRethy/vim-illuminate"] = {
     config = function()
