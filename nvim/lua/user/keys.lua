@@ -3,45 +3,45 @@ local M = {}
 M.general = {
   ["i"] = {
     -- to quit insert mode fast
-    ["jk"] = { "<ESC>", "leave insert mode" },
-    ["kj"] = { "<ESC>", "leave insert mode" },
-    ["jj"] = { "<ESC>", "leave insert mode" },
+    ["jk"] = { "<ESC>", "Leave insert mode" },
+    ["kj"] = { "<ESC>", "Leave insert mode" },
+    ["jj"] = { "<ESC>", "Leave insert mode" },
     -- go to beginning of line
-    ["<C-b>"] = { "<ESC>^i", "go to beginning of line" },
+    ["<C-b>"] = { "<ESC>^i", "Go to beginning of line" },
     -- go to end of line
-    ["<C-e>"] = { "<End>", "go to end of line" },
+    ["<C-e>"] = { "<End>", "Go to end of line" },
     -- navigate within insert mode
-    ["<C-h>"] = { "<Left>", "navigate left" },
-    ["<C-l>"] = { "<Right>", "navigate right" },
-    ["<C-k>"] = { "<Up>", "navigate up" },
-    ["<C-j>"] = { "<Down>", "navigate down" },
+    ["<C-h>"] = { "<Left>", "Navigate left" },
+    ["<C-l>"] = { "<Right>", "Navigate right" },
+    ["<C-k>"] = { "<Up>", "Navigate up" },
+    ["<C-j>"] = { "<Down>", "Navigate down" },
     -- Move current line / block
-    ["<A-j>"] = { "<Esc>:m .+1<CR>==gi", "move current line/block down" },
-    ["<A-k>"] = { "<Esc>:m .-2<CR>==gi", "move current line/block up" },
+    ["<A-j>"] = { "<Esc>:m .+1<CR>==gi", "Move current line/block down" },
+    ["<A-k>"] = { "<Esc>:m .-2<CR>==gi", "Move current line/block up" },
   },
   ["n"] = {
     -- remove highlight
-    ["<ESC>"] = { "<cmd> noh <CR>", "remove highlight" },
+    ["<ESC>"] = { "<cmd> noh <CR>", "Remove highlight" },
     -- Resize with arrows
-    ["<C-Up>"] = { ":resize -2<CR>", "resize window up" },
-    ["<C-Down>"] = { ":resize +2<CR>", "resize window down" },
-    ["<C-Left>"] = { ":vertical resize -2<CR>", "resize window left" },
-    ["<C-Right>"] = { ":vertical resize +2<CR>", "resize window right" },
+    ["<C-Up>"] = { ":resize -2<CR>", "Resize window up" },
+    ["<C-Down>"] = { ":resize +2<CR>", "Resize window down" },
+    ["<C-Left>"] = { ":vertical resize -2<CR>", "Resize window left" },
+    ["<C-Right>"] = { ":vertical resize +2<CR>", "Resize window right" },
     -- switch between windows
-    ["<C-h>"] = { "<C-w>h", "switch to left window" },
-    ["<C-l>"] = { "<C-w>l", "switch to right window" },
-    ["<C-k>"] = { "<C-w>k", "switch to upper window" },
-    ["<C-j>"] = { "<C-w>j", "switch to lower window" },
+    ["<C-h>"] = { "<C-w>h", "Switch to left window" },
+    ["<C-l>"] = { "<C-w>l", "Switch to right window" },
+    ["<C-k>"] = { "<C-w>k", "Switch to upper window" },
+    ["<C-j>"] = { "<C-w>j", "Switch to lower window" },
     -- save file
     ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
     -- line numbers
-    ["<leader>n"] = { "<cmd> set nu! <CR>", "toggle line numbers" },
-    ["<leader>nn"] = { "<cmd> set rnu! <CR>", "toggle relative line numbers" },
+    ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line numbers" },
+    ["<leader>nn"] = { "<cmd> set rnu! <CR>", "Toggle relative line numbers" },
     -- Move current line / block
-    ["<A-j>"] = { ":m .+1<CR>==", "move current line/block down" },
-    ["<A-k>"] = { ":m .-2<CR>==", "move current line/block up" },
+    ["<A-j>"] = { ":m .+1<CR>==", "Move current line/block down" },
+    ["<A-k>"] = { ":m .-2<CR>==", "Move current line/block up" },
     -- select all
-    ["<C-a>"] = { "gg<S-v>G", "select all" },
+    ["<C-a>"] = { "gg<S-v>G", "Select all" },
     -- centered page navigation
     ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
     ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
@@ -50,15 +50,15 @@ M.general = {
   },
   ["v"] = {
     -- indenting
-    ["<"] = { "<gv", "indent left" },
-    [">"] = { ">gv", "indent right" },
-    ["<leader>s"] = { ":sort<CR>", "sort ascending" },
-    ["<leader>S"] = { ":sort!<CR>", "sort descending" },
+    ["<"] = { "<gv", "Indent left" },
+    [">"] = { ">gv", "Indent right" },
+    ["<leader>s"] = { ":sort<CR>", "Sort ascending" },
+    ["<leader>S"] = { ":sort!<CR>", "Sort descending" },
   },
   ["x"] = {
     -- Move current line / block with Alt-j/k ala vscode.
-    ["<A-j>"] = { ":m '>+1<CR>gv-gv", "move current line/block down" },
-    ["<A-k>"] = { ":m '<-2<CR>gv-gv", "move current line/block up" },
+    ["<A-j>"] = { ":m '>+1<CR>gv-gv", "Move current line/block down" },
+    ["<A-k>"] = { ":m '<-2<CR>gv-gv", "Move current line/block up" },
   },
   ["t"] = {},
 }
@@ -69,14 +69,14 @@ M.comment = {
       function()
         require("Comment.api").toggle.linewise.current()
       end,
-      "comment out",
+      "Comment out",
     },
   },
 
   ["v"] = {
     ["<leader>/"] = {
       "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "toggle comment",
+      "Toggle comment",
     },
   },
 }
@@ -167,20 +167,20 @@ M.telescope = {
           vim.cmd "Telescope find_files"
         end
       end,
-      "find files",
+      "Find files",
     },
     ["<leader>fa"] = {
       "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>",
-      "find file global",
+      "Find file global",
     },
-    ["<leader>fw"] = { "<cmd> Telescope live_grep <CR>", "live grep" },
-    ["<leader>fb"] = { "<cmd> Telescope buffers <CR>", "buffers" },
-    ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "help tags" },
-    ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "old files" },
-    ["<leader>tk"] = { "<cmd> Telescope keymaps <CR>", "key maps" },
-    ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "git commit" },
-    ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "git status" },
-    ["<leader>dl"] = { "<cmd> Telescope diagnostics <CR>", "diagnostics" },
+    ["<leader>fw"] = { "<cmd> Telescope live_grep <CR>", "Live grep" },
+    ["<leader>fb"] = { "<cmd> Telescope buffers <CR>", "Buffers" },
+    ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "Help tags" },
+    ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Old files" },
+    ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Key maps" },
+    ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "Git commit" },
+    ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
+    ["<leader>dl"] = { "<cmd> Telescope diagnostics <CR>", "Diagnostics" },
   },
 }
 
@@ -190,19 +190,19 @@ M.hop = {
     -- ["<leader>j"] = { "<cmd>HopLineAC<CR>", "hop line down" },
     -- ["<leader><leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
     -- ["<leader><leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
-    ["<leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
-    ["<leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
+    ["<leader>k"] = { "<cmd>HopWordBC<CR>", "Hop word up" },
+    ["<leader>j"] = { "<cmd>HopWordAC<CR>", "Hop word down" },
   },
 }
 
 M.gitsigns = {
   ["n"] = {
-    ["<leader>gs"] = { "<cmd> Gitsigns toggle_signs <CR>", "toggle git signs" },
-    ["<leader>gn"] = { "<cmd> Gitsigns toggle_numhl<CR>", "toggle git numhl" },
-    ["<leader>gl"] = { "<cmd> Gitsigns toggle_linehl<CR>", "toggle git linehl" },
+    ["<leader>gs"] = { "<cmd> Gitsigns toggle_signs <CR>", "Toggle git signs" },
+    ["<leader>gn"] = { "<cmd> Gitsigns toggle_numhl<CR>", "Toggle git numhl" },
+    ["<leader>gl"] = { "<cmd> Gitsigns toggle_linehl<CR>", "Toggle git linehl" },
     ["<leader>gw"] = {
       "<cmd> Gitsigns toggle_word_diff <CR>",
-      "toggle git diff",
+      "Toggle git diff",
     },
   },
 }
@@ -212,14 +212,14 @@ M.trouble = {
     ["<leader>xx"] = { "<cmd> TroubleToggle <CR>", "toggle trouble" },
     ["<leader>xw"] = {
       "<cmd> TroubleToggle workspace_diagnostics <CR>",
-      "workspace diagnostics",
+      "Workspace diagnostics",
     },
     ["<leader>xd"] = {
       "<cmd> TroubleToggle document_diagnostics <CR>",
-      "document diagnostics",
+      "Document diagnostics",
     },
-    ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "loclist" },
-    ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "quickfix" },
+    ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "Loclist" },
+    ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "Quickfix" },
     -- ["gr"] = { "<cmd> TroubleToggle lsp_references <CR>", "LSP references" },
     -- ["gi"] = {
     --   "<cmd> TroubleToggle lsp_implementations <CR>",
@@ -262,64 +262,64 @@ M.rename = {
 
 M.bufferline = {
   ["n"] = {
-    ["<leader>bd"] = { "<cmd> BufferKill <CR>", "buffer kill" },
-    ["<leader>]"] = { "<cmd> BufferLineCycleNext<CR>", "cycle buffer next" },
-    ["<leader>["] = { "<cmd> BufferLineCyclePrev<CR>", "cycle buffer prev" },
-    ["<leader>m]"] = { "<cmd> BufferLineMoveNext<CR>", "move buffer next" },
-    ["<leader>m["] = { "<cmd> BufferLineMovePrev<CR>", "move buffer left" },
+    ["<leader>bd"] = { "<cmd> BufferKill <CR>", "Buffer kill" },
+    ["<leader>]"] = { "<cmd> BufferLineCycleNext<CR>", "Cycle buffer next" },
+    ["<leader>["] = { "<cmd> BufferLineCyclePrev<CR>", "Cycle buffer prev" },
+    ["<leader>m]"] = { "<cmd> BufferLineMoveNext<CR>", "Move buffer next" },
+    ["<leader>m["] = { "<cmd> BufferLineMovePrev<CR>", "Move buffer left" },
     ["<leader>1"] = {
       function()
         require("bufferline").go_to_buffer(1, true)
       end,
-      "buffer 1",
+      "Buffer 1",
     },
     ["<leader>2"] = {
       function()
         require("bufferline").go_to_buffer(2, true)
       end,
-      "buffer 2",
+      "Buffer 2",
     },
     ["<leader>3"] = {
       function()
         require("bufferline").go_to_buffer(3, true)
       end,
-      "buffer 3",
+      "Buffer 3",
     },
     ["<leader>4"] = {
       function()
         require("bufferline").go_to_buffer(4, true)
       end,
-      "buffer 4",
+      "Buffer 4",
     },
     ["<leader>5"] = {
       function()
         require("bufferline").go_to_buffer(5, true)
       end,
-      "buffer 5",
+      "Buffer 5",
     },
     ["<leader>6"] = {
       function()
         require("bufferline").go_to_buffer(6, true)
       end,
-      "buffer 6",
+      "Buffer 6",
     },
     ["<leader>7"] = {
       function()
         require("bufferline").go_to_buffer(7, true)
       end,
-      "buffer 7",
+      "Buffer 7",
     },
     ["<leader>8"] = {
       function()
         require("bufferline").go_to_buffer(8, true)
       end,
-      "buffer 8",
+      "Buffer 8",
     },
     ["<leader>9"] = {
       function()
         require("bufferline").go_to_buffer(9, true)
       end,
-      "buffer 9",
+      "Buffer 9",
     },
   },
 }
@@ -327,13 +327,7 @@ M.bufferline = {
 M.nvimtree = {
   ["n"] = {
     -- toggle
-    ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle tree" },
-  },
-}
-
-M.truezen = {
-  ["n"] = {
-    ["<leader>zn"] = { "<cmd> TZAtaraxis<CR>", "toggle zen mode" },
+    ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle tree" },
   },
 }
 
@@ -341,7 +335,7 @@ M.toggleterm = {
   ["t"] = {
     ["<C-x>"] = {
       vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),
-      "close terminal",
+      "Close terminal",
     },
   },
 }

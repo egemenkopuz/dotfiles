@@ -39,7 +39,15 @@ M = {
   ["nvim-treesitter/nvim-treesitter-context"] = {
     after = "nvim-treesitter",
     config = function()
-      require("treesitter-context").setup {}
+      require("treesitter-context").setup()
+    end,
+  },
+
+  ["kylechui/nvim-surround"] = {
+    after = "nvim-treesitter-context",
+    tag = "*",
+    config = function()
+      require("nvim-surround").setup()
     end,
   },
 
@@ -100,6 +108,17 @@ M = {
   ["hrsh7th/cmp-buffer"] = { after = "cmp-nvim-lsp" },
 
   ["hrsh7th/cmp-path"] = { after = "cmp-buffer" },
+
+  -- ["nvim-neo-tree/neo-tree.nvim"] = {
+  --   branch = "v2.x",
+  --   requires = "MunifTanjim/nui.nvim",
+  --   config = function()
+  --     require("user.plugins.configs.neotree").setup()
+  --   end,
+  --   setup = function()
+  --     require("user.utils").keys.load_section "nvimtree"
+  --   end,
+  -- },
 
   ["kyazdani42/nvim-tree.lua"] = {
     cmd = require("user.plugins.configs.nvimtree").lazy_commands,
@@ -166,6 +185,7 @@ M = {
       require("user.utils").keys.load_section "dap"
     end,
   },
+
   ["rcarriga/nvim-dap-ui"] = {
     config = function()
       require("user.plugins.configs.dapui").setup()
@@ -173,7 +193,6 @@ M = {
     requires = { "mfussenegger/nvim-dap" },
   },
 
-  -- ["wbthomason/packer.nvim"] = {},
   ["arkav/lualine-lsp-progress"] = {},
 
   ["sindrets/diffview.nvim"] = {
@@ -208,12 +227,6 @@ M = {
     end,
   },
 
-  -- ["karb94/neoscroll.nvim"] = {
-  --   config = function()
-  --     require("user.plugins.configs.neoscroll").setup()
-  --   end,
-  -- },
-
   ["RRethy/vim-illuminate"] = {
     config = function()
       require("user.plugins.configs.illuminate").setup()
@@ -246,13 +259,13 @@ M = {
     run = "make",
   },
 
-  -- ["phaazon/hop.nvim"] = {
   ["aznhe21/hop.nvim"] = {
     branch = "fix-some-bugs",
     config = function()
       require("user.plugins.configs.hop").setup()
     end,
   },
+
   ["akinsho/toggleterm.nvim"] = {
     tag = "*",
     config = function()
@@ -262,6 +275,7 @@ M = {
       require("user.utils").keys.load_section "toggleterm"
     end,
   },
+
   ["simrat39/symbols-outline.nvim"] = {
     disable = true,
     module = { "cmp", "cmp_nvim_lsp" },
@@ -269,8 +283,9 @@ M = {
       require("user.plugins.configs.symbolsoutline").setup()
     end,
   },
+
   ["akinsho/bufferline.nvim"] = {
-    tag = "v2.*",
+    tag = "v3.*",
     event = "BufWinEnter",
     config = function()
       require("user.plugins.configs.bufferline").setup()
@@ -292,21 +307,6 @@ M = {
       require("user.plugins.configs.whichkey").setup()
     end,
   },
-
-  -- ["Pocco81/true-zen.nvim"] = {
-  --   config = function()
-  --     require("true-zen").setup()
-  --   end,
-  --   setup = function()
-  --     require("user.utils").keys.load_section "truezen"
-  --   end,
-  -- },
-
-  -- ["sam4llis/nvim-tundra"] = {
-  --   config = function()
-  --     require("user.plugins.configs.theme").setup()
-  --   end,
-  -- },
 
   ["catppuccin/nvim"] = {
     config = function()
