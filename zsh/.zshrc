@@ -2,24 +2,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# export ZSH=$HOME/.oh-my-zsh
-# export XDG_CONFIG_HOME="$HOME/.config"
-
 source "$HOME/antigen.zsh"
 antigen init $HOME/.antigenrc
-
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# plugins=(
-#     sudo
-#     git
-#     last-working-dir
-#     zsh-syntax-highlighting
-#     zsh-autopair
-#     zsh-autocomplete
-# )
-#
-# source $ZSH/oh-my-zsh.sh
 
 zstyle ':autocomplete:*' min-input 1
 
@@ -52,8 +36,6 @@ export PATH="$HOME/go/bin:$PATH"
 #     export GPG_TTY=$(tty)
 # fi
 
-# [[ ! -f $XDG_CONFIG_HOME/p10k/.p10k.zsh ]] || source $XDG_CONFIG_HOME/p10k/.p10k.zsh
-
 source $HOME/.p10k.zsh
 
 __conda_setup="$("$HOME/miniconda3/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
@@ -63,7 +45,7 @@ else
     if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
         . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/nihilist/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
