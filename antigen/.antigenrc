@@ -8,7 +8,7 @@ antigen bundle last-working-dir
 
 # from external repos
 antigen bundle hlissner/zsh-autopair
-antigen bundle marlonrichert/zsh-autocomplete
+antigen bundle marlonrichert/zsh-autocomplete@main
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme romkatv/powerlevel10k
