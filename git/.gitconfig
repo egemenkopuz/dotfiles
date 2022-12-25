@@ -1,0 +1,5 @@
+[user]
+        email = egemen.kopuz@tum.de
+        name = Egemen Kopuz
+[init]
+	defaultBranch = main

@@ -1,23 +1,25 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
-export ZSH=$HOME/.oh-my-zsh
-export XDG_CONFIG_HOME="$HOME/.config"
+# export ZSH=$HOME/.oh-my-zsh
+# export XDG_CONFIG_HOME="$HOME/.config"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+source "$HOME/antigen.zsh"
+antigen init $HOME/.antigenrc
 
-plugins=(
-    sudo
-    git
-    last-working-dir
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-autopair
-    zsh-autocomplete
-)
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
-source $ZSH/oh-my-zsh.sh
+# plugins=(
+#     sudo
+#     git
+#     last-working-dir
+#     zsh-syntax-highlighting
+#     zsh-autopair
+#     zsh-autocomplete
+# )
+#
+# source $ZSH/oh-my-zsh.sh
 
 zstyle ':autocomplete:*' min-input 1
 
@@ -34,6 +36,9 @@ alias ls="exa --color=auto --icons"
 alias grep="grep -n --color"
 alias mkdir="mkdir -pv"
 alias ps="ps -ef"
+alias fd="fdfind"
+alias cat="batcat"
+alias df="duf"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
