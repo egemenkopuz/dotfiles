@@ -2,20 +2,30 @@ local opt = vim.opt
 local g = vim.g
 
 g.do_filetype_lua = 1
+--
+-- if vim.fn.has "wsl" == 1 then
+--   vim.g.clipboard = {
+--     copy = {
+--       ["+"] = "win32yank.exe -i --crlf",
+--       ["*"] = "win32yank.exe -i --crlf",
+--     },
+--     paste = {
+--       ["+"] = "win32yank.exe -o --lf",
+--       ["*"] = "win32yank.exe -o --lf",
+--     },
+--   }
+-- else
+--   opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+-- end
 
+opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 if vim.fn.has "wsl" == 1 then
-  vim.g.clipboard = {
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-  }
-else
-  opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("Yank", { clear = true }),
+    callback = function()
+      vim.fn.system("clip.exe", vim.fn.getreg '"')
+    end,
+  })
 end
 
 opt.laststatus = 3 -- global statusline
