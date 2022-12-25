@@ -1,4 +1,4 @@
-git clone https://github.com/egemenkopuz/dotfiles.git $HOME/dotfiles
+git clone -b "test-setup" https://github.com/egemenkopuz/dotfiles.git $HOME/dotfiles
 
 ln -sf $HOME/dotfiles/zsh/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/zsh/.zshenv $HOME/.zshenv
