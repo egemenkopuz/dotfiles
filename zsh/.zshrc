@@ -45,14 +45,16 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
-if grep -q "microsoft" /proc/version &>/dev/null; then
-    # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
-    export DISPLAY="$(/sbin/ip route | awk "/default/ { print $3 }"):0"
-    # Allows your gpg passphrase prompt to spawn (useful for signing commits).
-    export GPG_TTY=$(tty)
-fi
+# if grep -q "microsoft" /proc/version &>/dev/null; then
+#     # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
+#     export DISPLAY="$(/sbin/ip route | awk "/default/ { print $3 }"):0"
+#     # Allows your gpg passphrase prompt to spawn (useful for signing commits).
+#     export GPG_TTY=$(tty)
+# fi
 
-[[ ! -f $XDG_CONFIG_HOME/p10k/.p10k.zsh ]] || source $XDG_CONFIG_HOME/p10k/.p10k.zsh
+# [[ ! -f $XDG_CONFIG_HOME/p10k/.p10k.zsh ]] || source $XDG_CONFIG_HOME/p10k/.p10k.zsh
+
+source $HOME/.p10k.zsh
 
 __conda_setup="$("$HOME/miniconda3/bin/conda" "shell.zsh" "hook" 2> /dev/null)"
 if [ $? -eq 0 ]; then
