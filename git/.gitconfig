@@ -1,7 +1,7 @@
 [gpg]
 	program = gpg
 [user]
-        email = egemen.kopuz@tum.de
+        email = egemenkopuz@hotmail.com
         name = Egemen Kopuz
 	signingkey = ABFA182B4377F38E
 [init]
