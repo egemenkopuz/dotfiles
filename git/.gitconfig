@@ -3,7 +3,7 @@
 [user]
         email = egemen.kopuz@tum.de
         name = Egemen Kopuz
-	signingkey = A0D67CF4A247680D
+	signingkey = ABFA182B4377F38E
 [init]
 	defaultBranch = main
 [commit]
