@@ -29,12 +29,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
-# if grep -q "microsoft" /proc/version &>/dev/null; then
-#     # Requires: https://sourceforge.net/projects/vcxsrv/ (or alternative)
-#     export DISPLAY="$(/sbin/ip route | awk "/default/ { print $3 }"):0"
-#     # Allows your gpg passphrase prompt to spawn (useful for signing commits).
-#     export GPG_TTY=$(tty)
-# fi
+m() { python3 -c "from math import *; print($*)" }
 
 source $HOME/.p10k.zsh
 
