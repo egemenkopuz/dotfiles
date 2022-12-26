@@ -3,7 +3,7 @@
 [user]
         email = egemenkopuz@hotmail.com
         name = Egemen Kopuz
-	signingkey = ABFA182B4377F38E
+	signingkey = FA1804B585C3B91FD9E27A57F865AFA0B72021A6
 [init]
 	defaultBranch = main
 [commit]
