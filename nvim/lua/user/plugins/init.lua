@@ -55,7 +55,6 @@ M = {
     ft = "gitcommit",
     setup = function()
       require("user.plugins.configs.gitsigns").lazy_laod()
-      require("user.utils").keys.load_section "gitsigns"
     end,
     config = function()
       require("user.plugins.configs.gitsigns").setup()

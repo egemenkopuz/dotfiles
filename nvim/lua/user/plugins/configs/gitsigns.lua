@@ -17,6 +17,9 @@ local options = {
     delay = 500,
     ignore_whitespace = false,
   },
+  on_attach = function(bufnr)
+    require("user.utils").keys.load_section("gitsigns", { buffer = bufnr })
+  end,
 }
 
 function M.lazy_laod()

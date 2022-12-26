@@ -45,6 +45,7 @@ M.general = {
     -- centered page navigation
     ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
     ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
+    -- centered search navigation
     ["n"] = { "nzzzv", "Next searched" },
     ["N"] = { "Nzzzv", "Previous searched" },
   },
@@ -52,6 +53,7 @@ M.general = {
     -- indenting
     ["<"] = { "<gv", "Indent left" },
     [">"] = { ">gv", "Indent right" },
+    -- sorting
     ["<leader>s"] = { ":sort<CR>", "Sort ascending" },
     ["<leader>S"] = { ":sort!<CR>", "Sort descending" },
   },
@@ -107,12 +109,6 @@ M.lspconfig = {
       end,
       "LSP code action",
     },
-    -- ["<leader>f"] = {
-    --   function()
-    --     vim.diagnostic.open_float()
-    --   end,
-    --   "LSP Open Float",
-    -- },
     ["<leader>dk"] = {
       function()
         vim.diagnostic.goto_prev()
@@ -179,30 +175,67 @@ M.telescope = {
     ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Old files" },
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Key maps" },
     ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "Git commit" },
-    ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
+    ["<leader>gg"] = { "<cmd> Telescope git_status <CR>", "Git status" },
     ["<leader>dl"] = { "<cmd> Telescope diagnostics <CR>", "Diagnostics" },
   },
 }
 
 M.hop = {
   ["n"] = {
-    -- ["<leader>k"] = { "<cmd>HopLineBC<CR>", "hop line up" },
-    -- ["<leader>j"] = { "<cmd>HopLineAC<CR>", "hop line down" },
-    -- ["<leader><leader>k"] = { "<cmd>HopWordBC<CR>", "hop word up" },
-    -- ["<leader><leader>j"] = { "<cmd>HopWordAC<CR>", "hop word down" },
     ["<leader>k"] = { "<cmd>HopWordBC<CR>", "Hop word up" },
     ["<leader>j"] = { "<cmd>HopWordAC<CR>", "Hop word down" },
   },
 }
 
 M.gitsigns = {
+  [{ "o", "x" }] = {
+    ["ih"] = { ":<C-U> Gitsigns select_hunk <CR>", "Select hunk", { silent = true } },
+  },
   ["n"] = {
-    ["<leader>gs"] = { "<cmd> Gitsigns toggle_signs <CR>", "Toggle git signs" },
-    ["<leader>gn"] = { "<cmd> Gitsigns toggle_numhl<CR>", "Toggle git numhl" },
-    ["<leader>gl"] = { "<cmd> Gitsigns toggle_linehl<CR>", "Toggle git linehl" },
-    ["<leader>gw"] = {
+    ["<leader>gts"] = { "<cmd> Gitsigns toggle_signs <CR>", "Toggle git signs" },
+    ["<leader>gtn"] = { "<cmd> Gitsigns toggle_numhl <CR>", "Toggle git numhl" },
+    ["<leader>gtl"] = { "<cmd> Gitsigns toggle_linehl <CR>", "Toggle git linehl" },
+    ["<leader>gtw"] = {
       "<cmd> Gitsigns toggle_word_diff <CR>",
       "Toggle git diff",
+    },
+    ["<leader>gs"] = { "<cmd> Gitsigns stage_hunk <CR>", "Stage hunk" },
+    ["<leader>gr"] = { "<cmd> Gitsigns reset_hunk <CR>", "Reset hunk" },
+    ["<leader>gu"] = { "<cmd> Gitsigns undo_stage_hunk <CR>", "Undo stage hunk" },
+    ["<leader>gp"] = { "<cmd> Gitsigns preview_hunk <CR>", "Preview hunk" },
+    ["<leader>gS"] = { "<cmd> Gitsigns stage_buffer <CR>", "Stage buffer" },
+    ["<leader>gR"] = { "<cmd> Gitsigns reset_buffer <CR>", "Reset buffer" },
+    ["<leader>gl"] = {
+      function()
+        require("gitsigns").blame_line { full = true }
+      end,
+      "Blame line",
+    },
+    ["[h"] = {
+      function()
+        if vim.wo.diff then
+          return "[h"
+        end
+        vim.schedule(function()
+          require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Previous hunk",
+      opts = { expr = true },
+    },
+    ["]h"] = {
+      function()
+        if vim.wo.diff then
+          return "]h"
+        end
+        vim.schedule(function()
+          require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Next hunk",
+      opts = { expr = true },
     },
   },
 }
@@ -220,16 +253,6 @@ M.trouble = {
     },
     ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "Loclist" },
     ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "Quickfix" },
-    -- ["gr"] = { "<cmd> TroubleToggle lsp_references <CR>", "LSP references" },
-    -- ["gi"] = {
-    --   "<cmd> TroubleToggle lsp_implementations <CR>",
-    --   "LSP implementations",
-    -- },
-    -- ["gd"] = { "<cmd> TroubleToggle lsp_definitions <CR>", "LSP definitions" },
-    -- ["D"] = {
-    --   "<cmd> TroubleToggle lsp_type_definitions <CR>",
-    --   "LSP type definitions",
-    -- },
   },
 }
 
@@ -263,10 +286,10 @@ M.rename = {
 M.bufferline = {
   ["n"] = {
     ["<leader>bd"] = { "<cmd> BufferKill <CR>", "Buffer kill" },
-    ["<leader>]"] = { "<cmd> BufferLineCycleNext<CR>", "Cycle buffer next" },
-    ["<leader>["] = { "<cmd> BufferLineCyclePrev<CR>", "Cycle buffer prev" },
-    ["<leader>m]"] = { "<cmd> BufferLineMoveNext<CR>", "Move buffer next" },
-    ["<leader>m["] = { "<cmd> BufferLineMovePrev<CR>", "Move buffer left" },
+    ["[b"] = { "<cmd> BufferLineCyclePrev<CR>", "Cycle buffer prev" },
+    ["]b"] = { "<cmd> BufferLineCycleNext<CR>", "Cycle buffer next" },
+    ["<leader>[m"] = { "<cmd> BufferLineMovePrev<CR>", "Move buffer left" },
+    ["<leader>]m"] = { "<cmd> BufferLineMoveNext<CR>", "Move buffer right" },
     ["<leader>1"] = {
       function()
         require("bufferline").go_to_buffer(1, true)
@@ -326,7 +349,6 @@ M.bufferline = {
 
 M.nvimtree = {
   ["n"] = {
-    -- toggle
     ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle tree" },
   },
 }
@@ -372,12 +394,6 @@ M.dap = {
       end,
       "DAP toggle breakpoint",
     },
-    -- ["<leader>B"] = {
-    --   function()
-    --     require("dap").set_breakpoint()
-    --   end,
-    --   "DAP set breakpoint",
-    -- },
   },
 }
 

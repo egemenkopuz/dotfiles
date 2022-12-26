@@ -1,5 +1,10 @@
+[gpg]
+	program = gpg
 [user]
         email = egemen.kopuz@tum.de
         name = Egemen Kopuz
+	signingkey = A0D67CF4A247680D
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
