@@ -29,17 +29,15 @@ local function button(sc, txt, keybind)
 end
 
 local fn = vim.fn
-local marginTopPercent = 0.15
-local headerPadding = fn.max { 5, fn.floor(fn.winheight(0) * marginTopPercent) }
+local marginTopPercent = 0.1
+local headerPadding = fn.max { 2, fn.floor(fn.winheight(0) * marginTopPercent) }
 
 local function footer()
   local date = os.date "  %d/%m/%Y "
   local time = os.date "  %H:%M:%S "
   local plugins = "  " .. #vim.tbl_keys(packer_plugins) .. " plugins "
-
   local v = vim.version()
   local version = "  v" .. v.major .. "." .. v.minor .. "." .. v.patch
-
   return date .. time .. plugins .. version
 end
 

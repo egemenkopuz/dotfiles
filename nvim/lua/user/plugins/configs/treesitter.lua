@@ -3,6 +3,7 @@ local M = {}
 local options = {
   ensure_installed = {
     "lua",
+    "bash",
     "vim",
     "python",
     "html",
@@ -12,6 +13,9 @@ local options = {
     "dockerfile",
     "javascript",
     "markdown",
+    "markdown_inline",
+    "toml",
+    "regex",
     "yaml",
     "json",
   },

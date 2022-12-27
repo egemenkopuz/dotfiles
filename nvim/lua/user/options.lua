@@ -2,31 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 g.do_filetype_lua = 1
-
--- if vim.fn.has "wsl" == 1 then
---   vim.g.clipboard = {
---     copy = {
---       ["+"] = "win32yank.exe -i --crlf",
---       ["*"] = "win32yank.exe -i --crlf",
---     },
---     paste = {
---       ["+"] = "win32yank.exe -o --lf",
---       ["*"] = "win32yank.exe -o --lf",
---     },
---   }
--- else
---   opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
--- end
-
 opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
--- if vim.fn.has "wsl" == 1 then
---   vim.api.nvim_create_autocmd("TextYankPost", {
---     group = vim.api.nvim_create_augroup("Yank", { clear = true }),
---     callback = function()
---       vim.fn.system("clip.exe", vim.fn.getreg '"')
---     end,
---   })
--- end
 
 opt.laststatus = 3 -- global statusline
 opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
@@ -63,7 +39,7 @@ opt.timeoutlen = 400
 opt.undofile = true -- enable persistent undo
 opt.writebackup = false -- if a file is being edited by another program, it is not allowed to be edited
 
-opt.updatetime = 250
+opt.updatetime = 300
 g.mapleader = " "
 
 -- disable some builtin vim plugins
