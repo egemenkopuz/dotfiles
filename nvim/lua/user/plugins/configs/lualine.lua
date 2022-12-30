@@ -6,8 +6,12 @@ local options = {
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
     globalstatus = true,
-    disabled_filetypes = { "alpha", "packer" },
+    disabled_filetypes = {
+      statusline = { "alpha", "packer" },
+      winbar = { "alpha", "packer", "NvimTree", "nvim-dap-ui" },
+    },
   },
+  extensions = { "nvim-tree", "toggleterm" },
   sections = {
     lualine_a = { "mode" },
     lualine_b = {
@@ -46,12 +50,28 @@ local options = {
           error = " ",
           warn = " ",
           info = " ",
-          hint = "ﯧ",
+          hint = "ﯧ ",
         },
       },
     },
     lualine_y = { "progress" },
     lualine_z = { "location" },
+  },
+  winbar = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  inactive_winbar = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
   },
 }
 

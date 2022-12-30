@@ -108,17 +108,6 @@ M = {
 
   ["hrsh7th/cmp-path"] = { after = "cmp-buffer" },
 
-  -- ["nvim-neo-tree/neo-tree.nvim"] = {
-  --   branch = "v2.x",
-  --   requires = "MunifTanjim/nui.nvim",
-  --   config = function()
-  --     require("user.plugins.configs.neotree").setup()
-  --   end,
-  --   setup = function()
-  --     require("user.utils").keys.load_section "nvimtree"
-  --   end,
-  -- },
-
   ["kyazdani42/nvim-tree.lua"] = {
     cmd = require("user.plugins.configs.nvimtree").lazy_commands,
     tag = "nightly",
@@ -291,6 +280,15 @@ M = {
     end,
     setup = function()
       require("user.utils").keys.load_section "bufferline"
+    end,
+  },
+
+  ["numToStr/Navigator.nvim"] = {
+    config = function()
+      require("Navigator").setup()
+    end,
+    setup = function()
+      require("user.utils").keys.load_section "navigator"
     end,
   },
 

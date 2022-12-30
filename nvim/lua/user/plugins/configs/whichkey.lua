@@ -11,6 +11,9 @@ local options = {
     i = { "j", "k" },
     v = { "j", "k" },
   },
+  key_labels = {
+    -- ["<leader>g"] = "Git",
+  },
 }
 
 function M.setup()

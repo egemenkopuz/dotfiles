@@ -19,7 +19,7 @@ function M.setup()
       null_ls.builtins.diagnostics.pydocstyle.with {
         extra_args = { "--config=$ROOT/setup.cfg" },
       },
-      null_ls.builtins.formatting.prettierd,
+      -- null_ls.builtins.formatting.prettierd,
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.rustfmt,
       null_ls.builtins.diagnostics.hadolint,

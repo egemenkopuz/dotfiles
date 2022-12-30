@@ -10,11 +10,6 @@ M.general = {
     ["<C-b>"] = { "<ESC>^i", "Go to beginning of line" },
     -- go to end of line
     ["<C-e>"] = { "<End>", "Go to end of line" },
-    -- navigate within insert mode
-    ["<C-h>"] = { "<Left>", "Navigate left" },
-    ["<C-l>"] = { "<Right>", "Navigate right" },
-    ["<C-k>"] = { "<Up>", "Navigate up" },
-    ["<C-j>"] = { "<Down>", "Navigate down" },
     -- Move current line / block
     ["<A-j>"] = { "<Esc>:m .+1<CR>==gi", "Move current line/block down" },
     ["<A-k>"] = { "<Esc>:m .-2<CR>==gi", "Move current line/block up" },
@@ -23,15 +18,10 @@ M.general = {
     -- remove highlight
     ["<ESC>"] = { "<cmd> noh <CR>", "Remove highlight" },
     -- Resize with arrows
-    ["<C-Up>"] = { ":resize -2<CR>", "Resize window up" },
-    ["<C-Down>"] = { ":resize +2<CR>", "Resize window down" },
-    ["<C-Left>"] = { ":vertical resize -2<CR>", "Resize window left" },
-    ["<C-Right>"] = { ":vertical resize +2<CR>", "Resize window right" },
-    -- switch between windows
-    ["<C-h>"] = { "<C-w>h", "Switch to left window" },
-    ["<C-l>"] = { "<C-w>l", "Switch to right window" },
-    ["<C-k>"] = { "<C-w>k", "Switch to upper window" },
-    ["<C-j>"] = { "<C-w>j", "Switch to lower window" },
+    ["<C-Up>"] = { ":resize +2<CR>", "Resize window up" },
+    ["<C-Down>"] = { ":resize -2<CR>", "Resize window down" },
+    ["<C-Left>"] = { ":vertical resize +2<CR>", "Resize window left" },
+    ["<C-Right>"] = { ":vertical resize -2<CR>", "Resize window right" },
     -- save file
     ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
     -- line numbers
@@ -41,7 +31,7 @@ M.general = {
     ["<A-j>"] = { ":m .+1<CR>==", "Move current line/block down" },
     ["<A-k>"] = { ":m .-2<CR>==", "Move current line/block up" },
     -- select all
-    ["<C-a>"] = { "gg<S-v>G", "Select all" },
+    -- ["<C-a>"] = { "gg<S-v>G", "Select all" },
     -- centered page navigation
     ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
     ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
@@ -63,6 +53,27 @@ M.general = {
     ["<A-k>"] = { ":m '<-2<CR>gv-gv", "Move current line/block up" },
   },
   ["t"] = {},
+}
+
+M.navigator = {
+  [{ "n", "t" }] = {
+    ["<C-h>"] = {
+      "<cmd> NavigatorLeft <cr>",
+      "Navigate left",
+    },
+    ["<C-j>"] = {
+      "<cmd> NavigatorDown <cr>",
+      "Navigate down",
+    },
+    ["<C-k>"] = {
+      "<cmd> NavigatorUp <cr>",
+      "Navigate up",
+    },
+    ["<C-l>"] = {
+      "<cmd> NavigatorRight <cr>",
+      "Navigate right",
+    },
+  },
 }
 
 M.comment = {
