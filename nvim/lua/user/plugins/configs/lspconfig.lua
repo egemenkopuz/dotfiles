@@ -17,6 +17,7 @@ local flags = {
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
+M.capabilities.offsetEncoding = "utf-8" -- for clangd
 M.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
@@ -84,6 +85,19 @@ function M.setup()
           },
         },
       },
+    },
+  }
+
+  lspconfig.clangd.setup {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--clang-tidy",
+      -- "--completion-style=bundled",
+      -- "--cross-file-rename",
+      -- "--header-insertion=iwyu",
     },
   }
 

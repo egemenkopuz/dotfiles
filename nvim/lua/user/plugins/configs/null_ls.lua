@@ -23,6 +23,7 @@ function M.setup()
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.rustfmt,
       null_ls.builtins.diagnostics.hadolint,
+      null_ls.builtins.formatting.clang_format,
     },
     debug = false,
     on_attach = function(client, bufnr)
