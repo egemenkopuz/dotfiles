@@ -10,6 +10,8 @@ M.general = {
     ["<C-b>"] = { "<ESC>^i", "Go to beginning of line" },
     -- go to end of line
     ["<C-e>"] = { "<End>", "Go to end of line" },
+    -- save file
+    ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
     -- Move current line / block
     ["<A-j>"] = { "<Esc>:m .+1<CR>==gi", "Move current line/block down" },
     ["<A-k>"] = { "<Esc>:m .-2<CR>==gi", "Move current line/block up" },
@@ -30,14 +32,15 @@ M.general = {
     -- Move current line / block
     ["<A-j>"] = { ":m .+1<CR>==", "Move current line/block down" },
     ["<A-k>"] = { ":m .-2<CR>==", "Move current line/block up" },
-    -- select all
-    -- ["<C-a>"] = { "gg<S-v>G", "Select all" },
     -- centered page navigation
     ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
     ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
     -- centered search navigation
     ["n"] = { "nzzzv", "Next searched" },
     ["N"] = { "Nzzzv", "Previous searched" },
+    -- better pasting
+    ["[p"] = { ":pu!<cr>" },
+    ["]p"] = { ":pu<cr>" },
   },
   ["v"] = {
     -- indenting
@@ -89,7 +92,7 @@ M.comment = {
   ["v"] = {
     ["<leader>/"] = {
       "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "Toggle comment",
+      "Comment out",
     },
   },
 }
@@ -120,17 +123,17 @@ M.lspconfig = {
       end,
       "LSP code action",
     },
-    ["<leader>dk"] = {
+    ["[d]"] = {
       function()
         vim.diagnostic.goto_prev()
       end,
-      "LSP go to previous",
+      "Previous diagnostic",
     },
-    ["<leader>dj"] = {
+    ["]d"] = {
       function()
         vim.diagnostic.goto_next()
       end,
-      "LSP go to next",
+      "Next diagnostic",
     },
     ["<leader>q"] = {
       function()
