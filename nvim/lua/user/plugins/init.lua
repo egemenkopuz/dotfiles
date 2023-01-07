@@ -215,9 +215,24 @@ M = {
     end,
   },
 
+  ["b0o/incline.nvim"] = {
+    config = function()
+      require("user.plugins.configs.incline").setup()
+    end,
+  },
+
+  ["asiryk/auto-hlsearch.nvim"] = {
+    config = function()
+      require("auto-hlsearch").setup()
+    end,
+  },
+
   ["RRethy/vim-illuminate"] = {
     config = function()
       require("user.plugins.configs.illuminate").setup()
+    end,
+    setup = function()
+      require("user.utils").keys.load_section "illuminate"
     end,
   },
 

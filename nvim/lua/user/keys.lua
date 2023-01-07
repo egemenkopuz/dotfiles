@@ -97,6 +97,23 @@ M.comment = {
   },
 }
 
+M.illuminate = {
+  ["n"] = {
+    ["]]"] = {
+      function()
+        require("illuminate").goto_next_reference(false)
+      end,
+      "Next reference",
+    },
+    ["[["] = {
+      function()
+        require("illuminate").goto_prev_reference(false)
+      end,
+      "Prev reference",
+    },
+  },
+}
+
 M.lspconfig = {
   ["n"] = {
     ["gD"] = {
@@ -368,6 +385,9 @@ M.nvimtree = {
 }
 
 M.toggleterm = {
+  ["n"] = {
+    ["<leader>g\\"] = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+  },
   ["t"] = {
     ["<C-x>"] = {
       vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),

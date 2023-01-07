@@ -11,9 +11,7 @@ local options = {
     i = { "j", "k" },
     v = { "j", "k" },
   },
-  key_labels = {
-    -- ["<leader>g"] = "Git",
-  },
+  key_labels = { ["<leader>"] = "SPC" },
 }
 
 function M.setup()
@@ -24,6 +22,20 @@ function M.setup()
   end
 
   whichkey.setup(options)
+  whichkey.register {
+    mode = { "n", "v" },
+    ["g"] = { name = "+goto" },
+    ["]"] = { name = "+next" },
+    ["["] = { name = "+prev" },
+    ["<leader>b"] = { name = "+buffer" },
+    ["<leader>c"] = { name = "+code" },
+    ["<leader>f"] = { name = "+file" },
+    ["<leader>g"] = { name = "+git" },
+    ["<leader>h"] = { name = "+help" },
+    ["<leader>o"] = { name = "+open" },
+    ["<leader>t"] = { name = "+toggle" },
+    ["<leader>x"] = { name = "+diagnostics/quickfix" },
+  }
 end
 
 return M
