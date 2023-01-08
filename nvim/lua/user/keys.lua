@@ -140,7 +140,7 @@ M.lspconfig = {
       end,
       "LSP code action",
     },
-    ["[d]"] = {
+    ["[d"] = {
       function()
         vim.diagnostic.goto_prev()
       end,
