@@ -1,83 +1,88 @@
-local M = { keys = {}, lazy = {} }
+local M = {}
 
 local merge_tb = vim.tbl_deep_extend
-local autocmd = vim.api.nvim_create_autocmd
 local general_opts = { noremap = true, silent = true }
-local term_opts = { silent = true }
 
-function M.keys.load(keys, additional_opts)
-  local wk_present, wk = pcall(require, "which-key")
-  local mapping_func
-  if wk_present then
-    mapping_func = function(mode, keybind, val, opts)
-      opts.mode = mode
-      wk.register({ [keybind] = val }, opts)
-    end
-  else
-    mapping_func = function(mode, keybind, val, opts)
-      vim.keymap.set(mode, keybind, val[1], opts)
-    end
-  end
-  for mode, mapping in pairs(keys) do
-    local opts
-    if mode == "t" then
-      opts = term_opts
-    else
-      opts = general_opts
-    end
-    opts = merge_tb("force", opts, additional_opts or {})
-    for key, val in pairs(mapping) do
-      opts = merge_tb("force", opts, val.opts or {})
-      if val.opts then
-        val.opts = nil
-      end
-      -- if #val == 1 then
-      --   print(mode)
-      --   vim.keymap.set(mode, key, val[1], opts)
-      -- end
-      mapping_func(mode, key, val, opts)
-    end
-  end
+M.notify = function(message, level, title)
+    local notify_options = {
+        title = title,
+        timeout = 2000,
+    }
+    vim.api.nvim_notify(message, level, notify_options)
 end
 
-function M.keys.load_section(section_name, additional_opts)
-  additional_opts = additional_opts or nil
-  local present, keys = pcall(require, "user.keys")
-  if not present or keys[section_name] == nil then
-    return
-  end
-  M.keys.load(keys[section_name], additional_opts)
-end
-
-function M.lazy.load(tb)
-  autocmd(tb.events, {
-    pattern = "*",
-    group = vim.api.nvim_create_augroup(tb.augroup_name, {}),
-    callback = function()
-      if tb.condition() then
-        vim.api.nvim_del_augroup_by_name(tb.augroup_name)
-        if tb.plugins ~= "nvim-treesitter" then
-          vim.defer_fn(function()
-            vim.cmd("PackerLoad " .. tb.plugins)
-          end, 0)
-        else
-          vim.cmd("PackerLoad " .. tb.plugins)
+function M.load_keymap(section_name, add_opts)
+    local present, keys = pcall(require, "user.keymaps")
+    if not present or keys[section_name] == nil then
+        return
+    end
+    for mode, mapping in pairs(keys[section_name]) do
+        for lhs, rhs in pairs(mapping) do
+            local opts = merge_tb("force", general_opts, rhs.opts or {})
+            rhs.opts = nil
+            if rhs[2] ~= nil then
+                opts = merge_tb("force", opts, { desc = rhs[2] })
+            end
+            opts = merge_tb("force", opts, add_opts or {})
+            vim.keymap.set(mode, lhs, rhs[1], opts)
         end
-      end
-    end,
-  })
+    end
 end
 
-function M.lazy.on_file_open(plugin_name)
-  M.lazy.load {
-    events = { "BufRead", "BufWinEnter", "BufNewFile" },
-    augroup_name = "BeLazyOnFileOpen" .. plugin_name,
-    plugins = plugin_name,
-    condition = function()
-      local file = vim.fn.expand "%"
-      return file ~= "NvimTree_1" and file ~= "[packer]" and file ~= ""
-    end,
-  }
+DIAGNOSTICS_ACTIVE = true
+M.toggle_diagnostics = function()
+    DIAGNOSTICS_ACTIVE = not DIAGNOSTICS_ACTIVE
+    if DIAGNOSTICS_ACTIVE then
+        vim.diagnostic.show()
+    else
+        vim.diagnostic.hide()
+    end
+end
+
+-- detect python venv
+-- https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-851247107
+-- local util = require "lspconfig/util"
+-- local path = util.path
+-- function M.get_python_path(workspace)
+--     -- Use activated virtualenv.
+--     if vim.env.VIRTUAL_ENV then
+--         return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+--     end
+--     -- Find and use virtualenv in workspace directory.
+--     for _, pattern in ipairs { "*", ".*" } do
+--         local match = vim.fn.glob(path.join(workspace, pattern, "pyvenv.cfg"))
+--         if match ~= "" then
+--             return path.join(path.dirname(match), "bin", "python")
+--         end
+--     end
+--     -- Fallback to system Python.
+--     return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
+-- end
+
+AUTOFORMAT_ACTIVE = true
+M.toggle_autoformat = function()
+    AUTOFORMAT_ACTIVE = not AUTOFORMAT_ACTIVE
+end
+
+M.telescope_find_files = function()
+    local path = vim.loop.cwd() .. "/.git"
+    if M.path_exists(path) then
+        return "Telescope git_files"
+    else
+        return "Telescope find_files"
+    end
+end
+
+-- toggle colorcolumn
+M.toggle_colorcolumn = function()
+    local value = vim.api.nvim_get_option_value("colorcolumn", {})
+    if value == "" then
+        M.notify("Enable colocolumn", 1, "functions.lua")
+        vim.api.nvim_set_option_value("colorcolumn", "79", {})
+    else
+        M.notify("Disable colocolumn", 1, "functions.lua")
+        vim.api.nvim_set_option_value("colorcolumn", "", {})
+    end
 end
 
 return M

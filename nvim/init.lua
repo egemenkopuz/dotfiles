@@ -1,14 +1,25 @@
-vim.defer_fn(function()
-  pcall(require, "impatient")
-end, 0)
-
-local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
-vim.env.PATH = vim.env.PATH .. (is_windows and ";" or ":") .. vim.fn.stdpath "data" .. "/mason/bin"
-
 require "user.options"
 
-vim.defer_fn(function()
-  require("user.utils").keys.load_section "general"
-end, 0)
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system {
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    }
+end
+vim.opt.runtimepath:prepend(lazypath)
 
-require "user.packer"
+require("lazy").setup("plugins", {
+    lockfile = vim.fn.stdpath "config" .. "/plugin-lock.json",
+    rtp = {
+        disabled_plugins = require("user.config").disabled_plugins,
+    },
+})
+
+require "user.autocmds"
+
+require("user.utils").load_keymap "general"
