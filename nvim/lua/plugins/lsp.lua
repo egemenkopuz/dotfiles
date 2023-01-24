@@ -19,6 +19,18 @@ return {
                     },
                 },
             },
+            {
+                "RRethy/vim-illuminate",
+                opts = {
+                    delay = 200,
+                    providers = { "lsp", "treesitter", "regex" },
+                    filetypes_denylist = { "dirvish", "fugitive", "lazy", "mason", "NvimTree" },
+                },
+                config = function(_, opts)
+                    require("illuminate").configure(opts)
+                    require("user.utils").load_keymap "illuminate"
+                end,
+            },
         },
         opts = {
             diagnostics = {

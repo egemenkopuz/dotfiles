@@ -1,6 +1,33 @@
 return {
     {
+        "egemenkopuz/nordic.nvim",
+        enabled = true,
+        priority = 1000,
+        opts = {
+            syntax = {
+                comments = {
+                    italic = false,
+                    bold = true,
+                },
+                operators = {
+                    italic = false,
+                    bold = false,
+                },
+                keywords = {
+                    italic = false,
+                    bold = false,
+                },
+            },
+        },
+        config = function(_, opts)
+            require("nordic").setup(opts)
+            vim.cmd.colorscheme "nordic"
+        end,
+    },
+
+    {
         "catppuccin/nvim",
+        enabled = false,
         name = "catppuccin",
         priority = 1000,
         opts = {
@@ -10,22 +37,10 @@ return {
                 light = "latte",
                 dark = "mocha",
             },
+            no_italic = true, -- Force no italic
+            no_bold = true, -- Force no bold
             transparent_background = false,
             compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
-            styles = {
-                comments = {},
-                conditionals = {},
-                loops = {},
-                functions = {},
-                keywords = {},
-                strings = {},
-                variables = {},
-                numbers = {},
-                booleans = {},
-                properties = {},
-                types = {},
-                operators = {},
-            },
             integrations = {
                 telescope = false,
                 mason = true,
@@ -72,9 +87,8 @@ return {
             },
         },
         config = function(_, opts)
-            local catppuccin = require "catppuccin"
-            catppuccin.setup(opts)
-            vim.cmd [[colorscheme catppuccin]]
+            require("catppuccin").setup(opts)
+            vim.cmd.colorscheme "catppuccin"
         end,
     },
 }

@@ -3,6 +3,7 @@ local M = { icons = {} }
 M.treesitter_packages = {
     "bash",
     "c",
+    "cmake",
     "cpp",
     "css",
     "dockerfile",
@@ -20,15 +21,18 @@ M.treesitter_packages = {
 }
 
 M.mason_packages = {
+    -- lsp
     "bash-language-server",
     "lua-language-server",
-    "stylua",
     "pyright",
+    "clangd",
+    -- formatter
+    "stylua",
     "black",
     "isort",
-    "debugpy",
-    "clangd",
     "clang-format",
+    -- dap
+    "debugpy",
 }
 
 M.disabled_plugins = {

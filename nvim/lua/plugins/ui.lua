@@ -1,9 +1,92 @@
 return {
     {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+        },
+        opts = {
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = true,
+            },
+            lsp = {
+                signature = {
+                    enabled = false,
+                },
+            },
+        },
+        config = function(_, opts)
+            require("noice").setup(opts)
+            vim.api.nvim_set_hl(0, "NoiceCmdLinePopup", { bg = "#191C24" })
+            vim.api.nvim_set_hl(0, "NoiceCmdLinePopupBorder", { fg = "#191C24" })
+        end,
+    },
+
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VimEnter",
+        opts = {
+            options = {
+                theme = "auto",
+                component_separators = { left = "", right = "" },
+                section_separators = { left = "", right = "" },
+                globalstatus = true,
+                disabled_filetypes = {
+                    statusline = { "alpha", "packer", "lazy", "terminal" },
+                    winbar = { "alpha", "packer", "NvimTree", "nvim-dap-ui" },
+                },
+            },
+            extensions = { "nvim-tree", "toggleterm" },
+            sections = {
+                lualine_a = { "mode" },
+                lualine_b = { "branch" },
+                lualine_c = {
+                    { "diff", symbols = { added = "+", modified = "~", removed = "-" } },
+                    "filename",
+                },
+                lualine_x = {
+                    {
+                        "lsp_progress",
+                        display_components = { { "title", "percentage", "message" } },
+                        colors = {
+                            percentage = "#505A6C",
+                            title = "#505A6C",
+                            message = "#505A6C",
+                            use = true,
+                        },
+                    },
+                    {
+                        "filetype",
+                        colored = false,
+                        icon_only = false,
+                        icon = { align = "right" },
+                    },
+                    {
+                        "diagnostics",
+                        symbols = {
+                            error = " ",
+                            warn = " ",
+                            info = " ",
+                            hint = "ﯧ ",
+                        },
+                    },
+                },
+                lualine_y = {},
+                lualine_z = { "location" },
+            },
+        },
+        config = function(_, opts)
+            require("lualine").setup(opts)
+        end,
+    },
+
+    {
         "goolord/alpha-nvim",
         event = "VimEnter",
         dependencies = {
-            "nvim-telescope/telescope.nvim",
             "kyazdani42/nvim-web-devicons",
         },
         opts = function()
@@ -45,7 +128,7 @@ return {
                 dashboard.button("r f", " " .. " Recent files", ":Telescope oldfiles <CR>"),
                 dashboard.button("s p", " " .. " Select project", ":Telescope projects <CR>"),
                 dashboard.button("s s", " " .. " Select session", ":Telescope persisted <CR>"),
-                dashboard.button("c c", " " .. " Config", ":e $MYVIMRC <CR>"),
+                dashboard.button("c c", " " .. " Config", ":e $MYVIMRC | :cd %:p:h <CR>"),
                 dashboard.button("c p", " " .. " Plugins", ":Lazy<CR>"),
                 dashboard.button("q", " " .. " Quit", ":qa<CR>"),
             }
@@ -74,7 +157,7 @@ return {
                     return {
                         {
                             fname,
-                            guibg = "#181825",
+                            guibg = "#191C24", --"#181825",
                             guifg = "#CDD6F4",
                         },
                     }
@@ -82,7 +165,7 @@ return {
                     return {
                         {
                             fname,
-                            guibg = "#181825",
+                            guibg = "#191C24", --"#181825",
                             guifg = "#454759",
                         },
                     }
@@ -111,5 +194,36 @@ return {
         config = function(_, opts)
             require("incline").setup(opts)
         end,
+    },
+
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        event = "BufReadPre",
+        opts = {
+            indentLine_enabled = 1,
+            char = "▏",
+            filetype_exclude = {
+                "dashboard",
+                "mason",
+                "log",
+                "gitcommit",
+                "packer",
+                "vimwiki",
+                "markdown",
+                "txt",
+                "help",
+                "NvimTree",
+                "git",
+                "TelescopePrompt",
+                "undotree",
+                "",
+            },
+            buftype_exclude = { "terminal", "nofile" },
+            show_trailing_blankline_indent = false,
+            show_first_indent_level = false,
+            show_current_context = false,
+            char_list = { "|", "¦", "┆", "┊" },
+            space_char = " ",
+        },
     },
 }

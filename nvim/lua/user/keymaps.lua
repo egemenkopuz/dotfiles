@@ -34,14 +34,26 @@ M.general = {
         -- better pasting
         ["[p"] = { ":pu!<cr>" },
         ["]p"] = { ":pu<cr>" },
+        -- buffer navigation
+        ["]b"] = { ":bnext <cr>" },
+        ["[b"] = { ":bprevious <cr>" },
     },
     v = {
+        ["p"] = { '"_dp' },
+        ["P"] = { '"_dP' },
         -- indenting
         ["<"] = { "<gv", "Indent left" },
         [">"] = { ">gv", "Indent right" },
         -- sorting
         ["<leader>s"] = { ":sort<CR>", "Sort ascending" },
         ["<leader>S"] = { ":sort!<CR>", "Sort descending" },
+    },
+}
+
+M.bufremove = {
+    n = {
+        ["<leader>bd"] = { "<cmd> Bdelete <cr>", "Kill buffer" },
+        ["<leader>bD"] = { "<cmd> Bdelete! <cr>", "Kill force buffer" },
     },
 }
 
@@ -55,10 +67,7 @@ M.telescope = {
     n = {
         ["<leader>ff"] = {
             function()
-                local status = pcall(vim.cmd, "Telescope git_files")
-                if not status then
-                    vim.cmd "Telescope find_files"
-                end
+                vim.cmd(require("user.utils").telescope_find_files())
             end,
             "Find files",
         },
@@ -66,14 +75,15 @@ M.telescope = {
             "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <cr>",
             "Find file global",
         },
+        ["<leader>fb"] = { "<cmd> Telescope file_browser <cr>", "File browser" },
         ["<leader>fw"] = { "<cmd> Telescope live_grep <cr>", "Live grep" },
-        ["<leader>fb"] = { "<cmd> Telescope buffers <cr>", "Buffers" },
+        ["<leader>fB"] = { "<cmd> Telescope buffers <cr>", "Buffers" },
         ["<leader>fh"] = { "<cmd> Telescope help_tags <cr>", "Help tags" },
         ["<leader>fo"] = { "<cmd> Telescope oldfiles <cr>", "Old files" },
         ["<leader>fk"] = { "<cmd> Telescope keymaps <cr>", "Key maps" },
         ["<leader>gc"] = { "<cmd> Telescope git_commits <cr>", "Git commit" },
         ["<leader>gg"] = { "<cmd> Telescope git_status <cr>", "Git status" },
-        ["<leader>dl"] = { "<cmd> Telescope diagnostics <cr>", "Diagnostics" },
+        ["<leader>xf"] = { "<cmd> Telescope diagnostics <cr>", "Diagnostics" },
     },
 }
 
@@ -126,6 +136,7 @@ M.gitsigns = {
         ["<leader>tn"] = { "<cmd> Gitsigns toggle_numhl <CR>", "Toggle git numhl" },
         ["<leader>tl"] = { "<cmd> Gitsigns toggle_linehl <CR>", "Toggle git linehl" },
         ["<leader>tw"] = { "<cmd> Gitsigns toggle_word_diff <CR>", "Toggle git diff" },
+        ["<leader>tb"] = { "<cmd> Gitsigns toggle_current_line_blame <CR>", "Toggle git line blame" },
         ["<leader>gs"] = { "<cmd> Gitsigns stage_hunk <CR>", "Stage hunk" },
         ["<leader>gr"] = { "<cmd> Gitsigns reset_hunk <CR>", "Reset hunk" },
         ["<leader>gu"] = { "<cmd> Gitsigns undo_stage_hunk <CR>", "Undo stage hunk" },
@@ -135,37 +146,22 @@ M.gitsigns = {
         ["<leader>gl"] = { function() require("gitsigns").blame_line { full = true } end, "Blame line", },
         ["[h"] = {
             function()
-                if vim.wo.diff then return "[h" end
-                vim.schedule(function() require("gitsigns").prev_hunk() end)
-                return "<Ignore>"
+                if vim.wo.diff then return "[h" end vim.schedule(function() require("gitsigns").prev_hunk() end) return "<Ignore>"
             end,
-            "Previous hunk",
-            opts = { expr = true },
+            "Previous hunk", opts = { expr = true },
         },
         ["]h"] = {
             function()
-                if vim.wo.diff then return "]h" end
-                vim.schedule(function() require("gitsigns").next_hunk() end)
-                return "<Ignore>"
+                if vim.wo.diff then return "]h" end vim.schedule(function() require("gitsigns").next_hunk() end) return "<Ignore>"
             end,
-            "Next hunk",
-            opts = { expr = true },
+            "Next hunk", opts = { expr = true },
         },
     },
 }
 -- stylua: ignore end
 
-M.navigator = {
-    [{ "n", "t" }] = {
-        ["<C-h>"] = { "<cmd> NavigatorLeft <cr>", "Navigate left" },
-        ["<C-j>"] = { "<cmd> NavigatorDown <cr>", "Navigate down" },
-        ["<C-k>"] = { "<cmd> NavigatorUp <cr>", "Navigate up" },
-        ["<C-l>"] = { "<cmd> NavigatorRight <cr>", "Navigate right" },
-    },
-}
-
 M.illuminate = {
-    ["n"] = {
+    n = {
         ["]]"] = {
             function()
                 require("illuminate").goto_next_reference(false)
@@ -178,6 +174,52 @@ M.illuminate = {
             end,
             "Prev reference",
         },
+    },
+}
+
+M.navigator = {
+    [{ "n", "t" }] = {
+        ["<C-h>"] = { "<cmd> NavigatorLeft <CR>", "Navigate left" },
+        ["<C-j>"] = { "<cmd> NavigatorDown <CR>", "Navigate down" },
+        ["<C-k>"] = { "<cmd> NavigatorUp <CR>", "Navigate up" },
+        ["<C-l>"] = { "<cmd> NavigatorRight <CR>", "Navigate right" },
+    },
+}
+
+M.hop = {
+    n = {
+        ["<leader>k"] = { "<cmd>HopWordBC<CR>", "Hop word up" },
+        ["<leader>j"] = { "<cmd>HopWordAC<CR>", "Hop word down" },
+    },
+}
+
+-- stylua: ignore start
+M.trouble = {
+    n = {
+        ["<leader>xx"] = { "<cmd> TroubleToggle <CR>", "Toggle trouble" },
+        ["<leader>xw"] = { "<cmd> TroubleToggle workspace_diagnostics <CR>", "Workspace diagnostics", },
+        ["<leader>xd"] = { "<cmd> TroubleToggle document_diagnostics <CR>", "Document diagnostics", },
+        ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "Loclist" },
+        ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "Quickfix" },
+    },
+}
+-- stylua: ignore end
+
+M.toggleterm = {
+    n = {
+        ["<leader>g\\"] = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+    },
+    t = {
+        ["<C-x>"] = {
+            vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),
+            "Close terminal",
+        },
+    },
+}
+
+M.nvimtree = {
+    n = {
+        ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle tree" },
     },
 }
 

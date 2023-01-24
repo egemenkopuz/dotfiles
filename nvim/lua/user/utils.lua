@@ -64,6 +64,11 @@ M.toggle_autoformat = function()
     AUTOFORMAT_ACTIVE = not AUTOFORMAT_ACTIVE
 end
 
+M.path_exists = function(path)
+    local ok = vim.loop.fs_stat(path)
+    return ok
+end
+
 M.telescope_find_files = function()
     local path = vim.loop.cwd() .. "/.git"
     if M.path_exists(path) then

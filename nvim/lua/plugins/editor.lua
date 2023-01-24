@@ -1,6 +1,7 @@
 return {
     {
         "echasnovski/mini.move",
+        event = "BufReadPre",
         config = function()
             require("mini.move").setup()
         end,
@@ -11,6 +12,7 @@ return {
         dependencies = {
             "folke/noice.nvim",
         },
+        event = "BufReadPre",
         config = function(_, opts)
             require("inc_rename").setup(opts)
             require("user.utils").load_keymap "rename"
@@ -19,6 +21,7 @@ return {
 
     {
         "dnlhc/glance.nvim",
+        event = "BufReadPre",
         config = function(_, opts)
             require("glance").setup(opts)
             require("user.utils").load_keymap "glance"
@@ -27,20 +30,21 @@ return {
 
     {
         "lewis6991/gitsigns.nvim",
-        event = "BufRead",
+        event = "BufReadPre",
         opts = {
             signs = {
                 add = { text = "│" },
                 change = { text = "│" },
-                delete = { text = "│" },
-                topdelete = { text = "│" },
-                changedelete = { text = "│" },
+                delete = { text = "▁" },
+                topdelete = { text = "▔" },
+                changedelete = { text = "▁" },
             },
+            current_line_blame_formatter = "<author> - <author_time:%Y-%m-%d> - <summary>",
             current_line_blame = false,
             current_line_blame_opts = {
                 virt_text = true,
-                virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-                delay = 500,
+                virt_text_pos = "eol",
+                delay = 200,
                 ignore_whitespace = false,
             },
             on_attach = function(bufnr)
@@ -50,5 +54,46 @@ return {
         config = function(_, opts)
             require("gitsigns").setup(opts)
         end,
+    },
+
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        opts = {
+            size = 20,
+            open_mapping = [[<c-\>]],
+            hide_numbers = true,
+            shade_filetypes = {},
+            shade_terminals = true,
+            shading_factor = 2,
+            start_in_insert = true,
+            direction = "float",
+            float_opts = {
+                border = "single",
+                winblend = 0,
+                highlights = {
+                    border = "Normal",
+                    background = "Normal",
+                },
+            },
+        },
+        config = function(_, opts)
+            require("toggleterm").setup(opts)
+            local Terminal = require("toggleterm.terminal").Terminal
+            local lazygit = Terminal:new { cmd = "lazygit", hidden = true, count = 2 }
+            function _LAZYGIT_TOGGLE()
+                lazygit:toggle()
+            end
+            require("user.utils").load_keymap "toggleterm"
+        end,
+    },
+
+    {
+        "folke/trouble.nvim",
+        cmd = { "TroubleToggle", "Trouble" },
+        init = function()
+            require("user.utils").load_keymap "trouble"
+        end,
+        opts = { auto_preview = false, mode = "document_diagnostics" },
     },
 }

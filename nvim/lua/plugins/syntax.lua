@@ -4,16 +4,33 @@ return {
         build = ":TSUpdate",
         event = "BufReadPost",
         dependencies = {
+            "windwp/nvim-ts-autotag",
             "nvim-treesitter/nvim-treesitter-context",
             "windwp/nvim-autopairs",
+            "JoosepAlviste/nvim-ts-context-commentstring",
         },
-        opts = {
-            sync_install = false,
-            highlight = { enable = true },
-            indent = { enable = true },
-            context_commentstring = { enable = true, enable_autocmd = false },
-            ensure_installed = require("user.config").treesitter_packages,
-        },
+        opts = function()
+            local MAX_FILE_LINES = 3000
+            local MAX_FILE_SIZE = 1048576 -- 1MB
+
+            return {
+                sync_install = false,
+                autotag = { enable = true },
+                indent = { enable = true },
+                context_commentstring = { enable = true, enable_autocmd = false },
+                ensure_installed = require("user.config").treesitter_packages,
+                highlight = {
+                    enable = true,
+                    max_file_lines = MAX_FILE_LINES,
+                    disable = function(_, bufnr)
+                        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+                        if ok and stats and stats.size > MAX_FILE_SIZE then
+                            return true
+                        end
+                    end,
+                },
+            }
+        end,
         config = function(_, opts)
             local treesitter = require "nvim-treesitter.configs"
             treesitter.setup(opts)

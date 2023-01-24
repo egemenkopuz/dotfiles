@@ -33,31 +33,34 @@ return {
                 ["<leader>g"] = { name = "+git" },
                 ["<leader>h"] = { name = "+help" },
                 ["<leader>t"] = { name = "+toggle" },
+                ["<leader>w"] = { name = "+workspace" },
                 ["<leader>x"] = { name = "+diagnostics/quickfix" },
             }
         end,
     },
 
     {
-        "folke/noice.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-        },
-        opts = {
-            presets = {
-                bottom_search = true,
-                command_palette = true,
-                long_message_to_split = true,
-                inc_rename = true,
-            },
-            lsp = {
-                signature = {
-                    enabled = false,
-                },
-            },
-        },
-        config = function(_, opts)
-            require("noice").setup(opts)
+        "kyazdani42/nvim-web-devicons",
+        config = function()
+            local nvim_web_devicons = require "nvim-web-devicons"
+            local current_icons = nvim_web_devicons.get_icons()
+            local new_icons = {}
+
+            for key, icon in pairs(current_icons) do
+                icon.color = "#9F9F9F"
+                icon.cterm_color = 198
+                new_icons[key] = icon
+            end
+
+            nvim_web_devicons.set_icon(new_icons)
+        end,
+    },
+
+    {
+        "moll/vim-bbye",
+        event = "BufReadPre",
+        config = function(_, _)
+            require("user.utils").load_keymap "bufremove"
         end,
     },
 }
