@@ -136,7 +136,9 @@ return {
                             group = augroup,
                             buffer = bufnr,
                             callback = function()
-                                vim.lsp.buf.format { bufnr = bufnr }
+                                if AUTOFORMAT_ACTIVE then
+                                    vim.lsp.buf.format { bufnr = bufnr }
+                                end
                             end,
                         })
                     end

@@ -172,7 +172,7 @@ return {
                 end
             end,
             window = {
-                zindex = 60,
+                zindex = 30,
                 width = "fit",
                 placement = { horizontal = "right", vertical = "top" },
                 margin = {

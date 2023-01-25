@@ -37,6 +37,27 @@ M.general = {
         -- buffer navigation
         ["]b"] = { ":bnext <cr>" },
         ["[b"] = { ":bprevious <cr>" },
+        -- toggle diagnostic
+        ["<leader>td"] = {
+            function()
+                require("user.utils").toggle_diagnostics()
+            end,
+            "Toggle diagnostics",
+        },
+        -- toggle format on save
+        ["<leader>tf"] = {
+            function()
+                require("user.utils").toggle_autoformat()
+            end,
+            "Toggle format on save",
+        },
+        -- toggle color column
+        ["<leader>tc"] = {
+            function()
+                require("user.utils").toggle_colorcolumn()
+            end,
+            "Toggle color column",
+        },
     },
     v = {
         ["p"] = { '"_dp' },
@@ -57,9 +78,15 @@ M.bufremove = {
     },
 }
 
+M.zenmode = {
+    n = {
+        ["<leader>tz"] = { "<cmd> ZenMode <cr>", "Toggle zen mode" },
+    },
+}
+
 M.treesitter_context = {
     n = {
-        ["<leader>tc"] = { "<cmd> TSContextToggle <cr>", "Toggle treesitter context" },
+        ["<leader>tt"] = { "<cmd> TSContextToggle <cr>", "Toggle treesitter context" },
     },
 }
 
@@ -220,6 +247,100 @@ M.toggleterm = {
 M.nvimtree = {
     n = {
         ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle tree" },
+    },
+}
+
+M.dap = {
+    n = {
+        ["<leader>dc"] = {
+            function()
+                require("dap").continue()
+            end,
+            "DAP continue",
+        },
+        ["<leader>dd"] = {
+            function()
+                require("dap").disconnect()
+            end,
+            "DAP disconnect",
+        },
+        ["<leader>dk"] = {
+            function()
+                require("dap").up()
+            end,
+            "DAP up",
+        },
+        ["<leader>dj"] = {
+            function()
+                require("dap").down()
+            end,
+            "DAP down",
+        },
+        ["<leader>du"] = {
+            function()
+                require("dap").step_over()
+            end,
+            "DAP step over",
+        },
+        ["<leader>di"] = {
+            function()
+                require("dap").step_into()
+            end,
+            "DAP step into",
+        },
+        ["<leader>do"] = {
+            function()
+                require("dap").step_out()
+            end,
+            "DAP step out",
+        },
+        ["<leader>ds"] = {
+            function()
+                require("dap").stop()
+            end,
+            "DAP stop",
+        },
+        ["<leader>dn"] = {
+            function()
+                require("dap").run_to_cursor()
+            end,
+            "DAP run to cursor",
+        },
+        ["<leader>de"] = {
+            function()
+                require("dap").set_exception_breakpoints()
+            end,
+            "DAP set exception breakpoints",
+        },
+        ["<leader>db"] = {
+            function()
+                require("dap").toggle_breakpoint()
+            end,
+            "DAP toggle breakpoint",
+        },
+    },
+}
+
+M.dapui = {
+    n = {
+        ["<leader>dt"] = {
+            function()
+                require("dapui").toggle()
+            end,
+            "DAP ui toggle",
+        },
+        ["<leader>dT"] = {
+            function()
+                require("dapui").close()
+            end,
+            "DAP ui close",
+        },
+        ["<leader>df"] = {
+            function()
+                require("dapui").float_element()
+            end,
+            "DAP ui float",
+        },
     },
 }
 

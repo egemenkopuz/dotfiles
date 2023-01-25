@@ -96,4 +96,17 @@ return {
         end,
         opts = { auto_preview = false, mode = "document_diagnostics" },
     },
+
+    {
+        "folke/zen-mode.nvim",
+        cmd = { "ZenMode" },
+        opts = {
+            plugins = {
+                tmux = { enabled = false },
+            },
+        },
+        init = function()
+            require("user.utils").load_keymap "zenmode"
+        end,
+    },
 }
