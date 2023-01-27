@@ -2,8 +2,8 @@ return {
     {
         "echasnovski/mini.move",
         event = "BufReadPre",
-        config = function()
-            require("mini.move").setup()
+        config = function(_, opts)
+            require("mini.move").setup(opts)
         end,
     },
 

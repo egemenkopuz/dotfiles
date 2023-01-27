@@ -1,5 +1,7 @@
 local M = {}
 
+local utils = require "user.utils"
+
 M.general = {
     i = {
         -- to quit insert mode fast
@@ -12,6 +14,11 @@ M.general = {
         ["<C-e>"] = { "<End>", "Go to end of line" },
         -- save file
         ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
+        -- navigation
+        ["<C-h>"] = { "<left>" },
+        ["<C-j>"] = { "<down>" },
+        ["<C-k>"] = { "<up>" },
+        ["<C-l>"] = { "<right>" },
     },
     n = {
         -- remove highlight
@@ -49,14 +56,14 @@ M.general = {
             function()
                 require("user.utils").toggle_autoformat()
             end,
-            "Toggle format on save",
+            "Toggle autoformat",
         },
         -- toggle color column
         ["<leader>tc"] = {
             function()
                 require("user.utils").toggle_colorcolumn()
             end,
-            "Toggle color column",
+            "Toggle colorcolumn",
         },
     },
     v = {
@@ -90,29 +97,52 @@ M.treesitter_context = {
     },
 }
 
+-- stylua: ignore start
 M.telescope = {
     n = {
-        ["<leader>ff"] = {
-            function()
-                vim.cmd(require("user.utils").telescope_find_files())
-            end,
-            "Find files",
-        },
-        ["<leader>fa"] = {
-            "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <cr>",
-            "Find file global",
-        },
-        ["<leader>fb"] = { "<cmd> Telescope file_browser <cr>", "File browser" },
-        ["<leader>fw"] = { "<cmd> Telescope live_grep <cr>", "Live grep" },
-        ["<leader>fB"] = { "<cmd> Telescope buffers <cr>", "Buffers" },
-        ["<leader>fh"] = { "<cmd> Telescope help_tags <cr>", "Help tags" },
+        ["<leader>:"] = { "<cmd> Telescope command_history <cr>", "Command history" },
+        ["<leader>/"] = { utils.telescope "live_grep", "Live grep" },
+        ["<leader>ff"] = { utils.telescope "files", "Files (root)" },
+        ["<leader>fF"] = { utils.telescope("files", { cwd = false }), "Files (cwd)" },
+        ["<leader>fw"] = { utils.telescope "live_grep", "Live grep" },
+        ["<leader>fn"] = { "<cmd> Telescope file_browser <cr>", "File browser" },
+        ["<leader>fb"] = { "<cmd> Telescope buffers <cr>", "Buffers" },
         ["<leader>fo"] = { "<cmd> Telescope oldfiles <cr>", "Old files" },
-        ["<leader>fk"] = { "<cmd> Telescope keymaps <cr>", "Key maps" },
         ["<leader>gc"] = { "<cmd> Telescope git_commits <cr>", "Git commit" },
         ["<leader>gg"] = { "<cmd> Telescope git_status <cr>", "Git status" },
         ["<leader>xf"] = { "<cmd> Telescope diagnostics <cr>", "Diagnostics" },
+        ["<leader>sa"] = { "<cmd>Telescope autocommands <cr>", "Auto commands" },
+        ["<leader>sc"] = { "<cmd> Telescope command_history <cr>", "Command history" },
+        ["<leader>sC"] = { "<cmd> Telescope commands <cr>", "Commands" },
+        ["<leader>sd"] = { "<cmd> Telescope diagnostics <cr>", "Diagnostics" },
+        ["<leader>sh"] = { "<cmd>Telescope help_tags<cr>", "Help Pages" },
+        ["<leader>sH"] = { "<cmd>Telescope highlights<cr>", "Search highlight groups" },
+        ["<leader>sk"] = { "<cmd>Telescope keymaps<cr>", "Key maps" },
+        ["<leader>sM"] = { "<cmd>Telescope man_pages<cr>", "Man pages" },
+        ["<leader>sm"] = { "<cmd>Telescope marks<cr>", "Jump to mark" },
+        ["<leader>so"] = { "<cmd>Telescope vim_options<cr>", "Options" },
+        ["<leader>sw"] = { utils.telescope "grep_string", "Word (root dir)" },
+        ["<leader>sW"] = { utils.telescope("grep_string", { cwd = false }), "Word (cwd)" },
+        ["<leader>ss"] = {
+            utils.telescope("lsp_document_symbols", {
+                symbols = {
+                    "Class",
+                    "Function",
+                    "Method",
+                    "Constructor",
+                    "Interface",
+                    "Module",
+                    "Struct",
+                    "Trait",
+                    "Field",
+                    "Property",
+                },
+            }),
+            "LSP symbols",
+        },
     },
 }
+-- stylua: ignore end
 
 -- stylua: ignore start
 M.rename = {
@@ -224,8 +254,8 @@ M.hop = {
 M.trouble = {
     n = {
         ["<leader>xx"] = { "<cmd> TroubleToggle <CR>", "Toggle trouble" },
-        ["<leader>xw"] = { "<cmd> TroubleToggle workspace_diagnostics <CR>", "Workspace diagnostics", },
         ["<leader>xd"] = { "<cmd> TroubleToggle document_diagnostics <CR>", "Document diagnostics", },
+        ["<leader>xD"] = { "<cmd> TroubleToggle workspace_diagnostics <CR>", "Workspace diagnostics", },
         ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "Loclist" },
         ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "Quickfix" },
     },
@@ -250,98 +280,30 @@ M.nvimtree = {
     },
 }
 
+-- stylua: ignore start
 M.dap = {
     n = {
-        ["<leader>dc"] = {
-            function()
-                require("dap").continue()
-            end,
-            "DAP continue",
-        },
-        ["<leader>dd"] = {
-            function()
-                require("dap").disconnect()
-            end,
-            "DAP disconnect",
-        },
-        ["<leader>dk"] = {
-            function()
-                require("dap").up()
-            end,
-            "DAP up",
-        },
-        ["<leader>dj"] = {
-            function()
-                require("dap").down()
-            end,
-            "DAP down",
-        },
-        ["<leader>du"] = {
-            function()
-                require("dap").step_over()
-            end,
-            "DAP step over",
-        },
-        ["<leader>di"] = {
-            function()
-                require("dap").step_into()
-            end,
-            "DAP step into",
-        },
-        ["<leader>do"] = {
-            function()
-                require("dap").step_out()
-            end,
-            "DAP step out",
-        },
-        ["<leader>ds"] = {
-            function()
-                require("dap").stop()
-            end,
-            "DAP stop",
-        },
-        ["<leader>dn"] = {
-            function()
-                require("dap").run_to_cursor()
-            end,
-            "DAP run to cursor",
-        },
-        ["<leader>de"] = {
-            function()
-                require("dap").set_exception_breakpoints()
-            end,
-            "DAP set exception breakpoints",
-        },
-        ["<leader>db"] = {
-            function()
-                require("dap").toggle_breakpoint()
-            end,
-            "DAP toggle breakpoint",
-        },
+        ["<leader>dc"] = { function() require("dap").continue() end, "DAP continue", },
+        ["<leader>dd"] = { function() require("dap").disconnect() end, "DAP disconnect", },
+        ["<leader>dk"] = { function() require("dap").up() end, "DAP up", },
+        ["<leader>dj"] = { function() require("dap").down() end, "DAP down", },
+        ["<leader>du"] = { function() require("dap").step_over() end, "DAP step over", },
+        ["<leader>di"] = { function() require("dap").step_into() end, "DAP step into", },
+        ["<leader>do"] = { function() require("dap").step_out() end, "DAP step out", },
+        ["<leader>ds"] = { function() require("dap").stop() end, "DAP stop", },
+        ["<leader>dn"] = { function() require("dap").run_to_cursor() end, "DAP run to cursor", },
+        ["<leader>de"] = { function() require("dap").set_exception_breakpoints() end, "DAP set exception breakpoints", },
+        ["<leader>db"] = { function() require("dap").toggle_breakpoint() end, "DAP toggle breakpoint", },
     },
 }
 
 M.dapui = {
     n = {
-        ["<leader>dt"] = {
-            function()
-                require("dapui").toggle()
-            end,
-            "DAP ui toggle",
-        },
-        ["<leader>dT"] = {
-            function()
-                require("dapui").close()
-            end,
-            "DAP ui close",
-        },
-        ["<leader>df"] = {
-            function()
-                require("dapui").float_element()
-            end,
-            "DAP ui float",
-        },
+        ["<leader>dt"] = { function() require("dapui").toggle() end, "DAP ui toggle", },
+        ["<leader>dT"] = { function() require("dapui").close() end, "DAP ui close", },
+        ["<leader>df"] = { function() require("dapui").float_element() end, "DAP ui float", },
     },
 }
+-- stylua: ignore end
 
 return M

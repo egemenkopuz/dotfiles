@@ -1,7 +1,7 @@
 return {
     {
         "nvim-tree/nvim-tree.lua",
-        enabled = true,
+        enabled = false,
         cmd = {
             "NvimTreeToggle",
             "NvimTreeFocus",
@@ -201,10 +201,10 @@ return {
 
             require("telescope").load_extension "noice"
 
-            local tc1 = "#2A2B3C"
-            local tc2 = "#ABFFF5"
+            -- local tc1 = "#2A2B3C"
+            -- local tc2 = "#ABFFF5"
             local tc3 = "#181825"
-            local tc4 = "#F38BA8"
+            -- local tc4 = "#F38BA8"
 
             local hl_group = {
                 --     TelescopeMatching = { fg = tc2 },
