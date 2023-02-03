@@ -1,5 +1,5 @@
 require "user.options"
-require("user.utils").init_settings()
+require "user.utils"
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

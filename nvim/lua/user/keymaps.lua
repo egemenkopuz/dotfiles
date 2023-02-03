@@ -87,7 +87,7 @@ M.bufremove = {
 
 M.zenmode = {
     n = {
-        ["<leader>tz"] = { "<cmd> ZenMode <cr>", "Toggle zen mode" },
+        ["<leader>tz"] = { "<cmd> NoNeckPain <cr>", "Toggle zen mode" },
     },
 }
 
@@ -219,13 +219,13 @@ M.gitsigns = {
 
 M.illuminate = {
     n = {
-        ["]]"] = {
+        ["]r"] = {
             function()
                 require("illuminate").goto_next_reference(false)
             end,
             "Next reference",
         },
-        ["[["] = {
+        ["[r"] = {
             function()
                 require("illuminate").goto_prev_reference(false)
             end,

@@ -98,12 +98,10 @@ return {
     },
 
     {
-        "folke/zen-mode.nvim",
-        cmd = { "ZenMode" },
+        "shortcuts/no-neck-pain.nvim",
+        cmd = { "NoNeckPain" },
         opts = {
-            plugins = {
-                tmux = { enabled = false },
-            },
+            toggleMapping = false,
         },
         init = function()
             require("user.utils").load_keymap "zenmode"

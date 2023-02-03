@@ -31,6 +31,7 @@ return {
                     require("user.utils").load_keymap "illuminate"
                 end,
             },
+            { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
         },
         opts = {
             diagnostics = {
@@ -45,11 +46,43 @@ return {
                 ["jsonls"] = {},
                 ["yamlls"] = {},
                 ["marksman"] = {},
+                ["clangd"] = {
+                    cmd = {
+                        "clangd",
+                        "--background-index",
+                        "--clang-tidy",
+                        -- "--completion-style=bundled",
+                        -- "--cross-file-rename",
+                        -- "--header-insertion=iwyu",
+                    },
+                },
+                ["rust_analyzer"] = {
+                    cargo = { allFeatures = true },
+                    checkOnSave = { allFeatures = true, command = "clippy" },
+                    procMacro = {
+                        ignored = {
+                            ["async-trait"] = { "async_trait" },
+                            ["napi-derive"] = { "napi" },
+                            ["async-recursion"] = { "async_recursion" },
+                        },
+                    },
+                },
                 ["pyright"] = {},
                 ["sumneko_lua"] = {
-                    Lua = {
-                        telemetry = {
-                            enable = false,
+                    settings = {
+                        Lua = {
+                            runtime = { version = "LuaJIT" },
+                            format = { enable = false },
+                            telemetry = { enable = false },
+                            diagnostics = { globals = { "vim" } },
+                            workspace = {
+                                library = {
+                                    [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+                                    [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+                                },
+                                maxPreload = 100000,
+                                preloadFileSize = 10000,
+                            },
                         },
                     },
                 },
@@ -98,7 +131,19 @@ return {
                 function(server)
                     local server_opts = servers[server] or {}
                     server_opts.on_attach = on_attach
-                    server_opts.capabilities = capabilities
+                    server_opts.before_init = function(_, config)
+                        if server == "pyright" then
+                            config.settings.python.pythonPath =
+                                utils.get_python_path(config.root_dir)
+                        end
+                    end
+                    if server == "clangd" then
+                        local t_capabilities = vim.deepcopy(capabilities)
+                        t_capabilities.offsetEncoding = "utf-8"
+                        server_opts.capabilities = t_capabilities
+                    else
+                        server_opts.capabilities = capabilities
+                    end
                     server_opts.flags = { debounce_text_changes = 150 }
                     lspconfig[server].setup(server_opts)
                 end,
@@ -129,6 +174,7 @@ return {
                     nls.builtins.formatting.clang_format,
                 },
                 on_attach = function(client, bufnr)
+                    local utils = require "user.utils"
                     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
                     if client.supports_method "textDocument/formatting" then
                         vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
@@ -136,7 +182,7 @@ return {
                             group = augroup,
                             buffer = bufnr,
                             callback = function()
-                                if AUTOFORMAT_ACTIVE then
+                                if utils.is_enabled "autoformat" then
                                     vim.lsp.buf.format { bufnr = bufnr }
                                 end
                             end,
