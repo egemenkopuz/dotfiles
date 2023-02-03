@@ -1,5 +1,5 @@
+-- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-    desc = "go to last loc when opening a buffer",
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)

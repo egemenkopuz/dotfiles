@@ -70,6 +70,7 @@ return {
             },
         },
         init = function()
+            require("project_nvim").setup()
             require("user.utils").load_keymap "telescope"
         end,
         config = function(_, opts)
