@@ -14,9 +14,12 @@ return {
                         require("luasnip.loaders.from_vscode").lazy_load()
                     end,
                 },
-                opts = {
-                    history = true,
-                    delete_check_events = "TextChanged",
+                opts = { history = true, delete_check_events = "TextChanged" },
+                -- stylua: ignore
+                keys = {
+                    { "<tab>", function() return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>" end, expr = true, silent = true, mode = "i", },
+                    { "<tab>", function() require("luasnip").jump(1) end, mode = "s", },
+                    { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" }, },
                 },
             },
             "saadparwaiz1/cmp_luasnip",
@@ -54,11 +57,15 @@ return {
                         border = border "CmpDocBorder",
                     },
                 },
+                completion = {
+                    completeopt = "menu,menuone,noinsert",
+                },
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
                     end,
                 },
+                -- stylua: ignore
                 mapping = cmp.mapping.preset.insert {
                     -- ["<C-p>"] = cmp.mapping.select_prev_item(),
                     -- ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -66,34 +73,13 @@ return {
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = false,
-                    },
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end, {
-                        "i",
-                        "s",
-                    }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
-                        end
-                    end, {
-                        "i",
-                        "s",
-                    }),
+                    ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false, },
+                    ["<Tab>"] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, { "i", "s", }),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end, { "i", "s", }),
                 },
                 sources = cmp.config.sources {
-                    { name = "luasnip" },
                     { name = "nvim_lsp" },
+                    { name = "luasnip" },
                     { name = "buffer" },
                     { name = "nvim_lua" },
                     { name = "path" },

@@ -107,4 +107,6 @@ return {
             require("user.utils").load_keymap "zenmode"
         end,
     },
+
+    { "tpope/vim-repeat", event = "VeryLazy" },
 }

@@ -29,10 +29,17 @@ vim.opt.title = true
 vim.opt.cursorline = true
 
 -- vim.opt.shortmess:append "sI"
+vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true -- ignore case in search patterns
 vim.opt.smartcase = true -- smart case
 vim.opt.mouse = "a" -- allow the mouse to be used in neovim
+vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.wildmode = "longest:full,full"
+
+vim.opt.confirm = true
+vim.opt.undofile = true
+vim.opt.undolevels = 10000
 
 vim.opt.timeoutlen = 400
 vim.opt.updatetime = 200

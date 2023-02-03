@@ -20,7 +20,21 @@ M.general = {
         ["<C-k>"] = { "<up>" },
         ["<C-l>"] = { "<right>" },
     },
+    [{ "n", "x" }] = {
+        ["gy"] = { "+y", "Paste to system clipboard" },
+        ["j"] = { [[v:count == 0 ? 'gj' : 'j']], opts = { expr = true } },
+        ["k"] = { [[v:count == 0 ? 'gk' : 'k']], opts = { expr = true } },
+    },
+    x = {
+        ["gp"] = { "+P", "Paste from system clipboard" },
+    },
+    -- stylua: ignore
     n = {
+        ["go"] = { "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", "Put empty line below", },
+        ["gO"] = { "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Put empty line below", },
+        ["gp"] = { "+p", "Paste from system clipboard" },
+        ["<leader>fN"] = { "<cmd>enew<cr>", "Open a new file" },
+        ["gV"] = { '"`[" . strpart(getregtype(), 0, 1) . "`]"', "Visually select changed text", opts = { expr = true }, },
         -- remove highlight
         ["<ESC>"] = { "<cmd> noh <CR>", "Remove highlight" },
         -- Resize with arrows
@@ -45,26 +59,11 @@ M.general = {
         ["]b"] = { ":bnext <cr>" },
         ["[b"] = { ":bprevious <cr>" },
         -- toggle diagnostic
-        ["<leader>td"] = {
-            function()
-                require("user.utils").toggle_diagnostics()
-            end,
-            "Toggle diagnostics",
-        },
+        ["<leader>td"] = { function() require("user.utils").toggle_diagnostics() end, "Toggle diagnostics", },
         -- toggle format on save
-        ["<leader>tf"] = {
-            function()
-                require("user.utils").toggle_autoformat()
-            end,
-            "Toggle autoformat",
-        },
+        ["<leader>tf"] = { function() require("user.utils").toggle_autoformat() end, "Toggle autoformat", },
         -- toggle color column
-        ["<leader>tc"] = {
-            function()
-                require("user.utils").toggle_colorcolumn()
-            end,
-            "Toggle colorcolumn",
-        },
+        ["<leader>tc"] = { function() require("user.utils").toggle_colorcolumn() end, "Toggle colorcolumn", },
     },
     v = {
         ["p"] = { '"_dp' },
@@ -219,13 +218,13 @@ M.gitsigns = {
 
 M.illuminate = {
     n = {
-        ["]r"] = {
+        ["]]"] = {
             function()
                 require("illuminate").goto_next_reference(false)
             end,
             "Next reference",
         },
-        ["[r"] = {
+        ["[["] = {
             function()
                 require("illuminate").goto_prev_reference(false)
             end,
