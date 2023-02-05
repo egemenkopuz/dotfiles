@@ -1,9 +1,10 @@
+[gpg]
+	program = gpg
 [user]
         email = egemenkopuz@hotmail.com
         name = Egemen Kopuz
+	signingkey = FA1804B585C3B91FD9E27A57F865AFA0B72021A6
 [init]
 	defaultBranch = main
-[safe]
-	directory = /root/workspace
-	directory = /root/workspace/py
-	directory = /root/dotfiles
+[commit]
+	gpgsign = true
