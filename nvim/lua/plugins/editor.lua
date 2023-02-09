@@ -57,6 +57,14 @@ return {
     },
 
     {
+        "ruifm/gitlinker.nvim",
+        event = "BufReadPre",
+        config = function()
+            require("gitlinker").setup()
+        end,
+    },
+
+    {
         "sindrets/diffview.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",

@@ -71,6 +71,7 @@ return {
         },
         init = function()
             require("project_nvim").setup()
+            require("persisted").setup()
             require("user.utils").load_keymap "telescope"
         end,
         config = function(_, opts)
@@ -97,14 +98,9 @@ return {
             telescope.load_extension "undo"
             telescope.load_extension "file_browser"
             telescope.load_extension "ui-select"
-
-            require("project_nvim").setup()
             telescope.load_extension "projects"
-
-            require("persisted").setup()
             telescope.load_extension "persisted"
-
-            require("telescope").load_extension "noice"
+            telescope.load_extension "noice"
 
             -- local tc1 = "#2A2B3C"
             -- local tc2 = "#ABFFF5"

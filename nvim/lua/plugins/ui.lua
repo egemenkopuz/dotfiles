@@ -147,6 +147,13 @@ return {
     },
 
     {
+        "NvChad/nvim-colorizer.lua",
+        config = function(_, opts)
+            require("colorizer").setup(opts)
+        end,
+    },
+
+    {
         "b0o/incline.nvim",
         event = "BufReadPre",
         opts = {
