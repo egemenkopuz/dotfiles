@@ -58,9 +58,12 @@ return {
                         "clangd",
                         "--background-index",
                         "--clang-tidy",
-                        -- "--completion-style=bundled",
-                        -- "--cross-file-rename",
-                        -- "--header-insertion=iwyu",
+                        "--completion-style=detailed",
+                        "--completion-parse=always",
+                        "--cross-file-rename",
+                        "--header-insertion=iwyu",
+                        "--suggest-missing-includes",
+                        "-j=4", -- number of workers
                     },
                 },
                 ["rust_analyzer"] = {

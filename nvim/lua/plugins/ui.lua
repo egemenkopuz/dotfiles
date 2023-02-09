@@ -151,25 +151,20 @@ return {
         event = "BufReadPre",
         opts = {
             render = function(props)
-                local fname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+                local bufname = vim.api.nvim_buf_get_name(props.buf)
+                local filename = " " .. vim.fn.fnamemodify(bufname, ":t") .. " "
+                local cbg = "#191C24"
+                local cfg = "#D89079"
+                local buffer = { { filename, guifg = cfg, guibg = cbg } }
 
-                if props.focused == true then
-                    return {
-                        {
-                            fname,
-                            guibg = "#191C24", --"#181825",
-                            guifg = "#CDD6F4",
-                        },
-                    }
-                else
-                    return {
-                        {
-                            fname,
-                            guibg = "#191C24", --"#181825",
-                            guifg = "#454759",
-                        },
-                    }
+                if vim.api.nvim_buf_get_option(props.buf, "modified") then
+                    buffer[1][1] = filename .. "[+]"
                 end
+                if props.focused == false then
+                    buffer[1].guibg = "#191C24"
+                    buffer[1].guifg = "#4C566A"
+                end
+                return buffer
             end,
             window = {
                 zindex = 30,

@@ -22,13 +22,14 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 vim.opt.signcolumn = "yes"
--- vim.opt.statuscolumn = "%{&nu?(&rnu && v:relnum?v:relnum:v:lnum):''}"
 vim.opt.showmode = false
 vim.opt.laststatus = 3 -- global statusline
 vim.opt.title = true
 vim.opt.cursorline = true
 
--- vim.opt.shortmess:append "sI"
+vim.opt.showtabline = 1 -- Always show tabline
+vim.opt.hidden = true -- Allow switching buffers without saving them
+
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true -- ignore case in search patterns

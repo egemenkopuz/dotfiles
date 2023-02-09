@@ -9,11 +9,11 @@ local settings = {
     colorcolumn = false,
 }
 
-if vim.api.nvim_get_option_value("colorcolumn", {}) == "" then
-    settings.colorcolumn = false
-else
-    settings.colorcolumn = true
-end
+-- if vim.api.nvim_get_option_value("colorcolumn", {}) == "" then
+--     settings.colorcolumn = false
+-- else
+--     settings.colorcolumn = true
+-- end
 
 function M.toggle(var_name)
     settings[var_name] = not settings[var_name]

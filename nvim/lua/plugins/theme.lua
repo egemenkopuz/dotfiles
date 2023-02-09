@@ -1,26 +1,11 @@
 return {
     {
-        "egemenkopuz/nordic.nvim",
+        "AlexvZyl/nordic.nvim",
         enabled = true,
         priority = 1000,
-        opts = {
-            syntax = {
-                comments = {
-                    italic = false,
-                    bold = true,
-                },
-                operators = {
-                    italic = false,
-                    bold = false,
-                },
-                keywords = {
-                    italic = false,
-                    bold = false,
-                },
-            },
-        },
         config = function(_, opts)
             require("nordic").setup(opts)
+            vim.api.nvim_set_hl(0, "MiniTablineFill", { bg = "#191C24" })
             vim.cmd.colorscheme "nordic"
         end,
     },

@@ -182,7 +182,7 @@ return {
         dependencies = {
             "kyazdani42/nvim-web-devicons",
         },
-        opts = {},
+        opts = { set_vim_settings = false },
         config = function(_, opts)
             require("mini.tabline").setup(opts)
         end,

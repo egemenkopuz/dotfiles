@@ -57,6 +57,24 @@ return {
     },
 
     {
+        "sindrets/diffview.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        cmd = {
+            "DiffviewOpen",
+            "DiffviewClose",
+            "DiffviewToggleFiles",
+            "DiffviewFocusFiles",
+            "DiffviewRefresh",
+            "DiffviewFileHistory",
+        },
+        config = function(_, opts)
+            require("diffview").setup(opts)
+        end,
+    },
+
+    {
         "akinsho/toggleterm.nvim",
         version = "*",
         opts = {
