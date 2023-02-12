@@ -13,6 +13,11 @@ return {
         },
         cmd = "Telescope",
         version = false,
+        init = function()
+            require("project_nvim").setup()
+            require("persisted").setup()
+            require("user.utils").load_keymap "telescope"
+        end,
         opts = {
             defaults = {
                 vimgrep_arguments = {
@@ -37,9 +42,7 @@ return {
                         preview_width = 0.55,
                         results_width = 0.8,
                     },
-                    vertical = {
-                        mirror = false,
-                    },
+                    vertical = { mirror = false },
                     width = 0.87,
                     height = 0.80,
                     preview_cutoff = 120,
@@ -50,30 +53,15 @@ return {
                 set_env = { ["COLORTERM"] = "truecolor" },
             },
             extensions = {
-                undo = {
-                    side_by_side = true,
-                    layout_strategy = "vertical",
-                    layout_config = {
-                        preview_height = 0.8,
-                    },
-                },
                 fzf = {
                     fuzzy = true,
                     override_generic_sorter = true,
                     override_file_sorter = true,
                     case_mode = "smart_case",
                 },
-                file_browser = {
-                    hidden = true,
-                    use_fd = true,
-                },
+                file_browser = { hidden = true, use_fd = true },
             },
         },
-        init = function()
-            require("project_nvim").setup()
-            require("persisted").setup()
-            require("user.utils").load_keymap "telescope"
-        end,
         config = function(_, opts)
             local telescope = require "telescope"
 
@@ -102,37 +90,25 @@ return {
             telescope.load_extension "persisted"
             telescope.load_extension "noice"
 
-            -- local tc1 = "#2A2B3C"
-            -- local tc2 = "#ABFFF5"
-            local tc3 = "#181825"
-            -- local tc4 = "#F38BA8"
+            local tc1 = "#2E3440"
+            local tc2 = "#ABFFF5"
+            local tc3 = "#191C24"
+            local tc4 = "#F38BA8"
 
             local hl_group = {
-                --     TelescopeMatching = { fg = tc2 },
-                --     TelescopeSelection = { fg = tc2, bg = tc1 },
-                --     TelescopePromptTitle = {
-                --         fg = tc3,
-                --         bg = tc4,
-                --         bold = true,
-                --     },
-                --     TelescopePromptPrefix = { fg = tc2 },
-                --     TelescopePromptCounter = { fg = tc2 },
-                --     TelescopePromptNormal = { bg = tc1 },
-                --     TelescopePromptBorder = { fg = tc1, bg = tc1 },
-                TelescopeResultsTitle = {
-                    fg = tc3,
-                    bg = tc3,
-                    bold = true,
-                },
-                --     TelescopeResultsNormal = { bg = tc3 },
-                --     TelescopeResultsBorder = { fg = tc3, bg = tc3 },
-                --     TelescopePreviewTitle = {
-                --         fg = tc3,
-                --         bg = tc2,
-                --         bold = true,
-                --     },
-                --     TelescopePreviewNormal = { bg = tc3 },
-                --     TelescopePreviewBorder = { fg = tc3, bg = tc3 },
+                TelescopeMatching = { fg = tc2 },
+                TelescopeSelection = { fg = tc2, bg = tc1 },
+                TelescopePromptTitle = { fg = tc3, bg = tc4, bold = true },
+                TelescopePromptPrefix = { fg = tc2 },
+                TelescopePromptCounter = { fg = tc2 },
+                TelescopePromptNormal = { bg = tc1 },
+                TelescopePromptBorder = { fg = tc1, bg = tc1 },
+                TelescopeResultsTitle = { fg = tc3, bg = tc3, bold = true },
+                TelescopeResultsNormal = { bg = tc3 },
+                TelescopeResultsBorder = { fg = tc3, bg = tc3 },
+                TelescopePreviewTitle = { fg = tc3, bg = tc2, bold = true },
+                TelescopePreviewNormal = { bg = tc3 },
+                TelescopePreviewBorder = { fg = tc3, bg = tc3 },
             }
 
             for k, v in pairs(hl_group) do
@@ -170,14 +146,14 @@ return {
                 leap.opts[k] = v
             end
             leap.add_default_mappings(true)
+            vim.keymap.del({ "x", "o" }, "x")
+            vim.keymap.del({ "x", "o" }, "X")
         end,
     },
 
     {
         "echasnovski/mini.tabline",
-        dependencies = {
-            "kyazdani42/nvim-web-devicons",
-        },
+        dependencies = { "kyazdani42/nvim-web-devicons" },
         opts = { set_vim_settings = false },
         config = function(_, opts)
             require("mini.tabline").setup(opts)

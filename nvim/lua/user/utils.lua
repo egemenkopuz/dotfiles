@@ -99,7 +99,7 @@ function M.get_python_path(workspace)
     return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
 end
 
-M.path_exists = function(path)
+function M.path_exists(path)
     local ok = vim.loop.fs_stat(path)
     return ok
 end
@@ -159,6 +159,41 @@ function M.telescope(builtin, opts)
             end
         end
         require("telescope.builtin")[builtin](opts)
+    end
+end
+
+function M.lsp_on_attach()
+    return function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        M.load_keymap("lsp", { buffer = bufnr })
+        if client.supports_method "textDocument/signatureHelp" then
+            require("lsp_signature").on_attach({}, bufnr)
+        end
+    end
+end
+
+function M.lsp_capabilities()
+    local capabilities =
+        require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    return capabilities
+end
+
+function M.formatting()
+    return function(client, bufnr)
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+        if client.supports_method "textDocument/formatting" then
+            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = augroup,
+                buffer = bufnr,
+                callback = function()
+                    if M.is_enabled "autoformat" then
+                        vim.lsp.buf.format { bufnr = bufnr }
+                    end
+                end,
+            })
+        end
     end
 end
 

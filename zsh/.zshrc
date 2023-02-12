@@ -2,7 +2,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source "$HOME/dotfiles/antigen/antigen.zsh"
+source "$HOME/.config/antigen/antigen.zsh"
 antigen init $HOME/.antigenrc
 
 export LANG=en_US.UTF-8
@@ -28,6 +28,10 @@ alias fd="fdfind"
 alias cat="batcat"
 alias df="duf"
 alias ps="procs"
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"

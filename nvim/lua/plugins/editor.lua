@@ -9,9 +9,7 @@ return {
 
     {
         "smjonas/inc-rename.nvim",
-        dependencies = {
-            "folke/noice.nvim",
-        },
+        dependencies = { "folke/noice.nvim" },
         event = "BufReadPre",
         config = function(_, opts)
             require("inc_rename").setup(opts)
@@ -44,24 +42,13 @@ return {
             current_line_blame_opts = {
                 virt_text = true,
                 virt_text_pos = "eol",
-                delay = 200,
+                delay = 350,
                 ignore_whitespace = false,
             },
             on_attach = function(bufnr)
                 require("user.utils").load_keymap("gitsigns", { buffer = bufnr })
             end,
         },
-        config = function(_, opts)
-            require("gitsigns").setup(opts)
-        end,
-    },
-
-    {
-        "ruifm/gitlinker.nvim",
-        event = "BufReadPre",
-        config = function()
-            require("gitlinker").setup()
-        end,
     },
 
     {
@@ -97,10 +84,7 @@ return {
             float_opts = {
                 border = "single",
                 winblend = 0,
-                highlights = {
-                    border = "Normal",
-                    background = "Normal",
-                },
+                highlights = { border = "Normal", background = "Normal" },
             },
         },
         config = function(_, opts)
@@ -126,13 +110,15 @@ return {
     {
         "shortcuts/no-neck-pain.nvim",
         cmd = { "NoNeckPain" },
-        opts = {
-            toggleMapping = false,
-        },
         init = function()
             require("user.utils").load_keymap "zenmode"
         end,
+        opts = { toggleMapping = false, widthUpMapping = false, widthDownMapping = false },
     },
 
-    { "tpope/vim-repeat", event = "VeryLazy" },
+    { "ruifm/gitlinker.nvim", event = "BufReadPre", config = true },
+
+    { "tpope/vim-repeat", event = "BufReadPost" },
+
+    { "andymass/vim-matchup", event = "BufReadPost" },
 }

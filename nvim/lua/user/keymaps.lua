@@ -30,6 +30,7 @@ M.general = {
     },
     -- stylua: ignore
     n = {
+        ["<leader>ur"] = { "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", "Redraw / clear hlsearch / diff update"},
         ["go"] = { "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", "Put empty line below", },
         ["gO"] = { "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Put empty line below", },
         ["<leader>fN"] = { "<cmd>enew<cr>", "Open a new file" },

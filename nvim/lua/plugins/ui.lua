@@ -2,9 +2,7 @@ return {
     {
         "folke/noice.nvim",
         event = "VeryLazy",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-        },
+        dependencies = { "MunifTanjim/nui.nvim" },
         opts = {
             presets = {
                 bottom_search = true,
@@ -13,114 +11,133 @@ return {
                 inc_rename = true,
             },
             lsp = {
-                signature = {
-                    enabled = false,
+                signature = { enabled = false },
+                progress = { enabled = false },
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true,
                 },
             },
         },
-        config = function(_, opts)
-            require("noice").setup(opts)
-            vim.api.nvim_set_hl(0, "NoiceCmdLinePopup", { bg = "#191C24" })
-            vim.api.nvim_set_hl(0, "NoiceCmdLinePopupBorder", { fg = "#191C24" })
+        init = function()
+            vim.api.nvim_set_hl(0, "NoiceCmdLinePopup", { bg = "#2E3440" })
+            vim.api.nvim_set_hl(0, "NoiceCmdLinePopupBorder", { fg = "#2E3440" })
         end,
+        config = true,
     },
 
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
-        opts = {
-            options = {
-                theme = "auto",
-                component_separators = { left = "", right = "" },
-                section_separators = { left = "", right = "" },
-                globalstatus = true,
-                disabled_filetypes = {
-                    statusline = { "alpha", "packer", "lazy", "terminal" },
-                    winbar = { "alpha", "packer", "NvimTree", "nvim-dap-ui" },
+        dependencies = { "arkav/lualine-lsp-progress" },
+        opts = function()
+            local dg_icons = require("user.config").icons.diagnostics
+
+            local indent = {
+                function()
+                    local style = vim.bo.expandtab and "Spaces" or "Tab Size"
+                    local size = vim.bo.expandtab and vim.bo.tabstop or vim.bo.shiftwidth
+                    return style .. ": " .. size
+                end,
+                cond = function()
+                    return vim.bo.filetype ~= ""
+                end,
+            }
+
+            local python_env = {
+                function()
+                    local output = ""
+
+                    for _, client in pairs(vim.lsp.buf_get_clients()) do
+                        if client.name == "pyright" then
+                            -- Check if lsp was initialized with py_lsp
+                            if client.config.settings.python["pythonPath"] ~= nil then
+                                local venv_name = client.config.settings.python.venv_name
+                                output = client.name .. "(" .. venv_name .. ")"
+                            end
+                        end
+                    end
+
+                    return output
+                end,
+                cond = function()
+                    return vim.bo.filetype == "python"
+                end,
+            }
+
+            return {
+                options = {
+                    theme = "auto",
+                    component_separators = { left = "", right = "" },
+                    section_separators = { left = "", right = "" },
+                    globalstatus = true,
+                    disabled_filetypes = { statusline = { "alpha", "packer", "lazy", "terminal" } },
                 },
-            },
-            extensions = { "nvim-tree", "toggleterm" },
-            sections = {
-                lualine_a = { "mode" },
-                lualine_b = { "branch" },
-                lualine_c = {
-                    { "diff", symbols = { added = "+", modified = "~", removed = "-" } },
-                    "filename",
-                },
-                lualine_x = {
-                    {
-                        "lsp_progress",
-                        display_components = { { "title", "percentage", "message" } },
-                        colors = {
-                            percentage = "#505A6C",
-                            title = "#505A6C",
-                            message = "#505A6C",
-                            use = true,
+                extensions = { "nvim-tree", "toggleterm" },
+                sections = {
+                    lualine_a = { "mode" },
+                    lualine_b = { "branch" },
+                    lualine_c = {
+                        { "diff", symbols = { added = "+", modified = "~", removed = "-" } },
+                        "filename",
+                    },
+                    lualine_x = {
+                        {
+                            "lsp_progress",
+                            display_components = { { "title", "percentage", "message" } },
+                            colors = {
+                                percentage = "#505A6C",
+                                title = "#505A6C",
+                                message = "#505A6C",
+                                use = true,
+                            },
+                        },
+
+                        {
+                            "filetype",
+                            colored = false,
+                            icon_only = false,
+                            icon = { align = "right" },
+                        },
+                        {
+                            "diagnostics",
+                            symbols = {
+                                error = dg_icons.Error,
+                                warn = dg_icons.Warn,
+                                info = dg_icons.Info,
+                                hint = dg_icons.Hint,
+                            },
                         },
                     },
-                    {
-                        "filetype",
-                        colored = false,
-                        icon_only = false,
-                        icon = { align = "right" },
-                    },
-                    {
-                        "diagnostics",
-                        symbols = {
-                            error = " ",
-                            warn = " ",
-                            info = " ",
-                            hint = "ﯧ ",
-                        },
-                    },
+                    lualine_y = { python_env },
+                    lualine_z = { "location" },
                 },
-                lualine_y = {},
-                lualine_z = { "location" },
-            },
-        },
-        config = function(_, opts)
-            require("lualine").setup(opts)
+            }
         end,
     },
 
     {
         "goolord/alpha-nvim",
         event = "VimEnter",
-        dependencies = {
-            "kyazdani42/nvim-web-devicons",
-        },
+        dependencies = { "kyazdani42/nvim-web-devicons" },
         opts = function()
-            local fn = vim.fn
+            local config = require "user.config"
             local dashboard = require "alpha.themes.dashboard"
-            local logo = {
-                "                                         _.oo.",
-                "                 _.u[[/;:,.         .odMMMMMM'",
-                "              .o888UU[[[/;:-.  .o@P^    MMM^",
-                "             oN88888UU[[[/;::-.        dP^",
-                "            dNMMNN888UU[[[/;:--.   .o@P^",
-                "           ,MMMMMMN888UU[[/;::-. o@^",
-                "           NNMMMNN888UU[[[/~.o@P^",
-                "           888888888UU[[[/o@^-..",
-                "          oI8888UU[[[/o@P^:--..",
-                "       .@^  YUU[[[/o@^;::---..",
-                "     oMP     ^/o@P^;:::---..",
-                "  .dMMM    .o@^ ^;::---...",
-                " dMMMMMMM@^`       `^^^^",
-                "YMMMUP^",
-                " ^^",
-            }
+            local fn = vim.fn
 
             local function footer()
                 local date = os.date "%d/%m/%Y "
                 local time = os.date "%H:%M:%S "
                 local v = vim.version()
-                local version = " v" .. v.major .. "." .. v.minor .. "." .. v.patch
-                local stats = require("lazy").stats()
-                local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-                return date .. time .. stats.count .. ms .. "ms" .. version
+                local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch
+                return date .. time .. version
             end
 
-            dashboard.section.header.val = logo
+            if config.logo then
+                dashboard.section.header.val = config.logo
+            end
+
             dashboard.section.buttons.val = {
                 dashboard.button("f n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
                 dashboard.button("f f", " " .. " Find file", ":Telescope find_files <CR>"),
@@ -139,18 +156,9 @@ return {
             dashboard.opts.layout[1].val = fn.max { 2, fn.floor(fn.winheight(0) * 0.1) }
             dashboard.section.footer.val = footer()
 
-            return dashboard
+            return dashboard.opts
         end,
-        config = function(_, dashboard)
-            require("alpha").setup(dashboard.opts)
-        end,
-    },
-
-    {
-        "NvChad/nvim-colorizer.lua",
-        config = function(_, opts)
-            require("colorizer").setup(opts)
-        end,
+        config = true,
     },
 
     {
@@ -160,10 +168,7 @@ return {
             render = function(props)
                 local bufname = vim.api.nvim_buf_get_name(props.buf)
                 local filename = " " .. vim.fn.fnamemodify(bufname, ":t") .. " "
-                local cbg = "#191C24"
-                local cfg = "#D89079"
-                local buffer = { { filename, guifg = cfg, guibg = cbg } }
-
+                local buffer = { { filename, guibg = "#D89079", guifg = "#191C24" } }
                 if vim.api.nvim_buf_get_option(props.buf, "modified") then
                     buffer[1][1] = filename .. "[+]"
                 end
@@ -181,11 +186,9 @@ return {
                     horizontal = { left = 1, right = 0 },
                     vertical = { bottom = 0, top = 1 },
                 },
-                padding = { left = 1, right = 1 },
+                padding = { left = 0, right = 0 },
                 padding_char = " ",
-                winhighlight = {
-                    Normal = "TreesitterContext",
-                },
+                winhighlight = { Normal = "TreesitterContext" },
             },
             hide = {
                 cursorline = "focused_win",
@@ -193,9 +196,7 @@ return {
                 only_win = true,
             },
         },
-        config = function(_, opts)
-            require("incline").setup(opts)
-        end,
+        config = true,
     },
 
     {
@@ -205,8 +206,9 @@ return {
             indentLine_enabled = 1,
             char = "▏",
             filetype_exclude = {
-                "dashboard",
+                "alpha",
                 "mason",
+                "lazy",
                 "log",
                 "gitcommit",
                 "packer",
@@ -227,5 +229,11 @@ return {
             char_list = { "|", "¦", "┆", "┊" },
             space_char = " ",
         },
+    },
+
+    {
+        "NvChad/nvim-colorizer.lua",
+        opts = { buftypes = { "*", "!alpha", "!mason", "!lazy" } },
+        config = true,
     },
 }

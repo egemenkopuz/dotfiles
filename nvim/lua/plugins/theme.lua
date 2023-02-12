@@ -6,7 +6,17 @@ return {
         config = function(_, opts)
             require("nordic").setup(opts)
             vim.api.nvim_set_hl(0, "MiniTablineFill", { bg = "#191C24" })
-            vim.cmd.colorscheme "nordic"
+            -- vim.cmd.colorscheme "nordic"
+        end,
+    },
+
+    {
+        "rebelot/kanagawa.nvim",
+        enabled = true,
+        priority = 1000,
+        config = function(_, opts)
+            require("kanagawa").setup(opts)
+            vim.cmd.colorscheme "kanagawa"
         end,
     },
 

@@ -1,5 +1,20 @@
 local M = { icons = {} }
 
+-- stylua: ignore start
+vim.fn.sign_define( "DiagnosticSignError", { text = "", numhl = "DiagnosticError", linehl = "DiagnosticLineError" })
+vim.fn.sign_define( "DiagnosticSignWarn", { text = "", numhl = "DiagnosticWarn", linehl = "DiagnosticLineWarn" })
+vim.fn.sign_define( "DiagnosticSignInfo", { text = "", numhl = "DiagnosticInfo", linehl = "DiagnosticLineInfo" })
+vim.fn.sign_define( "DiagnosticSignHint", { text = "", numhl = "DiagnosticHint", linehl = "DiagnosticLineHint" })
+vim.fn.sign_define( "DapBreakpoint", { text = "", numhl = "DapBreakpoint", linehl = "DapBreakpoint" })
+vim.fn.sign_define( "DagLogPoint", { text = "", numhl = "DapLogPoint", linehl = "DapLogPoint" })
+vim.fn.sign_define( "DapStopped", { text = "", numhl = "DapStopped", linehl = "DapStopped" })
+-- stylua: ignore end
+vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
+vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
+vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
+
+
+-- auto install treesitter packages
 M.treesitter_packages = {
     "bash",
     "c",
@@ -20,6 +35,7 @@ M.treesitter_packages = {
     "yaml",
 }
 
+-- auto install mason packages
 M.mason_packages = {
     -- lsp
     "bash-language-server",
@@ -64,6 +80,18 @@ M.disabled_plugins = {
     "ftplugin",
 }
 
+-- Dashboard logo
+M.logo = nil
+
+-- Diagnostics icons
+M.icons.diagnostics = {
+    Error = " ",
+    Warn = " ",
+    Info = " ",
+    Hint = "ﯧ ",
+}
+
+-- Syntax icons
 M.icons.kinds = {
     Namespace = "",
     Text = " ",

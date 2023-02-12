@@ -36,6 +36,7 @@ return {
                 ["<leader>h"] = { name = "+help" },
                 ["<leader>t"] = { name = "+toggle" },
                 ["<leader>w"] = { name = "+workspace" },
+                ["<leader>u"] = { name = "+ui" },
                 ["<leader>x"] = { name = "+diagnostics/quickfix" },
             }
         end,

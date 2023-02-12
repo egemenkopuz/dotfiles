@@ -55,7 +55,7 @@ return {
             require("lazy.core.loader").disable_rtp_plugin "nvim-treesitter-textobjects"
         end,
         opts = function()
-            local ai = require("mini.ai")
+            local ai = require "mini.ai"
             return {
                 n_lines = 500,
                 custom_textobjects = {
