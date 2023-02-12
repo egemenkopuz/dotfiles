@@ -90,7 +90,14 @@ return {
         config = function(_, opts)
             require("toggleterm").setup(opts)
             local Terminal = require("toggleterm.terminal").Terminal
-            local lazygit = Terminal:new { cmd = "lazygit", hidden = true, count = 2 }
+            local lazygit = Terminal:new {
+                cmd = "lazygit",
+                hidden = true,
+                count = 2,
+                on_close = function()
+                    vim.cmd [[ "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>" ]]
+                end,
+            }
             function _LAZYGIT_TOGGLE()
                 lazygit:toggle()
             end
