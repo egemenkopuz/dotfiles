@@ -1,6 +1,7 @@
 return {
     {
         "hrsh7th/nvim-cmp",
+        version = false,
         event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
@@ -53,13 +54,9 @@ return {
                         border = border "CmpBorder",
                         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
                     },
-                    documentation = {
-                        border = border "CmpDocBorder",
-                    },
+                    documentation = { border = border "CmpDocBorder" },
                 },
-                completion = {
-                    completeopt = "menu,menuone,noinsert",
-                },
+                completion = { completeopt = "menu,menuone,noinsert" },
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
@@ -67,11 +64,9 @@ return {
                 },
                 -- stylua: ignore
                 mapping = cmp.mapping.preset.insert {
-                    -- ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    -- ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
+                    -- ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false, },
                     ["<Tab>"] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end, { "i", "s", }),
@@ -93,11 +88,7 @@ return {
                         return item
                     end,
                 },
-                experimental = {
-                    ghost_text = {
-                        hl_group = "LspCodeLens",
-                    },
-                },
+                experimental = { ghost_text = { hl_group = "LspCodeLens" } },
             }
         end,
     },

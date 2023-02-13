@@ -1,12 +1,12 @@
 return {
     {
         "AlexvZyl/nordic.nvim",
-        enabled = true,
+        enabled = false,
         priority = 1000,
         config = function(_, opts)
             require("nordic").setup(opts)
             vim.api.nvim_set_hl(0, "MiniTablineFill", { bg = "#191C24" })
-            -- vim.cmd.colorscheme "nordic"
+            vim.cmd.colorscheme "nordic"
         end,
     },
 
@@ -28,21 +28,15 @@ return {
         opts = {
             flavour = "mocha", -- latte, frappe, macchiato, mocha
             term_colors = true,
-            background = {
-                light = "latte",
-                dark = "mocha",
-            },
-            no_italic = true, -- Force no italic
-            no_bold = true, -- Force no bold
+            background = { light = "latte", dark = "mocha" },
+            no_italic = true,
+            no_bold = true,
             transparent_background = false,
             compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
             integrations = {
                 telescope = false,
                 mason = true,
-                dap = {
-                    enabled = true,
-                    enable_ui = true,
-                },
+                dap = { enabled = true, enable_ui = true },
                 native_lsp = {
                     enabled = true,
                     virtual_text = {
@@ -60,12 +54,8 @@ return {
                 },
             },
             color_overrides = {
-                latte = {
-                    base = "#E1EEF5",
-                },
-                mocha = {
-                    base = "#0D0D14",
-                },
+                latte = { base = "#E1EEF5" },
+                mocha = { base = "#0D0D14" },
             },
             highlight_overrides = {
                 mocha = function(mocha)
@@ -75,11 +65,7 @@ return {
                     }
                 end,
             },
-            dim_inactive = {
-                enabled = true,
-                shade = "dark",
-                percentage = 1.3,
-            },
+            dim_inactive = { enabled = true, shade = "dark", percentage = 1.3 },
         },
         config = function(_, opts)
             require("catppuccin").setup(opts)

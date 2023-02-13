@@ -32,24 +32,11 @@ return {
         event = "VeryLazy",
         dependencies = { "arkav/lualine-lsp-progress" },
         opts = function()
-            local dg_icons = require("user.config").icons.diagnostics
-
-            local indent = {
-                function()
-                    local style = vim.bo.expandtab and "Spaces" or "Tab Size"
-                    local size = vim.bo.expandtab and vim.bo.tabstop or vim.bo.shiftwidth
-                    return style .. ": " .. size
-                end,
-                cond = function()
-                    return vim.bo.filetype ~= ""
-                end,
-            }
-
+            local icons = require("user.config").icons
             local python_env = {
                 function()
                     local output = ""
-
-                    for _, client in pairs(vim.lsp.buf_get_clients()) do
+                    for _, client in pairs(vim.lsp.get_active_clients()) do
                         if client.name == "pyright" then
                             -- Check if lsp was initialized with py_lsp
                             if client.config.settings.python["pythonPath"] ~= nil then
@@ -58,7 +45,6 @@ return {
                             end
                         end
                     end
-
                     return output
                 end,
                 cond = function()
@@ -79,8 +65,19 @@ return {
                     lualine_a = { "mode" },
                     lualine_b = { "branch" },
                     lualine_c = {
-                        { "diff", symbols = { added = "+", modified = "~", removed = "-" } },
-                        "filename",
+                        {
+                            "diff",
+                            symbols = {
+                                added = icons.diff.added,
+                                modified = icons.diff.modified,
+                                removed = icons.diff.removed,
+                            },
+                        },
+                        {
+                            "filename",
+                            path = 1,
+                            symbols = { readonly = "", unnamed = "" },
+                        },
                     },
                     lualine_x = {
                         {
@@ -103,10 +100,10 @@ return {
                         {
                             "diagnostics",
                             symbols = {
-                                error = dg_icons.Error,
-                                warn = dg_icons.Warn,
-                                info = dg_icons.Info,
-                                hint = dg_icons.Hint,
+                                error = icons.diagnostics.error,
+                                warn = icons.diagnostics.warn,
+                                info = icons.diagnostics.info,
+                                hint = icons.diagnostics.hint,
                             },
                         },
                     },
@@ -125,14 +122,6 @@ return {
             local config = require "user.config"
             local dashboard = require "alpha.themes.dashboard"
             local fn = vim.fn
-
-            local function footer()
-                local date = os.date "%d/%m/%Y "
-                local time = os.date "%H:%M:%S "
-                local v = vim.version()
-                local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch
-                return date .. time .. version
-            end
 
             if config.logo then
                 dashboard.section.header.val = config.logo
@@ -154,11 +143,27 @@ return {
             dashboard.section.header.opts.hl = "AlphaHeader"
             dashboard.section.buttons.opts.hl = "AlphaButtons"
             dashboard.opts.layout[1].val = fn.max { 2, fn.floor(fn.winheight(0) * 0.1) }
-            dashboard.section.footer.val = footer()
 
-            return dashboard.opts
+            return dashboard
         end,
-        config = true,
+        config = function(_, dashboard)
+            require("alpha").setup(dashboard.opts)
+
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "LazyVimStarted",
+                -- stylua: ignore
+                callback = function()
+                    local date = os.date "%d/%m/%Y "
+                    local time = os.date "%H:%M:%S"
+                    local v = vim.version()
+                    local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch .. " "
+                    local stats = require("lazy").stats()
+                    local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+                    dashboard.section.footer.val = "[" .. date .. time .. "][" .. stats.count .. " plugins " .. ms .. "ms][" .. version .. "]"
+                    pcall(vim.cmd.AlphaRedraw)
+                end,
+            })
+        end,
     },
 
     {

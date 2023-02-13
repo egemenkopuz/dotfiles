@@ -53,9 +53,7 @@ return {
 
     {
         "sindrets/diffview.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
+        dependencies = { "nvim-lua/plenary.nvim" },
         cmd = {
             "DiffviewOpen",
             "DiffviewClose",
@@ -128,4 +126,12 @@ return {
     { "tpope/vim-repeat", event = "BufReadPost" },
 
     { "andymass/vim-matchup", event = "BufReadPost" },
+
+    {
+        "moll/vim-bbye",
+        event = "BufReadPre",
+        config = function(_, _)
+            require("user.utils").load_keymap "bufremove"
+        end,
+    },
 }

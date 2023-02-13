@@ -13,7 +13,6 @@ vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
 vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
 vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
 
-
 -- auto install treesitter packages
 M.treesitter_packages = {
     "bash",
@@ -85,10 +84,16 @@ M.logo = nil
 
 -- Diagnostics icons
 M.icons.diagnostics = {
-    Error = " ",
-    Warn = " ",
-    Info = " ",
-    Hint = "ﯧ ",
+    error = " ",
+    warn = " ",
+    info = " ",
+    hint = "ﯧ ",
+}
+
+M.icons.diff = {
+    added = "+",
+    modified = "~",
+    removed = "-",
 }
 
 -- Syntax icons
