@@ -4,9 +4,9 @@ vim.g.maplocalleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 
-vim.opt.backup = false -- creates a backup file
-vim.opt.cmdheight = 0 -- space in the neovim command line for displaying messages
-vim.opt.colorcolumn = "99999" -- indentline
+vim.opt.backup = false 
+vim.opt.cmdheight = 0 
+vim.opt.colorcolumn = "" 
 
 vim.opt.expandtab = true
 vim.opt.smartindent = true
@@ -27,8 +27,8 @@ vim.opt.laststatus = 3 -- global statusline
 vim.opt.title = true
 vim.opt.cursorline = true
 
-vim.opt.showtabline = 1 -- Always show tabline
-vim.opt.hidden = true -- Allow switching buffers without saving them
+vim.opt.showtabline = 1
+vim.opt.hidden = true
 
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.opt.fillchars = { eob = " " }

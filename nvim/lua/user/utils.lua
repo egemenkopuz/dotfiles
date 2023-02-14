@@ -6,14 +6,15 @@ local general_opts = { noremap = true, silent = true }
 local settings = {
     diagnostics = true,
     autoformat = true,
-    colorcolumn = false,
+    colorcolumn = true,
 }
 
--- if vim.api.nvim_get_option_value("colorcolumn", {}) == "" then
---     settings.colorcolumn = false
--- else
---     settings.colorcolumn = true
--- end
+-- util init
+if vim.api.nvim_get_option_value("colorcolumn", {}) == "" then
+    settings.colorcolumn = false
+else
+    settings.colorcolumn = true
+end
 
 function M.toggle(var_name)
     settings[var_name] = not settings[var_name]

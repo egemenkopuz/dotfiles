@@ -13,8 +13,8 @@ return {
     font_size = 11,
     line_height = 1.1,
     window_padding = {
-            left = 5,
-            right = 5,
+            left = 1,
+            right = 1,
             top = 0,
             bottom = 0,
     },
