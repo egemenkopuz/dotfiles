@@ -1,10 +1,19 @@
 [gpg]
-	program = gpg
+    program = gpg
+
 [user]
-        email = egemenkopuz@hotmail.com
-        name = Egemen Kopuz
-	signingkey = FA1804B585C3B91FD9E27A57F865AFA0B72021A6
+    email = egemenkopuz@hotmail.com
+    name = Egemen Kopuz
+    signingkey = FA1804B585C3B91FD9E27A57F865AFA0B72021A6
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
 [commit]
-	gpgsign = true
+    gpgsign = true
+
+[pull]
+    ff = only
+
+[merge]
+    conflictstyle = diff3

@@ -50,6 +50,25 @@ M.mason_packages = {
     "debugpy",
 }
 
+M.nulls_packages = {
+    formatting = {
+        "isort",
+        "black",
+        "trim_newlines",
+        "trim_whitespace",
+        "prettier",
+        "stylua",
+        "clang_format",
+        "rustfmt",
+    },
+    diagnostics = {
+        "flake8",
+        "mypy",
+        { "pydocstyle", extra_args = { "--config=$ROOT/setup.cfg" } },
+        "hadolint",
+    },
+}
+
 M.disabled_plugins = {
     "2html_plugin",
     "getscript",

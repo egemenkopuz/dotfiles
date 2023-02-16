@@ -1,12 +1,13 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.opt.encoding = "UTF-8"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 
-vim.opt.backup = false 
-vim.opt.cmdheight = 0 
-vim.opt.colorcolumn = "" 
+vim.opt.backup = false
+vim.opt.cmdheight = 0
+vim.opt.colorcolumn = ""
 
 vim.opt.expandtab = true
 vim.opt.smartindent = true
@@ -23,7 +24,7 @@ vim.opt.splitright = true
 
 vim.opt.signcolumn = "yes"
 vim.opt.showmode = false
-vim.opt.laststatus = 3 -- global statusline
+vim.opt.laststatus = 3
 vim.opt.title = true
 vim.opt.cursorline = true
 
@@ -32,9 +33,9 @@ vim.opt.hidden = true
 
 vim.opt.shortmess:append { W = true, I = true, c = true }
 vim.opt.fillchars = { eob = " " }
-vim.opt.ignorecase = true -- ignore case in search patterns
-vim.opt.smartcase = true -- smart case
-vim.opt.mouse = "a" -- allow the mouse to be used in neovim
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.mouse = "a"
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.wildmode = "longest:full,full"
 

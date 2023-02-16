@@ -9,6 +9,7 @@ return {
             "debugloop/telescope-undo.nvim",
             "olimorris/persisted.nvim",
             "ahmedkhalf/project.nvim",
+            "nvim-telescope/telescope-dap.nvim",
             "folke/noice.nvim",
         },
         cmd = "Telescope",
@@ -28,6 +29,9 @@ return {
                     "--line-number",
                     "--column",
                     "--smart-case",
+                    "--hidden",
+                    "--glob",
+                    "!**/.git/*",
                 },
                 prompt_prefix = "   ",
                 selection_caret = "  ",
@@ -72,10 +76,7 @@ return {
                     layout_strategy = "vertical",
                     layout_config = {
                         prompt_position = "top",
-                        vertical = {
-                            width = 0.4,
-                            height = 0.3,
-                        },
+                        vertical = { width = 0.4, height = 0.3 },
                     },
                 },
             }
@@ -88,6 +89,7 @@ return {
             telescope.load_extension "ui-select"
             telescope.load_extension "projects"
             telescope.load_extension "persisted"
+            telescope.load_extension "dap"
             telescope.load_extension "noice"
 
             local tc1 = "#2E3440"

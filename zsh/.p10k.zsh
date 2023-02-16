@@ -19,6 +19,8 @@
     context
     vcs
     dir
+    virtualenv
+    anaconda
     prompt_char
   )
 
@@ -238,8 +240,8 @@
 
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=0
   typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND=4
-  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
-  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=true
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   typeset -g POWERLEVEL9K_ANACONDA_FOREGROUND=3
   typeset -g POWERLEVEL9K_ANACONDA_BACKGROUND=
@@ -252,7 +254,7 @@
 
   # off - quiet - verbose
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-  typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=false
+  typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
   (( ! $+functions[p10k] )) || p10k reload
 }

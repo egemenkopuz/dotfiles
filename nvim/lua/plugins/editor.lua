@@ -109,7 +109,7 @@ return {
         init = function()
             require("user.utils").load_keymap "trouble"
         end,
-        opts = { auto_preview = false, mode = "document_diagnostics" },
+        opts = { auto_preview = true, mode = "document_diagnostics" },
     },
 
     {

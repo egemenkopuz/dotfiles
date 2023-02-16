@@ -6,6 +6,24 @@ return {
             "mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "hrsh7th/cmp-nvim-lsp",
+            "b0o/schemastore.nvim",
+            "simrat39/rust-tools.nvim",
+            "p00f/clangd_extensions.nvim",
+            {
+                "saecki/crates.nvim",
+                opts = { null_ls = { enabled = true, name = "crates.nvim" } },
+                config = function(_, opts)
+                    vim.api.nvim_create_autocmd("BufRead", {
+                        group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+                        pattern = "Cargo.toml",
+                        callback = function()
+                            require("cmp").setup.buffer { sources = { { name = "crates" } } }
+                        end,
+                    })
+                    require("crates").setup(opts)
+                end,
+            },
+            { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
             {
                 "ray-x/lsp_signature.nvim",
                 opts = {
@@ -14,10 +32,10 @@ return {
                     fixpos = true,
                     padding = " ",
                     bind = true,
+                    noice = true,
                     handler_opts = { border = "single" },
                 },
             },
-            { "b0o/schemastore.nvim" },
             {
                 "RRethy/vim-illuminate",
                 opts = {
@@ -37,7 +55,6 @@ return {
                     require("user.utils").load_keymap "illuminate"
                 end,
             },
-            { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
         },
         opts = {
             diagnostics = {
@@ -65,25 +82,15 @@ return {
                         "-j=4", -- number of workers
                     },
                 },
-                ["rust_analyzer"] = {
-                    cargo = { allFeatures = true },
-                    checkOnSave = { allFeatures = true, command = "clippy" },
-                    procMacro = {
-                        ignored = {
-                            ["async-trait"] = { "async_trait" },
-                            ["napi-derive"] = { "napi" },
-                            ["async-recursion"] = { "async_recursion" },
-                        },
-                    },
-                },
+                ["rust_analyzer"] = {},
                 ["pyright"] = {
                     settings = {
                         pyright = { autoImportCompletion = true },
                         python = {
                             analysis = {
                                 autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = false,
+                                diagnosticMode = "workspace",
+                                useLibraryCodeForTypes = true,
                                 typeCheckingMode = "off",
                             },
                         },
@@ -112,24 +119,24 @@ return {
         config = function(_, opts)
             local lspconfig = require "lspconfig"
             local utils = require "user.utils"
+            local servers = opts.servers
 
             vim.diagnostic.config(opts.diagnostics)
-
-            local servers = opts.servers
 
             require("mason-lspconfig").setup { ensure_installed = vim.tbl_keys(servers) }
             require("mason-lspconfig").setup_handlers {
                 function(server)
                     local server_opts = servers[server] or {}
-                    local capabilities = utils.lsp_capabilities()
 
                     server_opts.flags = { debounce_text_changes = 150 }
 
                     server_opts.on_attach = utils.lsp_on_attach()
-                    server_opts.capabilities = capabilities
+                    server_opts.capabilities = utils.lsp_capabilities()
 
                     if server == "clangd" then
                         server_opts.capabilities.offsetEncoding = "utf-8"
+                    elseif server == "lua_ls" then
+                        require("neodev").setup {}
                     end
 
                     server_opts.before_init = function(_, config)
@@ -156,7 +163,13 @@ return {
                         }
                     end
 
-                    lspconfig[server].setup(server_opts)
+                    if server == "rust_analyzer" then
+                        require("rust-tools").setup { server = server_opts }
+                    elseif server == "clangd" then
+                        require("clangd_extensions").setup { server = server_opts }
+                    else
+                        lspconfig[server].setup(server_opts)
+                    end
                 end,
             }
         end,
@@ -169,24 +182,25 @@ return {
         config = function()
             local nls = require "null-ls"
             local utils = require "user.utils"
-            nls.setup {
-                sources = {
-                    nls.builtins.formatting.isort,
-                    nls.builtins.formatting.black,
-                    nls.builtins.formatting.trim_newlines,
-                    nls.builtins.formatting.trim_whitespace,
-                    nls.builtins.diagnostics.flake8,
-                    nls.builtins.diagnostics.pydocstyle.with {
-                        extra_args = { "--config=$ROOT/setup.cfg" },
-                    },
-                    nls.builtins.formatting.prettier,
-                    nls.builtins.formatting.stylua,
-                    nls.builtins.formatting.rustfmt,
-                    nls.builtins.diagnostics.hadolint,
-                    nls.builtins.formatting.clang_format,
-                },
-                on_attach = utils.formatting(),
-            }
+            local packages = require("user.config").nulls_packages
+            local sources = {}
+
+            for _, package in ipairs(packages.formatting) do
+                if type(package) == "table" then
+                    table.insert(sources, nls.builtins.formatting[package[1]].with { package[2] })
+                else
+                    table.insert(sources, nls.builtins.formatting[package])
+                end
+            end
+            for _, package in ipairs(packages.diagnostics) do
+                if type(package) == "table" then
+                    table.insert(sources, nls.builtins.diagnostics[package[1]].with { package[2] })
+                else
+                    table.insert(sources, nls.builtins.diagnostics[package])
+                end
+            end
+
+            nls.setup { sources = sources, on_attach = utils.formatting() }
         end,
     },
 
@@ -204,16 +218,5 @@ return {
                 end
             end
         end,
-    },
-
-    {
-        "HallerPatrick/py_lsp.nvim",
-        event = "BufReadPre",
-        dependencies = { "nvim-lspconfig" },
-        opts = function()
-            local utils = require "user.utils"
-            return { capabilities = utils.lsp_capabilities(), on_attach = utils.lsp_on_attach() }
-        end,
-        config = true,
     },
 }

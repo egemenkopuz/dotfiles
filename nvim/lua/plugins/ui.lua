@@ -156,7 +156,7 @@ return {
                     local date = os.date "%d/%m/%Y "
                     local time = os.date "%H:%M:%S"
                     local v = vim.version()
-                    local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch .. " "
+                    local version = "v" .. v.major .. "." .. v.minor .. "." .. v.patch
                     local stats = require("lazy").stats()
                     local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
                     dashboard.section.footer.val = "[" .. date .. time .. "][" .. stats.count .. " plugins " .. ms .. "ms][" .. version .. "]"
@@ -238,7 +238,11 @@ return {
 
     {
         "NvChad/nvim-colorizer.lua",
-        opts = { buftypes = { "*", "!alpha", "!mason", "!lazy" } },
+        event = "BufReadPre",
+        opts = {
+            user_default_options = { names = false },
+            buftypes = { "*", "!alpha", "!mason", "!lazy" },
+        },
         config = true,
     },
 }
