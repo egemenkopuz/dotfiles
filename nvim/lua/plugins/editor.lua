@@ -134,4 +134,12 @@ return {
             require("user.utils").load_keymap "bufremove"
         end,
     },
+
+    {
+        "iamcco/markdown-preview.nvim",
+        ft = "markdown",
+        build = function()
+            vim.fn["mkdp#util#install"]()
+        end,
+    },
 }
