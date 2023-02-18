@@ -21,7 +21,7 @@ M.general = {
         -- go to end of line
         ["<C-e>"] = { "<End>", "Go to end of line" },
         -- save file
-        ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
+        ["<C-s>"] = { "<cmd> w <cr>", "Save file" },
         -- navigation
         ["<C-h>"] = { "<left>" },
         ["<C-j>"] = { "<down>" },
@@ -30,25 +30,34 @@ M.general = {
     },
     -- stylua: ignore
     n = {
-        ["<leader>qq"] = {"<Cmd> qall <CR>", "Quit"},
-        ["<leader>wv"] = {"<Cmd> vsplit <CR>", "Vertical split"},
-        ["<leader>wx"] = {"<Cmd> split <CR>", "Horizontal split"},
-        ["<leader>ur"] = { "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", "Redraw / clear hlsearch / diff update"},
-        ["go"] = { "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", "Put empty line below", },
-        ["gO"] = { "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", "Put empty line below", },
-        ["<leader>wf"] = { "<cmd>enew<cr>", "Open a new file" },
+        -- quit
+        ["<leader>qa"] = {"<cmd> qall <cr>", "Quit all"},
+        ["<leader>qA"] = {"<cmd> qall! <cr>", "Quit force all"},
+        ["<leader>qq"] = {"<cmd> q <cr>", "Quit window"},
+        ["<leader>qQ"] = {"<cmd> q! <cr>", "Quit force window"},
+        -- splits
+        ["<leader>wv"] = {"<cmd> vsplit <cr>", "Vertical split"},
+        ["<leader>wx"] = {"<cmd> split <cr>", "Horizontal split"},
+        -- ui reset
+        ["<leader>ur"] = { "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><cr>", "Redraw / clear hlsearch / diff update"},
+        -- go to last selected text
         ["gV"] = { '"`[" . strpart(getregtype(), 0, 1) . "`]"', "Visually select changed text", opts = { expr = true }, },
+        -- emtpy lines
+        ["go"] = { "<cmd>call append(line('.'),     repeat([''], v:count1))<cr>", "Put empty line below", },
+        ["gO"] = { "<cmd>call append(line('.') - 1, repeat([''], v:count1))<cr>", "Put empty line below", },
+        -- file operations
+        ["<leader>wf"] = { "<cmd>enew<cr>", "Open a new file" },
         -- remove highlight
-        ["<ESC>"] = { "<cmd> noh <CR>", "Remove highlight" },
+        ["<ESC>"] = { "<cmd> noh <cr>", "Remove highlight" },
         -- Resize with arrows
-        ["<C-Up>"] = { ":resize +2<CR>", "Resize window up" },
-        ["<C-Down>"] = { ":resize -2<CR>", "Resize window down" },
-        ["<C-Left>"] = { ":vertical resize +2<CR>", "Resize window left" },
-        ["<C-Right>"] = { ":vertical resize -2<CR>", "Resize window right" },
+        ["<C-Up>"] = { ":resize +2<cr>", "Resize window up" },
+        ["<C-Down>"] = { ":resize -2<cr>", "Resize window down" },
+        ["<C-Left>"] = { ":vertical resize +2<cr>", "Resize window left" },
+        ["<C-Right>"] = { ":vertical resize -2<cr>", "Resize window right" },
         -- save file
-        ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
+        ["<C-s>"] = { "<cmd> w <cr>", "Save file" },
         -- line numbers
-        ["<leader>tr"] = { "<cmd> set rnu! <CR>", "Toggle relative line numbers" },
+        ["<leader>tr"] = { "<cmd> set rnu! <cr>", "Toggle relative line numbers" },
         -- centered page navigation
         ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
         ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
@@ -73,8 +82,8 @@ M.general = {
         ["<"] = { "<gv", "Indent left" },
         [">"] = { ">gv", "Indent right" },
         -- sorting
-        ["<leader>s"] = { ":sort<CR>", "Sort ascending" },
-        ["<leader>S"] = { ":sort!<CR>", "Sort descending" },
+        ["<leader>s"] = { ":sort<cr>", "Sort ascending" },
+        ["<leader>S"] = { ":sort!<cr>", "Sort descending" },
     },
 }
 
@@ -97,8 +106,8 @@ M.treesitter_context = {
     },
 }
 
--- stylua: ignore start
 M.telescope = {
+    -- stylua: ignore
     n = {
         ["<leader>:"] = { "<cmd> Telescope command_history <cr>", "Command history" },
         ["<leader>/"] = { utils.telescope "live_grep", "Live grep" },
@@ -110,7 +119,7 @@ M.telescope = {
         ["<leader>fN"] = { "<cmd> Telescope file_browser <cr>", "File browser (root)" },
         ["<leader>fb"] = { "<cmd> Telescope buffers <cr>", "Buffers" },
         ["<leader>fo"] = { "<cmd> Telescope oldfiles <cr>", "Recent files" },
-        ["<leader>gc"] = { "<cmd> Telescope git_commits <cr>", "Git commit" },
+        ["<leader>gc"] = { "<cmd> Telescope git_commits <cr>", "Git commits" },
         ["<leader>gg"] = { "<cmd> Telescope git_status <cr>", "Git status" },
         ["<leader>xf"] = { "<cmd> Telescope diagnostics <cr>", "Diagnostics" },
         ["<leader>sa"] = { "<cmd>Telescope autocommands <cr>", "Autocommands" },
@@ -123,7 +132,6 @@ M.telescope = {
         ["<leader>sM"] = { "<cmd>Telescope man_pages<cr>", "Man pages" },
         ["<leader>sm"] = { "<cmd>Telescope marks<cr>", "Jump to mark" },
         ["<leader>so"] = { "<cmd>Telescope vim_options<cr>", "Options" },
-        ["<leader>dl"] = { function () require"telescope".extensions.dap.list_breakpoints{} end , "DAP Breakpoints" },
         ["<leader>sw"] = { utils.telescope "grep_string", "Word (root dir)" },
         ["<leader>sW"] = { utils.telescope("grep_string", { cwd = false }), "Word (cwd)" },
         ["<leader>ss"] = {
@@ -145,18 +153,16 @@ M.telescope = {
         },
     },
 }
--- stylua: ignore end
 
--- stylua: ignore start
 M.rename = {
+    -- stylua: ignore
     n = {
         ["<leader>cr"] = { function() return ":IncRename " .. vim.fn.expand "<cword>" end, "Rename", opts = { expr = true }, },
     },
 }
--- stylua: ignore end
 
--- stylua: ignore start
 M.lsp = {
+    -- stylua: ignore
     n = {
         ["gD"] = { function() vim.lsp.buf.declaration() end, "Go to declaration", },
         ["K"] = { function() vim.lsp.buf.hover() end, "Open hover", },
@@ -175,34 +181,33 @@ M.lsp = {
         ["<leader>wl"] = { function() utils.notify(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, "Workspace list", },
     },
 }
--- stylua: ignore end
 
 M.glance = {
     n = {
-        ["gr"] = { "<cmd>Glance references<CR>", "References" },
-        ["gM"] = { "<cmd>Glance implementations<CR>", "Implementations" },
-        ["gd"] = { "<cmd>Glance definitions<CR>", "Definitions" },
-        ["D"] = { "<cmd>Glance type_definitions<CR>", "Type definitions" },
+        ["gr"] = { "<cmd>Glance references<cr>", "References" },
+        ["gM"] = { "<cmd>Glance implementations<cr>", "Implementations" },
+        ["gd"] = { "<cmd>Glance definitions<cr>", "Definitions" },
+        ["D"] = { "<cmd>Glance type_definitions<cr>", "Type definitions" },
     },
 }
 
--- stylua: ignore start
 M.gitsigns = {
     [{ "o", "x" }] = {
-        ["ih"] = { ":<C-U> Gitsigns select_hunk <CR>", "Select hunk", { silent = true } },
+        ["ih"] = { ":<C-U> Gitsigns select_hunk <cr>", "Select hunk", { silent = true } },
     },
+    -- stylua: ignore
     ["n"] = {
-        ["<leader>ts"] = { "<cmd> Gitsigns toggle_signs <CR>", "Toggle git signs" },
-        ["<leader>tn"] = { "<cmd> Gitsigns toggle_numhl <CR>", "Toggle git numhl" },
-        ["<leader>tl"] = { "<cmd> Gitsigns toggle_linehl <CR>", "Toggle git linehl" },
-        ["<leader>tw"] = { "<cmd> Gitsigns toggle_word_diff <CR>", "Toggle git diff" },
-        ["<leader>tb"] = { "<cmd> Gitsigns toggle_current_line_blame <CR>", "Toggle git line blame" },
-        ["<leader>gs"] = { "<cmd> Gitsigns stage_hunk <CR>", "Stage hunk" },
-        ["<leader>gr"] = { "<cmd> Gitsigns reset_hunk <CR>", "Reset hunk" },
-        ["<leader>gu"] = { "<cmd> Gitsigns undo_stage_hunk <CR>", "Undo stage hunk" },
-        ["<leader>gp"] = { "<cmd> Gitsigns preview_hunk <CR>", "Preview hunk" },
-        ["<leader>gS"] = { "<cmd> Gitsigns stage_buffer <CR>", "Stage buffer" },
-        ["<leader>gR"] = { "<cmd> Gitsigns reset_buffer <CR>", "Reset buffer" },
+        ["<leader>ts"] = { "<cmd> Gitsigns toggle_signs <cr>", "Toggle git signs" },
+        ["<leader>tn"] = { "<cmd> Gitsigns toggle_numhl <cr>", "Toggle git numhl" },
+        ["<leader>tl"] = { "<cmd> Gitsigns toggle_linehl <cr>", "Toggle git linehl" },
+        ["<leader>tw"] = { "<cmd> Gitsigns toggle_word_diff <cr>", "Toggle git diff" },
+        ["<leader>tb"] = { "<cmd> Gitsigns toggle_current_line_blame <cr>", "Toggle git line blame" },
+        ["<leader>gs"] = { "<cmd> Gitsigns stage_hunk <cr>", "Stage hunk" },
+        ["<leader>gr"] = { "<cmd> Gitsigns reset_hunk <cr>", "Reset hunk" },
+        ["<leader>gu"] = { "<cmd> Gitsigns undo_stage_hunk <cr>", "Undo stage hunk" },
+        ["<leader>gp"] = { "<cmd> Gitsigns preview_hunk <cr>", "Preview hunk" },
+        ["<leader>gS"] = { "<cmd> Gitsigns stage_buffer <cr>", "Stage buffer" },
+        ["<leader>gR"] = { "<cmd> Gitsigns reset_buffer <cr>", "Reset buffer" },
         ["<leader>gl"] = { function() require("gitsigns").blame_line { full = true } end, "Blame line", },
         ["[h"] = {
             function()
@@ -218,56 +223,45 @@ M.gitsigns = {
         },
     },
 }
--- stylua: ignore end
 
 M.illuminate = {
+    -- stylua: ignore
     n = {
-        ["]]"] = {
-            function()
-                require("illuminate").goto_next_reference(false)
-            end,
-            "Next reference",
-        },
-        ["[["] = {
-            function()
-                require("illuminate").goto_prev_reference(false)
-            end,
-            "Prev reference",
-        },
+        ["]]"] = { function() require("illuminate").goto_next_reference(false) end, "Next reference", },
+        ["[["] = { function() require("illuminate").goto_prev_reference(false) end, "Prev reference", },
     },
 }
 
 M.navigator = {
     [{ "n", "t" }] = {
-        ["<C-h>"] = { "<cmd> NavigatorLeft <CR>", "Navigate left" },
-        ["<C-j>"] = { "<cmd> NavigatorDown <CR>", "Navigate down" },
-        ["<C-k>"] = { "<cmd> NavigatorUp <CR>", "Navigate up" },
-        ["<C-l>"] = { "<cmd> NavigatorRight <CR>", "Navigate right" },
+        ["<C-h>"] = { "<cmd> NavigatorLeft <cr>", "Navigate left" },
+        ["<C-j>"] = { "<cmd> NavigatorDown <cr>", "Navigate down" },
+        ["<C-k>"] = { "<cmd> NavigatorUp <cr>", "Navigate up" },
+        ["<C-l>"] = { "<cmd> NavigatorRight <cr>", "Navigate right" },
     },
 }
 
 M.hop = {
     n = {
-        ["<leader>k"] = { "<cmd>HopWordBC<CR>", "Hop word up" },
-        ["<leader>j"] = { "<cmd>HopWordAC<CR>", "Hop word down" },
+        ["<leader>k"] = { "<cmd>HopWordBC<cr>", "Hop word up" },
+        ["<leader>j"] = { "<cmd>HopWordAC<cr>", "Hop word down" },
     },
 }
 
--- stylua: ignore start
 M.trouble = {
+    -- stylua: ignore
     n = {
-        ["<leader>xx"] = { "<cmd> TroubleToggle <CR>", "Toggle trouble" },
-        ["<leader>xd"] = { "<cmd> TroubleToggle document_diagnostics <CR>", "Document diagnostics", },
-        ["<leader>xD"] = { "<cmd> TroubleToggle workspace_diagnostics <CR>", "Workspace diagnostics", },
-        ["<leader>xl"] = { "<cmd> TroubleToggle loclist <CR>", "Loclist" },
-        ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <CR>", "Quickfix" },
+        ["<leader>xx"] = { "<cmd> TroubleToggle <cr>", "Toggle trouble" },
+        ["<leader>xd"] = { "<cmd> TroubleToggle document_diagnostics <cr>", "Document diagnostics", },
+        ["<leader>xD"] = { "<cmd> TroubleToggle workspace_diagnostics <cr>", "Workspace diagnostics", },
+        ["<leader>xl"] = { "<cmd> TroubleToggle loclist <cr>", "Loclist" },
+        ["<leader>xq"] = { "<cmd> TroubleToggle quickfix <cr>", "Quickfix" },
     },
 }
--- stylua: ignore end
 
 M.toggleterm = {
     n = {
-        ["<leader>g\\"] = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+        ["<leader>g\\"] = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazygit" },
     },
     t = {
         ["<C-x>"] = {
@@ -279,12 +273,12 @@ M.toggleterm = {
 
 M.nvimtree = {
     n = {
-        ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle tree" },
+        ["<C-n>"] = { "<cmd> NvimTreeToggle <cr>", "Toggle tree" },
     },
 }
 
--- stylua: ignore start
 M.dap = {
+    -- stylua: ignore
     n = {
         ["<leader>dc"] = { function() require("dap").continue() end, "DAP continue", },
         ["<leader>dd"] = { function() require("dap").disconnect() end, "DAP disconnect", },
@@ -301,12 +295,29 @@ M.dap = {
 }
 
 M.dapui = {
+    -- stylua: ignore
     n = {
         ["<leader>dt"] = { function() require("dapui").toggle() end, "DAP ui toggle", },
         ["<leader>dT"] = { function() require("dapui").close() end, "DAP ui close", },
         ["<leader>df"] = { function() require("dapui").float_element() end, "DAP ui float", },
     },
 }
--- stylua: ignore end
+
+M.neotree = {
+    n = {
+        ["<C-n>"] = {
+            function()
+                require("neo-tree.command").execute { toggle = true, dir = vim.loop.cwd() }
+            end,
+            "Neotree",
+        },
+    },
+}
+
+M.spectre = {
+    n = {
+        ["<leader>cR"] = { "<cmd> Spectre <cr>", "Replace in files (Spectre)" },
+    },
+}
 
 return M

@@ -100,6 +100,17 @@ function M.get_python_path(workspace)
     return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
 end
 
+function M.env_cleanup(venv)
+    if string.find(venv, "/") then
+        local final_venv = venv
+        for w in venv:gmatch "([^/]+)" do
+            final_venv = w
+        end
+        venv = final_venv
+    end
+    return venv
+end
+
 function M.path_exists(path)
     local ok = vim.loop.fs_stat(path)
     return ok

@@ -28,7 +28,7 @@ return {
 
     {
         "lewis6991/gitsigns.nvim",
-        event = "BufReadPre",
+        event = { "BufReadPre", "BufNewFile" },
         opts = {
             signs = {
                 add = { text = "│" },
@@ -140,6 +140,14 @@ return {
         ft = "markdown",
         build = function()
             vim.fn["mkdp#util#install"]()
+        end,
+    },
+
+    {
+        "windwp/nvim-spectre",
+        cmd = "Spectre",
+        init = function()
+            require("user.utils").load_keymap "spectre"
         end,
     },
 }

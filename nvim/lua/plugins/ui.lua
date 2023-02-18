@@ -33,24 +33,7 @@ return {
         dependencies = { "arkav/lualine-lsp-progress" },
         opts = function()
             local icons = require("user.config").icons
-            local python_env = {
-                function()
-                    local output = ""
-                    for _, client in pairs(vim.lsp.get_active_clients()) do
-                        if client.name == "pyright" then
-                            -- Check if lsp was initialized with py_lsp
-                            if client.config.settings.python["pythonPath"] ~= nil then
-                                local venv_name = client.config.settings.python.venv_name
-                                output = client.name .. "(" .. venv_name .. ")"
-                            end
-                        end
-                    end
-                    return output
-                end,
-                cond = function()
-                    return vim.bo.filetype == "python"
-                end,
-            }
+            local utils = require "user.utils"
 
             return {
                 options = {
@@ -60,7 +43,7 @@ return {
                     globalstatus = true,
                     disabled_filetypes = { statusline = { "alpha", "packer", "lazy", "terminal" } },
                 },
-                extensions = { "nvim-tree", "toggleterm" },
+                extensions = { "toggleterm" },
                 sections = {
                     lualine_a = { "mode" },
                     lualine_b = { "branch" },
@@ -90,13 +73,34 @@ return {
                                 use = true,
                             },
                         },
-
+                        {
+                            function()
+                                local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
+                                return "" .. " " .. shiftwidth
+                            end,
+                            padding = 1,
+                        },
                         {
                             "filetype",
                             colored = false,
                             icon_only = false,
                             icon = { align = "right" },
                         },
+                        {
+                            function()
+                                local venv = os.getenv "CONDA_DEFAULT_ENV"
+                                    or os.getenv "VIRTUAL_ENV"
+                                if venv then
+                                    return string.format("(%s)", utils.env_cleanup(venv))
+                                end
+                                return ""
+                            end,
+                            cond = function()
+                                return vim.bo.filetype == "python"
+                            end,
+                        },
+                    },
+                    lualine_y = {
                         {
                             "diagnostics",
                             symbols = {
@@ -107,7 +111,6 @@ return {
                             },
                         },
                     },
-                    lualine_y = { python_env },
                     lualine_z = { "location" },
                 },
             }

@@ -1,5 +1,27 @@
 return {
     {
+        "nvim-neo-tree/neo-tree.nvim",
+        cmd = "Neotree",
+        deactivate = function()
+            vim.cmd [[Neotree close]]
+        end,
+        init = function()
+            vim.g.neo_tree_remove_legacy_commands = 1
+            if vim.fn.argc() == 1 then
+                local stat = vim.loop.fs_stat(vim.fn.argv(0))
+                if stat and stat.type == "directory" then
+                    require "neo-tree"
+                end
+            end
+            require("user.utils").load_keymap "neotree"
+        end,
+        opts = {
+            filesystem = { bind_to_cwd = false, follow_current_file = true },
+            window = { mappings = { ["<space>"] = "none" } },
+        },
+    },
+
+    {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -9,10 +31,10 @@ return {
             "debugloop/telescope-undo.nvim",
             "olimorris/persisted.nvim",
             "ahmedkhalf/project.nvim",
-            "nvim-telescope/telescope-dap.nvim",
+            -- "nvim-telescope/telescope-dap.nvim",
             "folke/noice.nvim",
         },
-        cmd = "Telescope",
+        -- cmd = "Telescope",
         version = false,
         init = function()
             require("project_nvim").setup()
@@ -63,7 +85,7 @@ return {
                     override_file_sorter = true,
                     case_mode = "smart_case",
                 },
-                file_browser = { hidden = true, use_fd = true },
+                file_browser = { hijack_netrw = true, hidden = true, use_fd = true },
             },
         },
         config = function(_, opts)
@@ -89,7 +111,6 @@ return {
             telescope.load_extension "ui-select"
             telescope.load_extension "projects"
             telescope.load_extension "persisted"
-            telescope.load_extension "dap"
             telescope.load_extension "noice"
 
             local tc1 = "#2E3440"
