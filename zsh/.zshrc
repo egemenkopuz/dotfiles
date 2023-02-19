@@ -2,20 +2,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export LANG=en_US.UTF-8
-export GPG_TTY=$TTY
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-
 source "$HOME/.config/antigen/antigen.zsh"
 antigen init $HOME/.antigenrc
 
@@ -25,7 +11,6 @@ zstyle ':autocomplete:*' fzf-completion yes
 
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE
-HISTFILE=$HOME/.zsh_history
 
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY             # Share history between all sessions.
@@ -42,7 +27,7 @@ alias xclip="xclip -selection clipboard"
 alias h="history"
 alias hf="history | grep"
 
-alias rm="rm -iv"
+alias rm="rm -v"
 alias cp="cp -iv"
 alias mv="mv -iv"
 
@@ -62,7 +47,7 @@ alias cat="batcat"
 alias df="duf"
 alias ps="procs"
 
-source $HOME/.p10k.zsh
+source "$ZDOTDIR/.p10k.zsh"
 
 eval "$(zoxide init zsh)"
 
