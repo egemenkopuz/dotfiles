@@ -291,6 +291,7 @@ M.dap = {
         ["<leader>dn"] = { function() require("dap").run_to_cursor() end, "DAP run to cursor", },
         ["<leader>de"] = { function() require("dap").set_exception_breakpoints() end, "DAP set exception breakpoints", },
         ["<leader>db"] = { function() require("dap").toggle_breakpoint() end, "DAP toggle breakpoint", },
+        ["<leader>dD"] = { function() require("dap").clear_breakpoints() end, "DAP clear breakpoints", },
     },
 }
 

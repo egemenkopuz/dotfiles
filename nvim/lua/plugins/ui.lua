@@ -43,7 +43,7 @@ return {
                     globalstatus = true,
                     disabled_filetypes = { statusline = { "alpha", "packer", "lazy", "terminal" } },
                 },
-                extensions = { "toggleterm" },
+                extensions = { "toggleterm", "neo-tree", "nvim-dap-ui" },
                 sections = {
                     lualine_a = { "mode" },
                     lualine_b = { "branch" },
@@ -176,7 +176,8 @@ return {
             render = function(props)
                 local bufname = vim.api.nvim_buf_get_name(props.buf)
                 local filename = " " .. vim.fn.fnamemodify(bufname, ":t") .. " "
-                local buffer = { { filename, guibg = "#D89079", guifg = "#191C24" } }
+                local buffer = { { filename, guibg = "#7E9CD8", guifg = "#191C24" } }
+
                 if vim.api.nvim_buf_get_option(props.buf, "modified") then
                     buffer[1][1] = filename .. "[+]"
                 end
@@ -224,7 +225,7 @@ return {
                 "markdown",
                 "txt",
                 "help",
-                "NvimTree",
+                "neo-tree",
                 "git",
                 "TelescopePrompt",
                 "undotree",

@@ -16,7 +16,7 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("plugins", {
     lockfile = vim.fn.stdpath "config" .. "/plugin-lock.json",
-    rtp = { disabled_plugins = require("user.config").disabled_plugins },
+    performance = { rtp = { disabled_plugins = require("user.config").disabled_plugins } },
 })
 
 require "user.autocmds"

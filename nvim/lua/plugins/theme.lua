@@ -24,16 +24,14 @@ return {
         "catppuccin/nvim",
         enabled = false,
         name = "catppuccin",
-        priority = 1000,
         opts = {
-            flavour = "mocha", -- latte, frappe, macchiato, mocha
+            flavour = "macchiato", -- latte, frappe, macchiato, mocha
             term_colors = true,
-            background = { light = "latte", dark = "mocha" },
-            no_italic = true,
-            no_bold = true,
-            transparent_background = false,
             compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
             integrations = {
+                leap = true,
+                hop = true,
+                neotree = true,
                 telescope = false,
                 mason = true,
                 dap = { enabled = true, enable_ui = true },
@@ -53,19 +51,12 @@ return {
                     },
                 },
             },
-            color_overrides = {
-                latte = { base = "#E1EEF5" },
-                mocha = { base = "#0D0D14" },
-            },
             highlight_overrides = {
-                mocha = function(mocha)
-                    return {
-                        NvimTreeNormal = { bg = "#0D0D14" },
-                        CmpBorder = { fg = mocha.surface2 },
-                    }
+                macchiato = function(x)
+                    return { CmpBorder = { fg = x.surface2 } }
                 end,
             },
-            dim_inactive = { enabled = true, shade = "dark", percentage = 1.3 },
+            dim_inactive = { enabled = true, shade = "dark", percentage = 0.15 },
         },
         config = function(_, opts)
             require("catppuccin").setup(opts)

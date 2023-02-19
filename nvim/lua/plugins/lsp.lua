@@ -41,7 +41,7 @@ return {
                 opts = {
                     delay = 200,
                     providers = { "lsp", "treesitter", "regex" },
-                    filetypes_denylist = { "dirvish", "fugitive", "lazy", "mason", "NvimTree" },
+                    filetypes_denylist = { "neo-tree", "dirvish", "fugitive", "lazy", "mason" },
                 },
                 config = function(_, opts)
                     require("illuminate").configure(opts)
@@ -129,7 +129,6 @@ return {
                     local server_opts = servers[server] or {}
 
                     server_opts.flags = { debounce_text_changes = 150 }
-
                     server_opts.on_attach = utils.lsp_on_attach()
                     server_opts.capabilities = utils.lsp_capabilities()
 
@@ -164,7 +163,16 @@ return {
                     end
 
                     if server == "rust_analyzer" then
-                        require("rust-tools").setup { server = server_opts }
+                        require("rust-tools").setup {
+                            server = server_opts,
+                            dap = {
+                                adapter = require("rust-tools.dap").get_codelldb_adapter(
+                                    vim.fn.stdpath "data" .. "/mason/bin/codelldb",
+                                    vim.fn.stdpath "data"
+                                        .. "/mason/packages/codelldb/extension/lldb/lib/liblldb.so"
+                                ),
+                            },
+                        }
                     elseif server == "clangd" then
                         require("clangd_extensions").setup { server = server_opts }
                     else
@@ -185,18 +193,13 @@ return {
             local packages = require("user.config").nulls_packages
             local sources = {}
 
-            for _, package in ipairs(packages.formatting) do
-                if type(package) == "table" then
-                    table.insert(sources, nls.builtins.formatting[package[1]].with { package[2] })
-                else
-                    table.insert(sources, nls.builtins.formatting[package])
-                end
-            end
-            for _, package in ipairs(packages.diagnostics) do
-                if type(package) == "table" then
-                    table.insert(sources, nls.builtins.diagnostics[package[1]].with { package[2] })
-                else
-                    table.insert(sources, nls.builtins.diagnostics[package])
+            for t_pkg, pkgs in pairs(packages) do
+                for _, pckg in ipairs(pkgs) do
+                    if type(pckg) == "table" then
+                        table.insert(sources, nls.builtins[t_pkg][pckg[1]].with { pckg[2] })
+                    else
+                        table.insert(sources, nls.builtins[t_pkg][pckg])
+                    end
                 end
             end
 

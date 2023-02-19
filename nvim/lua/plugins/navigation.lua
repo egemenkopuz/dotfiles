@@ -1,23 +1,50 @@
 return {
     {
         "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
         cmd = "Neotree",
-        deactivate = function()
-            vim.cmd [[Neotree close]]
-        end,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+            {
+                "s1n7ax/nvim-window-picker",
+                version = "v1.*",
+                config = function()
+                    require("window-picker").setup {
+                        autoselect_one = true,
+                        include_current = false,
+                        other_win_hl_color = "#7E9CD8",
+                        filter_rules = {
+                            bo = {
+                                filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                                buftype = { "terminal", "quickfix" },
+                            },
+                        },
+                    }
+                end,
+            },
+        },
         init = function()
             vim.g.neo_tree_remove_legacy_commands = 1
-            if vim.fn.argc() == 1 then
-                local stat = vim.loop.fs_stat(vim.fn.argv(0))
-                if stat and stat.type == "directory" then
-                    require "neo-tree"
-                end
-            end
             require("user.utils").load_keymap "neotree"
         end,
         opts = {
-            filesystem = { bind_to_cwd = false, follow_current_file = true },
-            window = { mappings = { ["<space>"] = "none" } },
+            filesystem = {
+                use_libuv_file_watcher = true,
+                bind_to_cwd = false,
+                follow_current_file = true,
+                hijack_netrw_behavior = "disabled",
+            },
+            window = {
+                mappings = {
+                    ["<space>"] = "none",
+                    ["<2-LeftMouse>"] = "open_with_window_picker",
+                    ["<cr>"] = "open_with_window_picker",
+                    ["<C-x>"] = "split_with_window_picker",
+                    ["<C-v>"] = "vsplit_with_window_picker",
+                },
+            },
         },
     },
 
@@ -31,10 +58,9 @@ return {
             "debugloop/telescope-undo.nvim",
             "olimorris/persisted.nvim",
             "ahmedkhalf/project.nvim",
-            -- "nvim-telescope/telescope-dap.nvim",
             "folke/noice.nvim",
         },
-        -- cmd = "Telescope",
+        cmd = "Telescope",
         version = false,
         init = function()
             require("project_nvim").setup()
@@ -85,7 +111,7 @@ return {
                     override_file_sorter = true,
                     case_mode = "smart_case",
                 },
-                file_browser = { hijack_netrw = true, hidden = true, use_fd = true },
+                file_browser = { hijack_netrw = false, hidden = true, use_fd = true },
             },
         },
         config = function(_, opts)

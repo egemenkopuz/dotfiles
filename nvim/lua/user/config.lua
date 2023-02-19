@@ -1,5 +1,7 @@
 local M = { icons = {} }
 
+vim.g.python3_host_prog = "/usr/bin/python3"
+
 -- stylua: ignore start
 vim.fn.sign_define( "DiagnosticSignError", { text = "", numhl = "DiagnosticError", linehl = "DiagnosticLineError" })
 vim.fn.sign_define( "DiagnosticSignWarn", { text = "", numhl = "DiagnosticWarn", linehl = "DiagnosticLineWarn" })
@@ -67,6 +69,8 @@ M.nulls_packages = {
         { "pydocstyle", extra_args = { "--config=$ROOT/setup.cfg" } },
         "hadolint",
     },
+    code_actions = {},
+    hover = {}
 }
 
 M.disabled_plugins = {
@@ -98,7 +102,7 @@ M.disabled_plugins = {
     "ftplugin",
 }
 
--- Dashboard logo
+-- Dashboard custom logo
 M.logo = nil
 
 -- Diagnostics icons
