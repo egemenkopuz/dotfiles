@@ -1,83 +1,47 @@
-local opt = vim.opt
-local g = vim.g
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-g.do_filetype_lua = 1
-opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+vim.opt.encoding = "UTF-8"
+vim.opt.clipboard = "unnamedplus"
+vim.opt.termguicolors = true
 
-opt.laststatus = 3 -- global statusline
-opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-opt.title = true
+vim.opt.backup = false
+vim.opt.cmdheight = 0
+vim.opt.colorcolumn = ""
 
-opt.backup = false -- creates a backup file
-opt.cmdheight = 0 -- space in the neovim command line for displaying messages
-opt.colorcolumn = "99999" -- indentline
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.shiftwidth = 4
 
-opt.cul = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.numberwidth = 1
+vim.opt.ruler = false
+vim.opt.wrap = false
 
-opt.expandtab = true
-opt.shiftwidth = 4
-opt.smartindent = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
-opt.fillchars = { eob = " " }
-opt.ignorecase = true -- ignore case in search patterns
-opt.smartcase = true -- smart case
-opt.mouse = "a" -- allow the mouse to be used in neovim
+vim.opt.signcolumn = "yes"
+vim.opt.showmode = false
+vim.opt.laststatus = 3
+vim.opt.title = true
+vim.opt.cursorline = true
 
-opt.number = true
-opt.relativenumber = true
-opt.numberwidth = 2
-opt.ruler = false
-opt.wrap = false -- display lines as one long line
+vim.opt.showtabline = 1
+vim.opt.hidden = true
 
-opt.shortmess:append "sI"
-opt.signcolumn = "yes"
-opt.splitbelow = true -- force all horizontal splits to go below current window
-opt.splitright = true -- force all vertical splits to go to the right of current window
-opt.tabstop = 8
-opt.termguicolors = true
-opt.timeoutlen = 400
-opt.undofile = true -- enable persistent undo
-opt.writebackup = false -- if a file is being edited by another program, it is not allowed to be edited
+vim.opt.shortmess:append { W = true, I = true, c = true }
+vim.opt.fillchars = { eob = " " }
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.mouse = "a"
+vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.wildmode = "longest:full,full"
 
-opt.updatetime = 300
-g.mapleader = " "
+vim.opt.confirm = true
+vim.opt.undofile = true
+vim.opt.undolevels = 10000
 
--- disable some builtin vim plugins
-local default_plugins = {
-  "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
-  "gzip",
-  "logipat",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-  "matchit",
-  "tar",
-  "tarPlugin",
-  "rrhelper",
-  "spellfile_plugin",
-  "vimball",
-  "vimballPlugin",
-  "zip",
-  "zipPlugin",
-  "tutor",
-  "rplugin",
-  "syntax",
-  "synmenu",
-  "optwin",
-  "compiler",
-  "bugreport",
-  "ftplugin",
-}
-
-for _, plugin in pairs(default_plugins) do
-  g["loaded_" .. plugin] = 1
-end
-
--- set shada path
-vim.schedule(function()
-  vim.opt.shadafile = vim.fn.expand "$HOME" .. "/.local/share/nvim/shada/main.shada"
-  vim.cmd [[ silent! rsh ]]
-end)
+vim.opt.timeoutlen = 400
+vim.opt.updatetime = 200
