@@ -2,8 +2,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source "$HOME/.config/antigen/antigen.zsh"
-antigen init $HOME/.antigenrc
+f="$HOME/.nvm/nvm.sh"
+if [ -r "$f" ]; then
+  . "$f" &>'/dev/null'
+  nvm use --lts &>'/dev/null'
+fi
+
+source "$XDG_CONFIG_HOME/antigen/antigen.zsh"
+antigen init $XDG_CONFIG_HOME/antigen/.antigenrc
 
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':autocomplete:*' min-input 1
@@ -23,6 +29,8 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 
 alias xclip="xclip -selection clipboard"
+
+alias gg="lazygit"
 
 alias h="history"
 alias hf="history | grep"
@@ -58,3 +66,7 @@ else
 fi
 
 while [ ! -z $CONDA_PREFIX ]; do conda deactivate; done
+
+export NVM_DIR="$HOME/.local/share/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

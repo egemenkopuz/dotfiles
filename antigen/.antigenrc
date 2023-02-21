@@ -4,6 +4,7 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle pip
 antigen bundle sudo
+antigen bundle tmuxinator
 antigen bundle last-working-dir
 
 # from external repos

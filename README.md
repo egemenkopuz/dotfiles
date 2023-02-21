@@ -1,4 +1,23 @@
-```bash
-for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
+# Install
 
+```zsh
+$ make "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/master/Makefile)" install
 ```
+
+```zsh
+$ docker build --no-cache -t "dev-env:latest" .
+$ docker run --name dev-env -d -it -v "$(pwd)":/home/user/projects dev-env
+$ docker exec -it dev-env zsh
+```
+
+# Neovim plugins
+
+- TODO
+
+# ZSH plugins
+
+- TODO
+
+# TMUX plugins
+
+- TODO
