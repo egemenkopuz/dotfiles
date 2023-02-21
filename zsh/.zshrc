@@ -2,22 +2,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export LANG=en_US.UTF-8
-export GPG_TTY=$TTY
-export VISUAL=nvim
-export EDITOR="$VISUAL"
+f="$HOME/.nvm/nvm.sh"
+if [ -r "$f" ]; then
+  . "$f" &>'/dev/null'
+  nvm use --lts &>'/dev/null'
+fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-
-source "$HOME/.config/antigen/antigen.zsh"
-antigen init $HOME/.antigenrc
+source "$XDG_CONFIG_HOME/antigen/antigen.zsh"
+antigen init $XDG_CONFIG_HOME/antigen/.antigenrc
 
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':autocomplete:*' min-input 1
@@ -25,7 +17,6 @@ zstyle ':autocomplete:*' fzf-completion yes
 
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE
-HISTFILE=$HOME/.zsh_history
 
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY             # Share history between all sessions.
@@ -39,10 +30,12 @@ setopt HIST_VERIFY               # Do not execute immediately upon history expan
 
 alias xclip="xclip -selection clipboard"
 
+alias gg="lazygit"
+
 alias h="history"
 alias hf="history | grep"
 
-alias rm="rm -iv"
+alias rm="rm -v"
 alias cp="cp -iv"
 alias mv="mv -iv"
 
@@ -62,7 +55,7 @@ alias cat="batcat"
 alias df="duf"
 alias ps="procs"
 
-source $HOME/.p10k.zsh
+source "$ZDOTDIR/.p10k.zsh"
 
 eval "$(zoxide init zsh)"
 
@@ -73,3 +66,7 @@ else
 fi
 
 while [ ! -z $CONDA_PREFIX ]; do conda deactivate; done
+
+export NVM_DIR="$HOME/.local/share/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

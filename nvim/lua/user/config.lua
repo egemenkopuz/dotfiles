@@ -43,13 +43,15 @@ M.mason_packages = {
     "lua-language-server",
     "pyright",
     "clangd",
-    -- formatter
+    "dockerfile-language-server",
+    "marksman",
+    "json-lsp",
+    "yaml-language-server",
+    "hadolint",
     "stylua",
-    "black",
-    "isort",
     "clang-format",
-    -- dap
     "debugpy",
+    "codelldb",
 }
 
 M.nulls_packages = {
@@ -70,7 +72,7 @@ M.nulls_packages = {
         "hadolint",
     },
     code_actions = {},
-    hover = {}
+    hover = {},
 }
 
 M.disabled_plugins = {
@@ -158,6 +160,7 @@ M.icons.kinds = {
     Calendar = "",
     Watch = " ",
     Package = "",
+    Copilot = " ",
 }
 
 return M
