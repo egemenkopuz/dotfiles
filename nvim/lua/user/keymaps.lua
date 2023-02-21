@@ -321,4 +321,30 @@ M.spectre = {
     },
 }
 
+M.window_picker = {
+    n = {
+        ["<leader>ws"] = {
+            function()
+                local picked_window_id = require("window-picker").pick_window {
+                    include_current_win = true,
+                } or vim.api.nvim_get_current_win()
+                vim.api.nvim_set_current_win(picked_window_id)
+            end,
+            "Pick a window",
+        },
+        ["<leader>wS"] = {
+            function()
+                local window = require("window-picker").pick_window { include_current_win = false }
+                if window == nil then
+                    return
+                end
+                local target_buffer = vim.fn.winbufnr(window)
+                vim.api.nvim_win_set_buf(window, 0)
+                vim.api.nvim_win_set_buf(0, target_buffer)
+            end,
+            "Swap windows",
+        },
+    },
+}
+
 return M

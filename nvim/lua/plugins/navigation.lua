@@ -7,23 +7,7 @@ return {
             "nvim-lua/plenary.nvim",
             "kyazdani42/nvim-web-devicons",
             "MunifTanjim/nui.nvim",
-            {
-                "s1n7ax/nvim-window-picker",
-                version = "v1.*",
-                config = function()
-                    require("window-picker").setup {
-                        autoselect_one = true,
-                        include_current = false,
-                        other_win_hl_color = "#7E9CD8",
-                        filter_rules = {
-                            bo = {
-                                filetype = { "neo-tree", "neo-tree-popup", "notify" },
-                                buftype = { "terminal", "quickfix" },
-                            },
-                        },
-                    }
-                end,
-            },
+            "s1n7ax/nvim-window-picker",
         },
         init = function()
             vim.g.neo_tree_remove_legacy_commands = 1
@@ -163,6 +147,26 @@ return {
             for k, v in pairs(hl_group) do
                 vim.api.nvim_set_hl(0, k, v)
             end
+        end,
+    },
+
+    {
+        "s1n7ax/nvim-window-picker",
+        event = "BufReadPost",
+        version = "v1.*",
+        config = function()
+            require("window-picker").setup {
+                autoselect_one = true,
+                include_current = false,
+                other_win_hl_color = "#7E9CD8",
+                filter_rules = {
+                    bo = {
+                        filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                        buftype = { "terminal", "quickfix" },
+                    },
+                },
+            }
+            require("user.utils").load_keymap "window_picker"
         end,
     },
 
