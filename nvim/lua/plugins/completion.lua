@@ -123,12 +123,10 @@ return {
     },
     {
         "zbirenbaum/copilot-cmp",
+        event = "InsertEnter",
         dependencies = {
             "zbirenbaum/copilot.lua",
-            opts = {
-                suggestion = { enabled = false },
-                panel = { enabled = false },
-            },
+            opts = { suggestion = { enabled = false }, panel = { enabled = false } },
         },
         opts = { method = "getCompletionsCycling" },
         config = function(_, opts)
