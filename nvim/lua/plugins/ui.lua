@@ -213,7 +213,8 @@ return {
         event = "BufReadPre",
         opts = {
             indentLine_enabled = 1,
-            char = "▏",
+            char = "┊",
+            -- char_list = { "|", "¦", "┆", "┊" },
             filetype_exclude = {
                 "alpha",
                 "mason",
@@ -234,8 +235,8 @@ return {
             buftype_exclude = { "terminal", "nofile" },
             show_trailing_blankline_indent = false,
             show_first_indent_level = false,
-            show_current_context = false,
-            char_list = { "|", "¦", "┆", "┊" },
+            show_current_context = true,
+            show_current_context_start = false,
             space_char = " ",
         },
     },

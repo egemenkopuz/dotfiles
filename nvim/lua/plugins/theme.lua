@@ -14,6 +14,12 @@ return {
         "rebelot/kanagawa.nvim",
         enabled = true,
         priority = 1000,
+        opts = {
+            overrides = {
+                IndentBlanklineChar = { fg = "#2E3440" },
+                IndentBlanklineContextChar = { fg = "#4A5263" },
+            },
+        },
         config = function(_, opts)
             require("kanagawa").setup(opts)
             vim.cmd.colorscheme "kanagawa"
@@ -25,7 +31,7 @@ return {
         enabled = false,
         name = "catppuccin",
         opts = {
-            flavour = "macchiato", -- latte, frappe, macchiato, mocha
+            flavour = "mocha", -- latte, frappe, macchiato, mocha
             term_colors = true,
             compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
             integrations = {
@@ -52,8 +58,12 @@ return {
                 },
             },
             highlight_overrides = {
-                macchiato = function(x)
-                    return { CmpBorder = { fg = x.surface2 } }
+                mocha = function(x)
+                    return {
+                        CmpBorder = { fg = x.surface2 },
+                        IndentBlanklineChar = { fg = "#2E3440" },
+                        IndentBlanklineContextChar = { fg = "#4A5263" },
+                    }
                 end,
             },
             dim_inactive = { enabled = true, shade = "dark", percentage = 0.15 },
