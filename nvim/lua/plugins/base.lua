@@ -38,13 +38,7 @@ return {
 
     {
         "nvim-tree/nvim-web-devicons",
-        opts = {
-            color_icons = false,
-            override_by_filename = {
-                ["Dockerfile"] = { icon = "", name = "Dockerfile" },
-                ["docker-compose.yaml"] = { icon = "", name = "Dockercompose" },
-            },
-        },
+        opts = { color_icons = false },
         config = true,
     },
 }
