@@ -1,7 +1,7 @@
 return {
     {
         "AlexvZyl/nordic.nvim",
-        enabled = false,
+        enabled = require("user.utils").colorscheme_selection("nordic"),
         priority = 1000,
         config = function(_, opts)
             require("nordic").setup(opts)
@@ -12,7 +12,7 @@ return {
 
     {
         "rebelot/kanagawa.nvim",
-        enabled = true,
+        enabled = require("user.utils").colorscheme_selection("kanagawa"),
         priority = 1000,
         opts = {
             overrides = {
@@ -28,7 +28,7 @@ return {
 
     {
         "catppuccin/nvim",
-        enabled = false,
+        enabled = require("user.utils").colorscheme_selection("catppuccin"),
         name = "catppuccin",
         opts = {
             flavour = "mocha", -- latte, frappe, macchiato, mocha

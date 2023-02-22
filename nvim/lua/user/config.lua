@@ -1,19 +1,8 @@
 local M = { icons = {} }
 
-vim.g.python3_host_prog = "/usr/bin/python3"
+M.colorscheme = "kanagawa"
 
--- stylua: ignore start
-vim.fn.sign_define( "DiagnosticSignError", { text = "", numhl = "DiagnosticError", linehl = "DiagnosticLineError" })
-vim.fn.sign_define( "DiagnosticSignWarn", { text = "", numhl = "DiagnosticWarn", linehl = "DiagnosticLineWarn" })
-vim.fn.sign_define( "DiagnosticSignInfo", { text = "", numhl = "DiagnosticInfo", linehl = "DiagnosticLineInfo" })
-vim.fn.sign_define( "DiagnosticSignHint", { text = "", numhl = "DiagnosticHint", linehl = "DiagnosticLineHint" })
-vim.fn.sign_define( "DapBreakpoint", { text = "", numhl = "DapBreakpoint", linehl = "DapBreakpoint" })
-vim.fn.sign_define( "DagLogPoint", { text = "", numhl = "DapLogPoint", linehl = "DapLogPoint" })
-vim.fn.sign_define( "DapStopped", { text = "", numhl = "DapStopped", linehl = "DapStopped" })
--- stylua: ignore end
-vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
-vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
-vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
+vim.g.python3_host_prog = "/usr/bin/python3"
 
 -- auto install treesitter packages
 M.treesitter_packages = {
@@ -60,7 +49,7 @@ M.nulls_packages = {
         "black",
         "trim_newlines",
         "trim_whitespace",
-        "prettierd",
+        "prettier",
         "stylua",
         "clang_format",
         "rustfmt",
@@ -162,5 +151,18 @@ M.icons.kinds = {
     Package = "",
     Copilot = " ",
 }
+
+-- stylua: ignore start
+vim.fn.sign_define( "DiagnosticSignError", { text = "", numhl = "DiagnosticError", linehl = "DiagnosticLineError" })
+vim.fn.sign_define( "DiagnosticSignWarn", { text = "", numhl = "DiagnosticWarn", linehl = "DiagnosticLineWarn" })
+vim.fn.sign_define( "DiagnosticSignInfo", { text = "", numhl = "DiagnosticInfo", linehl = "DiagnosticLineInfo" })
+vim.fn.sign_define( "DiagnosticSignHint", { text = "", numhl = "DiagnosticHint", linehl = "DiagnosticLineHint" })
+vim.fn.sign_define( "DapBreakpoint", { text = "", numhl = "DapBreakpoint", linehl = "DapBreakpoint" })
+vim.fn.sign_define( "DagLogPoint", { text = "", numhl = "DapLogPoint", linehl = "DapLogPoint" })
+vim.fn.sign_define( "DapStopped", { text = "", numhl = "DapStopped", linehl = "DapStopped" })
+-- stylua: ignore end
+vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
+vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
+vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
 
 return M

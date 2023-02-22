@@ -116,6 +116,14 @@ function M.path_exists(path)
     return ok
 end
 
+function M.colorscheme_selection(colorscheme)
+    if require("user.config").colorscheme == colorscheme then
+        return true
+    else
+        return false
+    end
+end
+
 -- return the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir
