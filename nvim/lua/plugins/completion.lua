@@ -117,6 +117,22 @@ return {
                     end,
                 },
                 formatters = { insert_text = require("copilot_cmp.format").remove_existing },
+                sorting = {
+                    priority_weight = 2,
+                    comparators = {
+                        cmp.config.compare.offset,
+                        cmp.config.compare.exact,
+                        cmp.config.compare.score,
+                        cmp.config.compare.recently_used,
+                        cmp.config.compare.locality,
+                        cmp.config.compare.kind,
+                        cmp.config.compare.sort_text,
+                        cmp.config.compare.length,
+                        cmp.config.compare.order,
+                        require("copilot_cmp.comparators").prioritize,
+                        require("copilot_cmp.comparators").score,
+                    },
+                },
                 experimental = { ghost_text = { hl_group = "LspCodeLens" } },
             }
         end,
