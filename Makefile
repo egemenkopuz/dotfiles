@@ -21,6 +21,7 @@ python-pkgs:
 rust-pkgs:
 	echo "Installing rust packages"
 	curl https://sh.rustup.rs -sSf | bash -s -- -y
+	cargo install git-delta
 
 install-lazygit:
 	echo "Installing lazygit..."

@@ -60,7 +60,7 @@ M.nulls_packages = {
         "black",
         "trim_newlines",
         "trim_whitespace",
-        "prettier",
+        "prettierd",
         "stylua",
         "clang_format",
         "rustfmt",
