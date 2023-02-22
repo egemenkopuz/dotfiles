@@ -37,18 +37,14 @@ return {
     },
 
     {
-        "kyazdani42/nvim-web-devicons",
-        config = function()
-            local nvim_web_devicons = require "nvim-web-devicons"
-            local current_icons = nvim_web_devicons.get_icons()
-            local new_icons = {}
-            -- makes all icons grayish
-            for key, icon in pairs(current_icons) do
-                icon.color = "#9F9F9F"
-                icon.cterm_color = 198
-                new_icons[key] = icon
-            end
-            nvim_web_devicons.set_icon(new_icons)
-        end,
+        "nvim-tree/nvim-web-devicons",
+        opts = {
+            color_icons = false,
+            override_by_filename = {
+                ["Dockerfile"] = { icon = "", name = "Dockerfile" },
+                ["docker-compose.yaml"] = { icon = "", name = "Dockercompose" },
+            },
+        },
+        config = true,
     },
 }

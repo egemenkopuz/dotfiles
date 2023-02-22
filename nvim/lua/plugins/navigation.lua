@@ -5,7 +5,7 @@ return {
         cmd = "Neotree",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "kyazdani42/nvim-web-devicons",
+            "nvim-tree/nvim-web-devicons",
             "MunifTanjim/nui.nvim",
             "s1n7ax/nvim-window-picker",
         },
@@ -39,7 +39,7 @@ return {
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             "nvim-telescope/telescope-file-browser.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
-            "olimorris/persisted.nvim",
+            { "olimorris/persisted.nvim", lazy = true, config = true },
             "ahmedkhalf/project.nvim",
             "folke/noice.nvim",
         },
@@ -47,7 +47,6 @@ return {
         version = false,
         init = function()
             require("project_nvim").setup()
-            require("persisted").setup()
             require("user.utils").load_keymap "telescope"
         end,
         opts = {
@@ -204,7 +203,7 @@ return {
 
     {
         "echasnovski/mini.tabline",
-        dependencies = { "kyazdani42/nvim-web-devicons" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = { set_vim_settings = false },
         config = function(_, opts)
             require("mini.tabline").setup(opts)

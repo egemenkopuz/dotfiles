@@ -120,7 +120,7 @@ return {
     {
         "goolord/alpha-nvim",
         event = "VimEnter",
-        dependencies = { "kyazdani42/nvim-web-devicons" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = function()
             local config = require "user.config"
             local dashboard = require "alpha.themes.dashboard"
