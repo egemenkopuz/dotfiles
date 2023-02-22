@@ -152,4 +152,15 @@ return {
             require("user.utils").load_keymap "spectre"
         end,
     },
+
+    {
+        "danymat/neogen",
+        event = "BufReadPre",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        init = function()
+            require("user.utils").load_keymap "neogen"
+        end,
+        opts = { snippet_engine = "luasnip" },
+        config = true,
+    },
 }

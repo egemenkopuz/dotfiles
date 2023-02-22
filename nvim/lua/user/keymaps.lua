@@ -38,6 +38,7 @@ M.general = {
         -- splits
         ["<leader>wv"] = {"<cmd> vsplit <cr>", "Vertical split"},
         ["<leader>wx"] = {"<cmd> split <cr>", "Horizontal split"},
+        ["<leader>we"] = {"<C-w>=", "Equalize splits"},
         -- ui reset
         ["<leader>ur"] = { "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><cr>", "Redraw / clear hlsearch / diff update"},
         -- go to last selected text
@@ -174,7 +175,6 @@ M.lsp = {
         ["[e"] = { function() vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR}) end, "Previous error", },
         ["]w"] = { function() vim.diagnostic.goto_next({severity = vim.diagnostic.severity.WARN}) end, "Next warning", },
         ["[w"] = { function() vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.WARN}) end, "Previous warning", },
-        -- ["<leader>q"] = { function() vim.diagnostic.setloclist() end, "Set loc list", },
         ["<leader>cf"] = { function() vim.lsp.buf.format { async = true } end, "Format", },
         ["<leader>wa"] = { function() vim.lsp.buf.add_workspace_folder() end, "Add workspace folder", },
         ["<leader>wr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "Remove workspace folder", },
@@ -344,6 +344,12 @@ M.window_picker = {
             end,
             "Swap windows",
         },
+    },
+}
+
+M.neogen = {
+    n = {
+        ["<leader>cg"] = { "<cmd>lua require('neogen').generate()<cr>", "Generate doc" },
     },
 }
 
