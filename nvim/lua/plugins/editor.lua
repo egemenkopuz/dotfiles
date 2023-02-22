@@ -154,6 +154,14 @@ return {
     },
 
     {
+        "mbbill/undotree",
+        event = "BufReadPre",
+        config = function(_, _)
+            require("user.utils").load_keymap "undotree"
+        end,
+    },
+
+    {
         "danymat/neogen",
         event = "BufReadPre",
         dependencies = "nvim-treesitter/nvim-treesitter",

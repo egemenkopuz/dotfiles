@@ -353,4 +353,10 @@ M.neogen = {
     },
 }
 
+M.undotree = {
+    n = {
+        ["<leader>fu"] = { "<cmd> UndotreeToggle <cr>", "Toggle undotree" },
+    },
+}
+
 return M
