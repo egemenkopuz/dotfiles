@@ -6,6 +6,9 @@ dependencies: symlinks python-pkgs rust-pkgs neovim-sync install-lazydocker inst
 docker-dependencies: symlinks neovim-sync
 
 install:
+	git clone --filter=blob:none --depth 1 https://github.com/egemenkopuz/.config.git ${HOME}/.config
+
+install-dev:
 	git clone https://github.com/egemenkopuz/.config.git ${HOME}/.config
 
 symlinks:

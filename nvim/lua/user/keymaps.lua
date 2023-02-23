@@ -10,6 +10,10 @@ M.general = {
         ["D"] = { '"_D' },
         ["c"] = { '"_c' },
         ["C"] = { '"_C' },
+        ["y"] = { '"+y' },
+        ["Y"] = { '"+Y' },
+        ["p"] = { '"+p' },
+        ["P"] = { '"+P' },
     },
     i = {
         -- to quit insert mode fast
@@ -57,8 +61,10 @@ M.general = {
         ["<C-Right>"] = { ":vertical resize -2<cr>", "Resize window right" },
         -- save file
         ["<C-s>"] = { "<cmd> w <cr>", "Save file" },
-        -- line numbers
+        -- toggle line numbers
         ["<leader>tr"] = { "<cmd> set rnu! <cr>", "Toggle relative line numbers" },
+        -- toggle word wrap 
+        ["<leader>tw"] = { "<cmd> set wrap! <cr>", "Toggle word wrap" },
         -- centered page navigation
         ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
         ["<C-d>"] = { "<C-d>zz", "Jump half-page down" },
@@ -197,11 +203,11 @@ M.gitsigns = {
     },
     -- stylua: ignore
     ["n"] = {
-        ["<leader>ts"] = { "<cmd> Gitsigns toggle_signs <cr>", "Toggle git signs" },
-        ["<leader>tn"] = { "<cmd> Gitsigns toggle_numhl <cr>", "Toggle git numhl" },
-        ["<leader>tl"] = { "<cmd> Gitsigns toggle_linehl <cr>", "Toggle git linehl" },
-        ["<leader>tw"] = { "<cmd> Gitsigns toggle_word_diff <cr>", "Toggle git diff" },
-        ["<leader>tb"] = { "<cmd> Gitsigns toggle_current_line_blame <cr>", "Toggle git line blame" },
+        ["<leader>tgs"] = { "<cmd> Gitsigns toggle_signs <cr>", "Toggle git signs" },
+        ["<leader>tgn"] = { "<cmd> Gitsigns toggle_numhl <cr>", "Toggle git numhl" },
+        ["<leader>tgl"] = { "<cmd> Gitsigns toggle_linehl <cr>", "Toggle git linehl" },
+        ["<leader>tgw"] = { "<cmd> Gitsigns toggle_word_diff <cr>", "Toggle git diff" },
+        ["<leader>tgb"] = { "<cmd> Gitsigns toggle_current_line_blame <cr>", "Toggle git line blame" },
         ["<leader>gs"] = { "<cmd> Gitsigns stage_hunk <cr>", "Stage hunk" },
         ["<leader>gr"] = { "<cmd> Gitsigns reset_hunk <cr>", "Reset hunk" },
         ["<leader>gu"] = { "<cmd> Gitsigns undo_stage_hunk <cr>", "Undo stage hunk" },

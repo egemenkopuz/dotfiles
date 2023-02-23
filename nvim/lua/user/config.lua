@@ -1,6 +1,6 @@
 local M = { icons = {} }
 
-M.colorscheme = "kanagawa"
+M.colorscheme = "nordic"
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 

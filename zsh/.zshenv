@@ -14,7 +14,7 @@ export ZSH="$XDG_CONFIG_HOME/zsh"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump-${(%):-%m}-${ZSH_VERSION}"
-export HISTFILE=$ZSH/.zsh_history
+export HISTFILE="$ZSH/.zsh_history"
 
 export GOPATH="$XDG_DATA_HOME/go"
 export CARGO_HOME="$HOME/.cargo"
