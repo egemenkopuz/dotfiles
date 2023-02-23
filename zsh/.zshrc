@@ -2,12 +2,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-f="$HOME/.nvm/nvm.sh"
-if [ -r "$f" ]; then
-  . "$f" &>'/dev/null'
-  nvm use --lts &>'/dev/null'
-fi
-
 source "$XDG_CONFIG_HOME/antigen/antigen.zsh"
 antigen init $XDG_CONFIG_HOME/antigen/.antigenrc
 
@@ -66,7 +60,3 @@ else
 fi
 
 while [ ! -z $CONDA_PREFIX ]; do conda deactivate; done
-
-export NVM_DIR="$HOME/.local/share/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
