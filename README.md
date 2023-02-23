@@ -2,16 +2,16 @@
 
 <div align="center">
     <a href="https://github.com/egemenkopuz/dotfiles/pulse">
-      <img alt="Last commit" src="https://img.shields.io/github/last-commit/egemenkopuz/dotfiles?style=for-the-badge&logo=starship&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41"/>
+      <img alt="Last commit" src="https://img.shields.io/github/last-commit/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41"/>
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles/stargazers">
-      <img alt="Stars" src="https://img.shields.io/github/stars/egemenkopuz/dotfiles?style=for-the-badge&logo=starship&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41" />
+      <img alt="Stars" src="https://img.shields.io/github/stars/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41" />
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles/issues">
-      <img alt="Issues" src="https://img.shields.io/github/issues/egemenkopuz/dotfiles?style=for-the-badge&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" />
+      <img alt="Issues" src="https://img.shields.io/github/issues/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" />
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles">
-      <img alt="Size" src="https://img.shields.io/github/repo-size/egemenkopuz/dotfiles?color=F5E0DC&label=SIZE&logo=codesandbox&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" />
+      <img alt="Size" src="https://img.shields.io/github/repo-size/egemenkopuz/dotfiles?color=F5E0DC&label=SIZE&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" />
     </a>
 </div>
 
@@ -22,9 +22,10 @@
 <div align="center">
 <span> more images </span>
  <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_alpha.png">1</a>
- <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_cmd.png">2</a>
+ <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_lazygit.png">2</a>
  <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_telescope.png">3</a>
- <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_zen.png">4</a>
+ <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_cmd.png">4</a>
+ <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_zen.png">5</a>
 </div>
 
 # My setup
@@ -34,7 +35,7 @@
 - terminal: wezterm
 - font: JetBrainsMono Nerd Font
 - tools:
-  - [antigen](https://github.com/zsh-users/antigen) - zsh plugin manager 
+  - [antigen](https://github.com/zsh-users/antigen) - zsh plugin manager
   - [p10k](https://github.com/romkatv/powerlevel10k) - zsh theme
   - [lazygit](https://github.com/jesseduffield/lazygit) - git workflow
   - [git-delta](https://github.com/dandavison/delta) - many cool features for git
@@ -42,12 +43,12 @@
   - [tmux](https://github.com/tmux/tmux) - terminal multiplexer
   - [ripgrep](https://github.com/BurntSushi/ripgrep) - must-have search tool
   - [fzf](https://github.com/junegunn/fzf) - must-have search tool
-  - [zoxide](https://github.com/ajeetdsouza/zoxide) - smarter *cd*
-  - [exa](https://github.com/ogham/exa) - better *ls*
-  - [fd](https://github.com/sharkdp/fd) - better *find*
-  - [bat](https://github.com/sharkdp/bat) - better *cat*
-  - [duf](https://github.com/muesli/duf) - better *df*
-  - [procs](https://github.com/dalance/procs) - better *ps*
+  - [zoxide](https://github.com/ajeetdsouza/zoxide) - smarter _cd_
+  - [exa](https://github.com/ogham/exa) - better _ls_
+  - [fd](https://github.com/sharkdp/fd) - better _find_
+  - [bat](https://github.com/sharkdp/bat) - better _cat_
+  - [duf](https://github.com/muesli/duf) - better _df_
+  - [procs](https://github.com/dalance/procs) - better _ps_
 
 # Install
 
@@ -77,5 +78,6 @@ $ docker exec -it dev-env zsh
 ```
 
 # Next
+
 - finding an alternative bufferline plugin
 - debug setup requires finetuning
