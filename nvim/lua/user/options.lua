@@ -1,13 +1,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-if vim.fn.has "wsl" == 1 then
-    vim.g.clipboard = {
-        copy = { ["+"] = "win32yank.exe -i --crlf", ["*"] = "win32yank.exe -i --crlf" },
-        paste = { ["+"] = "win32yank.exe -o --lf", ["*"] = "win32yank.exe -o --lf" },
-    }
-else
-    vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
+if os.getenv "PLATFORM" ~= "docker" then
+    require("user.utils").load_keymap "clipboard"
 end
 
 vim.opt.encoding = "UTF-8"

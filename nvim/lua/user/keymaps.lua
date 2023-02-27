@@ -10,10 +10,6 @@ M.general = {
         ["D"] = { '"_D' },
         ["c"] = { '"_c' },
         ["C"] = { '"_C' },
-        ["y"] = { '"+y' },
-        ["Y"] = { '"+Y' },
-        ["p"] = { '"+p' },
-        ["P"] = { '"+P' },
     },
     i = {
         -- to quit insert mode fast
@@ -63,7 +59,7 @@ M.general = {
         ["<C-s>"] = { "<cmd> w <cr>", "Save file" },
         -- toggle line numbers
         ["<leader>tr"] = { "<cmd> set rnu! <cr>", "Toggle relative line numbers" },
-        -- toggle word wrap 
+        -- toggle word wrap
         ["<leader>tw"] = { "<cmd> set wrap! <cr>", "Toggle word wrap" },
         -- centered page navigation
         ["<C-u>"] = { "<C-u>zz", "Jump half-page up" },
@@ -91,6 +87,15 @@ M.general = {
         -- sorting
         ["<leader>s"] = { ":sort<cr>", "Sort ascending" },
         ["<leader>S"] = { ":sort!<cr>", "Sort descending" },
+    },
+}
+
+M.clipboard = {
+    [{ "n", "x" }] = {
+        ["y"] = { '"+y' },
+        ["Y"] = { '"+Y' },
+        ["p"] = { '"+p' },
+        ["P"] = { '"+P' },
     },
 }
 

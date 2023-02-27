@@ -1,4 +1,4 @@
-<h1 align="center"> $ dotfiles</h1>
+<h1 align="center"> $ dotfiles </h1>
 
 <div align="center">
     <a href="https://github.com/egemenkopuz/dotfiles/pulse">
@@ -49,13 +49,16 @@
   - [bat](https://github.com/sharkdp/bat) - better _cat_
   - [duf](https://github.com/muesli/duf) - better _df_
   - [procs](https://github.com/dalance/procs) - better _ps_
+  - [tre](https://github.com/dduan/tre) - better _tree_
 
 # Install
 
 The following command clones the repository into .config in home directory and installs all the requirements.
 
 ```zsh
-$ make "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/master/Makefile)" install
+$ git clone --depth 1 https://github.com/egemenkopuz/dotfiles.git ${HOME}/.config
+$ cd ${HOME}/.config
+$ make all
 ```
 
 **Notice:** to be able to copy and paste properly within WSL, follow [this guide](https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl) -- make sure to create a symlink from windows-side; other method did not work out for me.

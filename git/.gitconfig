@@ -4,7 +4,7 @@
 [user]
     email = egemenkopuz@hotmail.com
     name = Egemen Kopuz
-    signingkey = FA1804B585C3B91FD9E27A57F865AFA0B72021A6
+    signingkey = ECFA76CC0DA4B634D6511DA52E42738DAC09603A
 
 [init]
     defaultBranch = main
