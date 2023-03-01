@@ -170,45 +170,6 @@ return {
     },
 
     {
-        "b0o/incline.nvim",
-        event = "BufReadPre",
-        opts = {
-            render = function(props)
-                local bufname = vim.api.nvim_buf_get_name(props.buf)
-                local filename = " " .. vim.fn.fnamemodify(bufname, ":t") .. " "
-                local buffer = { { filename, guibg = "#7E9CD8", guifg = "#191C24" } }
-
-                if vim.api.nvim_buf_get_option(props.buf, "modified") then
-                    buffer[1][1] = filename .. "[+]"
-                end
-                if props.focused == false then
-                    buffer[1].guibg = "#191C24"
-                    buffer[1].guifg = "#4C566A"
-                end
-                return buffer
-            end,
-            window = {
-                zindex = 30,
-                width = "fit",
-                placement = { horizontal = "right", vertical = "top" },
-                margin = {
-                    horizontal = { left = 1, right = 0 },
-                    vertical = { bottom = 0, top = 1 },
-                },
-                padding = { left = 0, right = 0 },
-                padding_char = " ",
-                winhighlight = { Normal = "TreesitterContext" },
-            },
-            hide = {
-                cursorline = "focused_win",
-                focused_win = false,
-                only_win = true,
-            },
-        },
-        config = true,
-    },
-
-    {
         "lukas-reineke/indent-blankline.nvim",
         event = "BufReadPre",
         opts = {

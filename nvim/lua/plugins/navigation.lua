@@ -200,13 +200,4 @@ return {
             vim.keymap.del({ "x", "o" }, "X")
         end,
     },
-
-    -- {
-    --     "echasnovski/mini.tabline",
-    --     dependencies = { "nvim-tree/nvim-web-devicons" },
-    --     opts = { set_vim_settings = false },
-    --     config = function(_, opts)
-    --         require("mini.tabline").setup(opts)
-    --     end,
-    -- },
 }
