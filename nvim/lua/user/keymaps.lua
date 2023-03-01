@@ -177,12 +177,6 @@ M.lsp = {
         ["K"] = { function() vim.lsp.buf.hover() end, "Open hover", },
         ["<leader>ls"] = { function() vim.lsp.buf.signature_help() end, "Signature help", },
         ["<leader>ca"] = { function() vim.lsp.buf.code_action() end, "Code action", },
-        -- ["]d"] = { function() vim.diagnostic.goto_next() end, "Next diagnostic", },
-        -- ["[d"] = { function() vim.diagnostic.goto_prev() end, "Previous diagnostic", },
-        -- ["]e"] = { function() vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR}) end, "Next error", },
-        -- ["[e"] = { function() vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR}) end, "Previous error", },
-        -- ["]w"] = { function() vim.diagnostic.goto_next({severity = vim.diagnostic.severity.WARN}) end, "Next warning", },
-        -- ["[w"] = { function() vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.WARN}) end, "Previous warning", },
         ["<leader>cf"] = { function() vim.lsp.buf.format { async = true } end, "Format", },
         ["<leader>wa"] = { function() vim.lsp.buf.add_workspace_folder() end, "Add workspace folder", },
         ["<leader>wr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "Remove workspace folder", },
@@ -338,6 +332,7 @@ M.window_picker = {
 }
 
 M.bufferline = {
+    -- stylua: ignore
     n = {
         ["<leader>b1"] = { "<cmd> BufferLineGoToBuffer 1 <cr>", "Go to buffer 1" },
         ["<leader>b2"] = { "<cmd> BufferLineGoToBuffer 2 <cr>", "Go to buffer 2" },
@@ -354,14 +349,8 @@ M.bufferline = {
         ["<leader>bw"] = { "<cmd> BufferLinePick <cr>", "Pick buffer" },
         ["<leader>bse"] = { "<cmd> BufferLineSortByExtension <cr>", "Sort buffers by extension" },
         ["<leader>bsd"] = { "<cmd> BufferLineSortByDirectory <cr>", "Sort buffers by directory" },
-        ["<leader>bcr"] = {
-            "<cmd> BufferLineCloseRight <cr>",
-            "Close all visible buffers to the right",
-        },
-        ["<leader>bcl"] = {
-            "<cmd> BufferLineCloseLeft <cr>",
-            "Close all visible buffers to the left",
-        },
+        ["<leader>bcr"] = { "<cmd> BufferLineCloseRight <cr>", "Close all visible buffers to the right" },
+        ["<leader>bcl"] = { "<cmd> BufferLineCloseLeft <cr>", "Close all visible buffers to the left" },
         ["<leader>bp"] = { "<cmd> BufferLineTogglePin <cr>", "Pin buffer" },
     },
 }
@@ -374,7 +363,13 @@ M.neogen = {
 
 M.undotree = {
     n = {
-        ["<leader>fu"] = { "<cmd> UndotreeToggle <cr>", "Toggle undotree" },
+        ["<leader>tu"] = { "<cmd> UndotreeToggle <cr>", "Toggle undotree" },
+    },
+}
+
+M.symbols = {
+    n = {
+        ["<leader>ts"] = { "<cmd> SymbolsOutline <cr>", "Toggle symbols outline" },
     },
 }
 

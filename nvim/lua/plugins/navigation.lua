@@ -158,7 +158,13 @@ return {
                 other_win_hl_color = "#7E9CD8",
                 filter_rules = {
                     bo = {
-                        filetype = { "neo-tree", "neo-tree-popup", "notify", "no-neck-pain" },
+                        filetype = {
+                            "neo-tree",
+                            "neo-tree-popup",
+                            "notify",
+                            "no-neck-pain",
+                            "Outline",
+                        },
                         buftype = { "terminal", "quickfix" },
                     },
                 },

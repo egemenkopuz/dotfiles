@@ -155,9 +155,25 @@ return {
 
     {
         "mbbill/undotree",
-        event = "BufReadPre",
-        config = function(_, _)
+        cmd = "UndotreeToggle",
+        init = function(_, _)
             require("user.utils").load_keymap "undotree"
+        end,
+    },
+
+    {
+        "simrat39/symbols-outline.nvim",
+        cmd = "SymbolsOutline",
+        init = function()
+            require("user.utils").load_keymap "symbols"
+        end,
+        opts = function()
+            local opts = { symbols = {} }
+            local kinds = require("user.config").icons.kinds
+            for k, v in pairs(kinds) do
+                opts.symbols[k] = { icon = v }
+            end
+            return opts
         end,
     },
 

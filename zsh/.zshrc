@@ -28,7 +28,7 @@ setopt HIST_VERIFY               # do not execute immediately upon history expan
 alias h="history"
 alias hf="history | grep"
 
-alias rm="rm -v"
+alias rm="rm -iv"
 alias cp="cp -iv"
 alias mv="mv -iv"
 
@@ -40,7 +40,8 @@ alias la="exa -a --icons"
 alias ll="exa -lah --icons --git"
 alias ls="exa --color=auto --icons"
 
-alias gg="lazygit"
+alias t="tmux"
+alias g="lazygit"
 alias python="python3"
 alias grep="grep -n --color"
 alias mkdir="mkdir -pv"
