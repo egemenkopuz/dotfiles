@@ -242,6 +242,39 @@ return {
     },
 
     {
+        "akinsho/bufferline.nvim",
+        event = "VeryLazy",
+        opts = {
+            options = {
+                offsets = {
+                    {
+                        filetype = "neo-tree",
+                        text = "",
+                        padding = 0,
+                        text_align = "center",
+                        highlight = "Offset",
+                    },
+                },
+                diagnostics = "nvim_lsp",
+                show_buffer_close_icons = false,
+                show_close_icon = false,
+                close_command = "Bdelete! %d",
+                color_icons = false,
+                always_show_bufferline = false,
+            },
+        },
+        config = function(_, opts)
+            opts.options.groups = {
+                items = {
+                    require("bufferline.groups").builtin.pinned:with { icon = "" },
+                },
+            }
+            require("bufferline").setup(opts)
+            require("user.utils").load_keymap "bufferline"
+        end,
+    },
+
+    {
         "NvChad/nvim-colorizer.lua",
         event = "BufReadPre",
         opts = {

@@ -21,6 +21,8 @@ return {
                 ["]"] = { name = "+next" },
                 ["["] = { name = "+prev" },
                 ["<leader>b"] = { name = "+buffer" },
+                ["<leader>bs"] = { name = "+sort" },
+                ["<leader>bc"] = { name = "+close" },
                 ["<leader>d"] = { name = "+debug" },
                 ["<leader>c"] = { name = "+code" },
                 ["<leader>f"] = { name = "+find" },
@@ -51,4 +53,6 @@ return {
         },
         config = true,
     },
+
+    { "olimorris/persisted.nvim", config = true },
 }

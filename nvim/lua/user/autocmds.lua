@@ -23,28 +23,6 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
     end,
 })
 
-vim.api.nvim_create_autocmd({ "BufAdd", "TabEnter" }, {
-    pattern = "*",
-    callback = function()
-        local count = #vim.fn.getbufinfo { buflisted = 1 }
-        local status = count > 1 and 2 or 0
-        if vim.o.showtabline ~= status then
-            vim.o.showtabline = status
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd({ "BufDelete" }, {
-    pattern = "*",
-    callback = function()
-        local count = #vim.fn.getbufinfo { buflisted = 1 } - 1
-        local status = count > 1 and 2 or 0
-        if vim.o.showtabline ~= status then
-            vim.o.showtabline = status
-        end
-    end,
-})
-
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {

@@ -39,7 +39,7 @@ return {
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             "nvim-telescope/telescope-file-browser.nvim",
             "nvim-telescope/telescope-ui-select.nvim",
-            { "olimorris/persisted.nvim", lazy = true, config = true },
+            "olimorris/persisted.nvim",
             "ahmedkhalf/project.nvim",
             "folke/noice.nvim",
         },
@@ -158,7 +158,7 @@ return {
                 other_win_hl_color = "#7E9CD8",
                 filter_rules = {
                     bo = {
-                        filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                        filetype = { "neo-tree", "neo-tree-popup", "notify", "no-neck-pain" },
                         buftype = { "terminal", "quickfix" },
                     },
                 },
@@ -188,7 +188,7 @@ return {
 
     {
         "ggandor/leap.nvim",
-        event = "VeryLazy",
+        event = "BufReadPre",
         dependencies = { { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } } },
         config = function(_, opts)
             local leap = require "leap"
@@ -201,12 +201,12 @@ return {
         end,
     },
 
-    {
-        "echasnovski/mini.tabline",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = { set_vim_settings = false },
-        config = function(_, opts)
-            require("mini.tabline").setup(opts)
-        end,
-    },
+    -- {
+    --     "echasnovski/mini.tabline",
+    --     dependencies = { "nvim-tree/nvim-web-devicons" },
+    --     opts = { set_vim_settings = false },
+    --     config = function(_, opts)
+    --         require("mini.tabline").setup(opts)
+    --     end,
+    -- },
 }

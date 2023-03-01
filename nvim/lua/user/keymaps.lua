@@ -36,9 +36,9 @@ M.general = {
         ["<leader>qq"] = {"<cmd> q <cr>", "Quit window"},
         ["<leader>qQ"] = {"<cmd> q! <cr>", "Quit force window"},
         -- splits
-        ["<leader>wv"] = {"<cmd> vsplit <cr>", "Vertical split"},
-        ["<leader>wx"] = {"<cmd> split <cr>", "Horizontal split"},
-        ["<leader>we"] = {"<C-w>=", "Equalize splits"},
+        ["<leader>uv"] = {"<cmd> vsplit <cr>", "Vertical split"},
+        ["<leader>ux"] = {"<cmd> split <cr>", "Horizontal split"},
+        ["<leader>ue"] = {"<C-w>=", "Equalize splits"},
         -- ui reset
         ["<leader>ur"] = { "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><cr>", "Redraw / clear hlsearch / diff update"},
         -- go to last selected text
@@ -333,28 +333,33 @@ M.spectre = {
 }
 
 M.window_picker = {
+    -- stylua: ignore
     n = {
-        ["<leader>ws"] = {
-            function()
-                local picked_window_id = require("window-picker").pick_window {
-                    include_current_win = true,
-                } or vim.api.nvim_get_current_win()
-                vim.api.nvim_set_current_win(picked_window_id)
-            end,
-            "Pick a window",
-        },
-        ["<leader>wS"] = {
-            function()
-                local window = require("window-picker").pick_window { include_current_win = false }
-                if window == nil then
-                    return
-                end
-                local target_buffer = vim.fn.winbufnr(window)
-                vim.api.nvim_win_set_buf(window, 0)
-                vim.api.nvim_win_set_buf(0, target_buffer)
-            end,
-            "Swap windows",
-        },
+        ["<leader>uw"] = { function() utils.pick_window() end, "Pick window" },
+        ["<leader>us"] = { function() utils.swap_window() end, "Swap window" },
+    },
+}
+
+M.bufferline = {
+    n = {
+        ["<leader>b1"] = { "<cmd> BufferLineGoToBuffer 1 <cr>", "Go to buffer 1" },
+        ["<leader>b2"] = { "<cmd> BufferLineGoToBuffer 2 <cr>", "Go to buffer 2" },
+        ["<leader>b3"] = { "<cmd> BufferLineGoToBuffer 3 <cr>", "Go to buffer 3" },
+        ["<leader>b4"] = { "<cmd> BufferLineGoToBuffer 4 <cr>", "Go to buffer 4" },
+        ["<leader>b5"] = { "<cmd> BufferLineGoToBuffer 5 <cr>", "Go to buffer 5" },
+        ["<leader>b6"] = { "<cmd> BufferLineGoToBuffer 6 <cr>", "Go to buffer 6" },
+        ["<leader>b7"] = { "<cmd> BufferLineGoToBuffer 7 <cr>", "Go to buffer 7" },
+        ["<leader>b8"] = { "<cmd> BufferLineGoToBuffer 8 <cr>", "Go to buffer 8" },
+        ["<leader>b9"] = { "<cmd> BufferLineGoToBuffer 9 <cr>", "Go to buffer 9" },
+        ["<leader>b0"] = { "<cmd> BufferLineGoToBuffer 10 <cr>", "Go to buffer 10" },
+        ["<leader>b["] = { "<cmd> BufferLineMovePrev <cr>", "Move buffer left" },
+        ["<leader>b]"] = { "<cmd> BufferLineMoveNext <cr>", "Move buffer right" },
+        ["<leader>bw"] = { "<cmd> BufferLinePick <cr>", "Pick buffer" },
+        ["<leader>bse"] = { "<cmd> BufferLineSortByExtension <cr>", "Sort buffers by extension" },
+        ["<leader>bsd"] = { "<cmd> BufferLineSortByDirectory <cr>", "Sort buffers by directory" },
+        ["<leader>bcr"] = { "<cmd> BufferLineCloseRight <cr>", "Close all visible buffers to the right"},
+        ["<leader>bcl"] = { "<cmd> BufferLineCloseLeft <cr>", "Close all visible buffers to the left"},
+        ["<leader>bp"] = { "<cmd> BufferLineTogglePin <cr>", "Pin buffer"}
     },
 }
 

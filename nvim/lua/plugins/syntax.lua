@@ -126,7 +126,7 @@ return {
             search_method = "cover",
             highlight_duration = 500,
             mappings = {
-                add = "gza",
+                add = "ys",
                 delete = "ds",
                 replace = "cs",
                 highlight = "",

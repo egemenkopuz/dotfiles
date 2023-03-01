@@ -182,6 +182,23 @@ function M.telescope(builtin, opts)
     end
 end
 
+function M.pick_window()
+    local picked_window_id = require("window-picker").pick_window {
+        include_current_win = true,
+    } or vim.api.nvim_get_current_win()
+    vim.api.nvim_set_current_win(picked_window_id)
+end
+
+function M.swap_window()
+    local window = require("window-picker").pick_window { include_current_win = false }
+    if window == nil then
+        return
+    end
+    local target_buffer = vim.fn.winbufnr(window)
+    vim.api.nvim_win_set_buf(window, 0)
+    vim.api.nvim_win_set_buf(0, target_buffer)
+end
+
 function M.lsp_on_attach()
     return function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false

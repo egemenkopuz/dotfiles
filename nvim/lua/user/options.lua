@@ -42,6 +42,7 @@ vim.opt.smartcase = true
 vim.opt.mouse = "a"
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.wildmode = "longest:full,full"
+vim.opt.sessionoptions = "buffers,curdir,folds,globals,tabpages,winpos,winsize"
 
 vim.opt.confirm = true
 vim.opt.undofile = true
