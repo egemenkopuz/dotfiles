@@ -35,6 +35,9 @@ M.general = {
         ["<leader>qA"] = {"<cmd> qall! <cr>", "Quit force all"},
         ["<leader>qq"] = {"<cmd> q <cr>", "Quit window"},
         ["<leader>qQ"] = {"<cmd> q! <cr>", "Quit force window"},
+        -- save
+        ["<leader>ws"] = {"<cmd> w <cr>", "Save"},
+        ["<leader>wS"] = {"<cmd> wa <cr>", "Save all"},
         -- splits
         ["<leader>uv"] = {"<cmd> vsplit <cr>", "Vertical split"},
         ["<leader>ux"] = {"<cmd> split <cr>", "Horizontal split"},

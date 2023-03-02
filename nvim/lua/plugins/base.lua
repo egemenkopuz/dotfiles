@@ -12,6 +12,7 @@ return {
             hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
             triggers_blacklist = { i = { "j", "k" }, v = { "j", "k" } },
             key_labels = { ["<leader>"] = "SPC" },
+            disable = { buftypes = {}, filetypes = { "TelescopePrompt" } },
         },
         config = function(_, opts)
             local wk = require "which-key"

@@ -39,13 +39,13 @@ return {
 
             local function border(hl_name)
                 return {
-                    { "╭", hl_name },
+                    { "┌", hl_name },
                     { "─", hl_name },
-                    { "╮", hl_name },
+                    { "┐", hl_name },
                     { "│", hl_name },
-                    { "╯", hl_name },
+                    { "┘", hl_name },
                     { "─", hl_name },
-                    { "╰", hl_name },
+                    { "└", hl_name },
                     { "│", hl_name },
                 }
             end
@@ -78,7 +78,6 @@ return {
                 mapping = cmp.mapping.preset.insert {
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-                    -- ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Replace,

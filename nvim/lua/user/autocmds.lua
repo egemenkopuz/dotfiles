@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+vim.api.nvim_create_autocmd("VimResized", {
     callback = function()
         vim.cmd "tabdo wincmd ="
     end,
@@ -31,9 +31,20 @@ vim.api.nvim_create_autocmd("FileType", {
         "man",
         "notify",
         "lspinfo",
+        "dap-float",
+        "null-ls-info",
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
+})
+
+-- enable spellcheck for some filetypes
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.txt", "*.md", "*.tex" },
+    callback = function()
+        vim.opt.spell = true
+        vim.opt.spelllang = "en"
     end,
 })

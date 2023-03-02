@@ -122,6 +122,7 @@ return {
 
     {
         "echasnovski/mini.surround",
+        event = "BufReadPre",
         opts = {
             search_method = "cover",
             highlight_duration = 500,

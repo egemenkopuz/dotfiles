@@ -175,9 +175,12 @@ return {
 
     {
         "numToStr/Navigator.nvim",
+        lazy = false,
+        init = function()
+            require("user.utils").load_keymap "navigator"
+        end,
         config = function(_, opts)
             require("Navigator").setup(opts)
-            require("user.utils").load_keymap "navigator"
         end,
     },
 
@@ -209,6 +212,7 @@ return {
 
     {
         "echasnovski/mini.bracketed",
+        event = "BufReadPre",
         version = false,
         opts = {
             buffer = { suffix = "b", options = {} },

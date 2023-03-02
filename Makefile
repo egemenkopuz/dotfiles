@@ -12,6 +12,9 @@ symlinks:
 	echo "Creating symlinks..."
 	ln -sf ${HOME}/.config/zsh/.zshenv ${HOME}/.zshenv
 	ln -sf ${HOME}/.config/zsh/.zshrc ${HOME}/.zshrc
+
+git-symlink:
+	echo "Creating git symlink..."
 	ln -sf ${HOME}/.config/git/.gitconfig ${HOME}/.gitconfig
 
 python-pkgs:
@@ -56,7 +59,8 @@ go-pkgs:
 neovim-sync:
 	echo "Syncing neovim plugins..."
 	if which nvim >/dev/null; then \
-		nvim --headless "+Lazy! sync" +qa; \
+		nvim --headless "+Lazy! sync" + "sleep 15" +qa \
+		nvim --headless "+MasonToolsInstall" + "sleep 20" +qa \
 	else \
 		echo "nvim not found. Skipping neovim plugin sync."; \
 	fi

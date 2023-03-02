@@ -1,8 +1,9 @@
 return {
     {
         "AlexvZyl/nordic.nvim",
-        enabled = require("user.utils").colorscheme_selection("nordic"),
+        enabled = require("user.utils").colorscheme_selection "nordic",
         priority = 1000,
+        lazy = false,
         config = function(_, opts)
             require("nordic").setup(opts)
             vim.api.nvim_set_hl(0, "MiniTablineFill", { bg = "#191C24" })
@@ -12,8 +13,9 @@ return {
 
     {
         "rebelot/kanagawa.nvim",
-        enabled = require("user.utils").colorscheme_selection("kanagawa"),
+        enabled = require("user.utils").colorscheme_selection "kanagawa",
         priority = 1000,
+        lazy = false,
         opts = {
             overrides = {
                 IndentBlanklineChar = { fg = "#2E3440" },
@@ -28,8 +30,9 @@ return {
 
     {
         "catppuccin/nvim",
-        enabled = require("user.utils").colorscheme_selection("catppuccin"),
+        enabled = require("user.utils").colorscheme_selection "catppuccin",
         name = "catppuccin",
+        lazy = false,
         opts = {
             flavour = "mocha", -- latte, frappe, macchiato, mocha
             term_colors = true,
