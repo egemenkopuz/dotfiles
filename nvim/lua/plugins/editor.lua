@@ -8,6 +8,16 @@ return {
     },
 
     {
+        "echasnovski/mini.splitjoin",
+        event = "BufReadPre",
+        version = false,
+        opts = { mappings = { toggle = "<leader>cs" } },
+        config = function(_, opts)
+            require("mini.splitjoin").setup(opts)
+        end,
+    },
+
+    {
         "smjonas/inc-rename.nvim",
         dependencies = { "folke/noice.nvim" },
         event = "BufReadPre",
@@ -120,7 +130,10 @@ return {
         init = function()
             require("user.utils").load_keymap "zenmode"
         end,
-        opts = { toggle = false, widthUp = false, widthDown = false, scratchPad = false },
+        opts = {
+            width = 120,
+            mappings = { toggle = false, widthUp = false, widthDown = false, scratchPad = false },
+        },
     },
 
     { "ruifm/gitlinker.nvim", event = "BufReadPre", config = true },
