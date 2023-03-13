@@ -57,12 +57,7 @@ return {
             },
         },
         opts = {
-            diagnostics = {
-                underline = true,
-                update_in_insert = false,
-                virtual_text = { spacing = 4, prefix = "●" },
-                severity_sort = true,
-            },
+            diagnostics = require("user.config").diagnostics,
             servers = {
                 ["bashls"] = {},
                 ["dockerls"] = {},

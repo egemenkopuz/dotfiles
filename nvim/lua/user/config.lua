@@ -1,6 +1,6 @@
 local M = { icons = {} }
 
-M.colorscheme = "nordic"
+M.colorscheme = "kanagawa"
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 
@@ -164,5 +164,13 @@ vim.fn.sign_define( "DapStopped", { text = "", numhl = "DapStopped", linehl =
 vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
 vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
 vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
+
+M.diagnostics = {
+    underline = true,
+    update_in_insert = false,
+    virtual_text = { spacing = 4, prefix = "●" },
+    virtual_lines = false,
+    severity_sort = true,
+}
 
 return M

@@ -17,10 +17,12 @@ return {
         priority = 1000,
         lazy = false,
         opts = {
-            overrides = {
-                IndentBlanklineChar = { fg = "#2E3440" },
-                IndentBlanklineContextChar = { fg = "#4A5263" },
-            },
+            overrides = function()
+                return {
+                    IndentBlanklineChar = { fg = "#2E3440" },
+                    IndentBlanklineContextChar = { fg = "#4A5263" },
+                }
+            end,
         },
         config = function(_, opts)
             require("kanagawa").setup(opts)

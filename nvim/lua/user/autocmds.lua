@@ -40,11 +40,10 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- enable spellcheck for some filetypes
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.txt", "*.md", "*.tex" },
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "gitcommit", "markdown" },
     callback = function()
-        vim.opt.spell = true
-        vim.opt.spelllang = "en"
+        vim.opt_local.wrap = true
+        vim.opt_local.spell = true
     end,
 })

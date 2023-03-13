@@ -82,5 +82,4 @@ $ docker exec -it dev-env zsh
 
 # Next
 
-- finding an alternative bufferline plugin
 - debug setup requires finetuning

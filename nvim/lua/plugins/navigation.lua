@@ -27,6 +27,8 @@ return {
                     ["<cr>"] = "open_with_window_picker",
                     ["<C-x>"] = "split_with_window_picker",
                     ["<C-v>"] = "vsplit_with_window_picker",
+                    ["Z"] = "expand_all_nodes",
+                    ["P"] = { "toggle_preview", config = { use_float = false } },
                 },
             },
         },

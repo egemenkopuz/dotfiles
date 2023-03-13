@@ -139,7 +139,7 @@ return {
                 dashboard.button("s s", " " .. " Select session", ":Telescope persisted <CR>"),
                 dashboard.button("c c", " " .. " Config", ":e $MYVIMRC | :cd %:p:h <CR>"),
                 dashboard.button("c p", " " .. " Plugins", ":Lazy<CR>"),
-                dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+                dashboard.button("q", " " .. " Quit", ":qa <CR>"),
             }
 
             dashboard.section.footer.opts.hl = "Type"
@@ -175,7 +175,6 @@ return {
         opts = {
             indentLine_enabled = 1,
             char = "┊",
-            -- char_list = { "|", "¦", "┆", "┊" },
             filetype_exclude = {
                 "alpha",
                 "mason",

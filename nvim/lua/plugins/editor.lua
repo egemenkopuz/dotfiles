@@ -120,7 +120,7 @@ return {
         init = function()
             require("user.utils").load_keymap "zenmode"
         end,
-        opts = { toggleMapping = false, widthUpMapping = false, widthDownMapping = false },
+        opts = { toggle = false, widthUp = false, widthDown = false, scratchPad = false },
     },
 
     { "ruifm/gitlinker.nvim", event = "BufReadPre", config = true },
