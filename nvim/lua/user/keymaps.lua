@@ -6,10 +6,14 @@ M.general = {
     [{ "n", "x" }] = {
         ["j"] = { [[v:count == 0 ? 'gj' : 'j']], opts = { expr = true } },
         ["k"] = { [[v:count == 0 ? 'gk' : 'k']], opts = { expr = true } },
-        ["d"] = { '"_d' },
-        ["D"] = { '"_D' },
-        ["c"] = { '"_c' },
-        ["C"] = { '"_C' },
+        ["x"] = { '"_x' },
+        ["X"] = { '"_X' },
+        ["d"] = { '"ad' },
+        ["D"] = { '"aD' },
+        ["c"] = { '"ac' },
+        ["C"] = { '"aC' },
+        ["gp"] = {'"ap', "Paste after cursor" },
+        ["gP"] = {'"aP', "Paste before cursor" },
     },
     i = {
         -- to quit insert mode fast
@@ -81,9 +85,6 @@ M.general = {
         ["<leader>tc"] = { function() utils.toggle_colorcolumn() end, "Toggle colorcolumn", },
     },
     v = {
-        -- indenting
-        ["<"] = { "<gv", "Indent left" },
-        [">"] = { ">gv", "Indent right" },
         -- sorting
         ["<leader>s"] = { ":sort<cr>", "Sort ascending" },
         ["<leader>S"] = { ":sort!<cr>", "Sort descending" },
@@ -268,11 +269,9 @@ M.toggleterm = {
     n = {
         ["<leader>g\\"] = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazygit" },
     },
+    -- stylua: ignore
     t = {
-        ["<C-x>"] = {
-            vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),
-            "Close terminal",
-        },
+        ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Close terminal", },
     },
 }
 

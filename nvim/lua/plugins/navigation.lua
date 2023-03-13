@@ -101,15 +101,11 @@ return {
         config = function(_, opts)
             local telescope = require "telescope"
 
-            vim.g.theme_switcher_loaded = true
-
             opts.extensions["ui-select"] = {
                 require("telescope.themes").get_dropdown {
-                    layout_strategy = "vertical",
-                    layout_config = {
-                        prompt_position = "top",
-                        vertical = { width = 0.4, height = 0.3 },
-                    },
+                    layout_strategy = "cursor",
+                    winblend = 15,
+                    layout_config = { prompt_position = "top", width = 80, height = 12 },
                 },
             }
 

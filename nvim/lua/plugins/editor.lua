@@ -11,7 +11,7 @@ return {
         "echasnovski/mini.splitjoin",
         event = "BufReadPre",
         version = false,
-        opts = { mappings = { toggle = "<leader>cs" } },
+        opts = { mappings = { toggle = "<leader>ce" } },
         config = function(_, opts)
             require("mini.splitjoin").setup(opts)
         end,
