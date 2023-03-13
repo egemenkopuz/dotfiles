@@ -21,6 +21,7 @@ return {
                 ensure_installed = require("user.config").treesitter_packages,
                 highlight = {
                     enable = true,
+                    additional_vim_regex_highlighting = false,
                     max_file_lines = MAX_FILE_LINES,
                     disable = function(_, bufnr)
                         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))

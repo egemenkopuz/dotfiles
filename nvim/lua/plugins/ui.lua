@@ -134,7 +134,7 @@ return {
                 dashboard.button("f n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
                 dashboard.button("f f", " " .. " Find file", ":Telescope find_files <CR>"),
                 dashboard.button("f t", " " .. " Find text", ":Telescope live_grep <CR>"),
-                dashboard.button("r f", " " .. " Recent files", ":Telescope oldfiles <CR>"),
+                dashboard.button("f o", " " .. " Recent files", ":Telescope oldfiles <CR>"),
                 dashboard.button("s p", " " .. " Select project", ":Telescope projects <CR>"),
                 dashboard.button("s s", " " .. " Select session", ":Telescope persisted <CR>"),
                 dashboard.button("c c", " " .. " Config", ":e $MYVIMRC | :cd %:p:h <CR>"),

@@ -1,6 +1,6 @@
 local M = { icons = {} }
 
-M.colorscheme = "kanagawa"
+M.colorscheme = "nordic"
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 
@@ -160,16 +160,16 @@ vim.fn.sign_define( "DiagnosticSignHint", { text = "", numhl = "DiagnosticHint",
 vim.fn.sign_define( "DapBreakpoint", { text = "", numhl = "DapBreakpoint", linehl = "DapBreakpoint" })
 vim.fn.sign_define( "DagLogPoint", { text = "", numhl = "DapLogPoint", linehl = "DapLogPoint" })
 vim.fn.sign_define( "DapStopped", { text = "", numhl = "DapStopped", linehl = "DapStopped" })
--- stylua: ignore end
+
 vim.api.nvim_set_hl(0, "DapBreakpoint", { bg = "#454545" })
 vim.api.nvim_set_hl(0, "DapLogPoint", { bg = "#31353f" })
 vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
+-- stylua: ignore end
 
 M.diagnostics = {
     underline = true,
     update_in_insert = false,
     virtual_text = { spacing = 4, prefix = "●" },
-    virtual_lines = false,
     severity_sort = true,
 }
 

@@ -17,7 +17,9 @@ return {
         priority = 1000,
         lazy = false,
         opts = {
-            overrides = function()
+            compile = true,
+            colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
+            overrides = function(_)
                 return {
                     IndentBlanklineChar = { fg = "#2E3440" },
                     IndentBlanklineContextChar = { fg = "#4A5263" },
