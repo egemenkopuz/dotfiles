@@ -97,12 +97,8 @@ return {
                             runtime = { version = "LuaJIT" },
                             format = { enable = false },
                             telemetry = { enable = false },
-                            diagnostics = { globals = { "vim" } },
                             workspace = {
-                                library = {
-                                    [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                                    [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-                                },
+                                checkThirdParty = false,
                                 maxPreload = 100000,
                                 preloadFileSize = 10000,
                             },
