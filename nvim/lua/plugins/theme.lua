@@ -19,6 +19,7 @@ return {
         opts = {
             compile = true,
             colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
+            background = { dark = "dragon", light = "lotus" },
             overrides = function(_)
                 return {
                     IndentBlanklineChar = { fg = "#2E3440" },

@@ -203,7 +203,6 @@ function M.lsp_on_attach()
     return function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
-        client.server_capabilities.semanticTokensProvider = nil
         M.load_keymap("lsp", { buffer = bufnr })
         if client.supports_method "textDocument/signatureHelp" then
             require("lsp_signature").on_attach({}, bufnr)
