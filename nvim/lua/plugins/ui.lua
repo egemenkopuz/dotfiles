@@ -20,10 +20,6 @@ return {
                 },
             },
         },
-        init = function()
-            vim.api.nvim_set_hl(0, "NoiceCmdLinePopup", { bg = "#2E3440" })
-            vim.api.nvim_set_hl(0, "NoiceCmdLinePopupBorder", { fg = "#2E3440" })
-        end,
         config = true,
     },
 

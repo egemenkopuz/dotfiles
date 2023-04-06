@@ -24,6 +24,7 @@ return {
                 return {
                     IndentBlanklineChar = { fg = "#2E3440" },
                     IndentBlanklineContextChar = { fg = "#4A5263" },
+                    NoiceCmdLinePopupBorder = { fg = "#282727" },
                 }
             end,
         },

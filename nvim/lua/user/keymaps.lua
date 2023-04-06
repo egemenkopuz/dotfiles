@@ -12,8 +12,8 @@ M.general = {
         ["D"] = { '"aD' },
         ["c"] = { '"ac' },
         ["C"] = { '"aC' },
-        ["gp"] = {'"ap', "Paste after cursor" },
-        ["gP"] = {'"aP', "Paste before cursor" },
+        ["gp"] = { '"ap', "Paste after cursor" },
+        ["gP"] = { '"aP', "Paste before cursor" },
     },
     i = {
         -- to quit insert mode fast

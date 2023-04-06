@@ -118,10 +118,10 @@ return {
             telescope.load_extension "persisted"
             telescope.load_extension "noice"
 
-            local tc1 = "#2E3440"
-            local tc2 = "#ABFFF5"
-            local tc3 = "#191C24"
-            local tc4 = "#F38BA8"
+            local tc1 = "#282727"
+            local tc2 = "#7FB4CA"
+            local tc3 = "#181616"
+            local tc4 = "#FF5D62"
 
             local hl_group = {
                 TelescopeMatching = { fg = tc2 },
@@ -129,14 +129,12 @@ return {
                 TelescopePromptTitle = { fg = tc3, bg = tc4, bold = true },
                 TelescopePromptPrefix = { fg = tc2 },
                 TelescopePromptCounter = { fg = tc2 },
-                TelescopePromptNormal = { bg = tc1 },
-                TelescopePromptBorder = { fg = tc1, bg = tc1 },
-                TelescopeResultsTitle = { fg = tc3, bg = tc3, bold = true },
+                TelescopePromptBorder = { fg = tc1 },
                 TelescopeResultsNormal = { bg = tc3 },
-                TelescopeResultsBorder = { fg = tc3, bg = tc3 },
+                TelescopeResultsBorder = { fg = tc1 },
                 TelescopePreviewTitle = { fg = tc3, bg = tc2, bold = true },
                 TelescopePreviewNormal = { bg = tc3 },
-                TelescopePreviewBorder = { fg = tc3, bg = tc3 },
+                TelescopePreviewBorder = { fg = tc1 },
             }
 
             for k, v in pairs(hl_group) do

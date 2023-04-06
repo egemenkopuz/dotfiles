@@ -152,4 +152,30 @@ return {
             }
         end,
     },
+
+    {
+        "nmac427/guess-indent.nvim",
+        event = "BufReadPre",
+        opts = {
+            filetype_exclude = {
+                "netrw",
+                "tutor",
+                "alpha",
+                "mason",
+                "lazy",
+                "log",
+                "gitcommmit",
+                "TelescopePrompt",
+                "neo-tree",
+                "neo-tree-popup",
+                "notify",
+                "no-neck-pain",
+                "Outline",
+                "undotree"
+            },
+        },
+        config = function(_, opts)
+            require("guess-indent").setup(opts)
+        end,
+    },
 }
