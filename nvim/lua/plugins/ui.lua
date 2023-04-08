@@ -239,4 +239,13 @@ return {
         },
         config = true,
     },
+
+    {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        event = "BufReadPre",
+        init = function()
+            require("user.utils").load_keymap "lsp_lines"
+        end,
+        config = true,
+    },
 }

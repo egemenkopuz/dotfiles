@@ -172,6 +172,7 @@ M.diagnostics = {
     virtual_text = { spacing = 4, prefix = "●" },
     severity_sort = true,
     float = { border = "rounded" },
+    virtual_lines = false,
 }
 
 return M

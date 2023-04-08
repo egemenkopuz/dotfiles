@@ -376,4 +376,10 @@ M.symbols = {
     },
 }
 
+M.lsp_lines = {
+    n = {
+        ["<leader>tx"] = { "<cmd>lua require('lsp_lines').toggle() <cr>", "Toggle lsp lines" },
+    },
+}
+
 return M
