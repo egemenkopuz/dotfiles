@@ -82,4 +82,5 @@ $ docker exec -it dev-env zsh
 
 # Next
 
-- debug setup requires finetuning
+- debug setup, DAP, requires finetuning
+- task runner plugin, overseer, requires extensive configuration for python and cpp

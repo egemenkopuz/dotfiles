@@ -27,7 +27,6 @@ M.treesitter_packages = {
 
 -- auto install mason packages
 M.mason_packages = {
-    -- lsp
     "bash-language-server",
     "lua-language-server",
     "pyright",
@@ -104,6 +103,7 @@ M.icons.diagnostics = {
     hint = "ﯧ ",
 }
 
+-- Diff icons
 M.icons.diff = {
     added = "+",
     modified = "~",
@@ -169,7 +169,7 @@ vim.api.nvim_set_hl(0, "DapStopped", { fg = "white", bg = "#B14238" })
 M.diagnostics = {
     underline = true,
     update_in_insert = false,
-    virtual_text = { spacing = 4, prefix = "●" },
+    virtual_text = { spacing = 2, prefix = "●" },
     severity_sort = true,
     float = { border = "rounded" },
     virtual_lines = false,
