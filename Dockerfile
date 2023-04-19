@@ -1,6 +1,5 @@
 FROM debian:stable-slim
 
-ARG NVIM_BUILD=nightly
 ARG USER_NAME=user
 
 ENV PLATFORM="docker"
@@ -34,14 +33,12 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     unzip \
     wget \
     zip \
+    neovim \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
 
 # general packages
-
-RUN curl -L -O "https://github.com/neovim/neovim/releases/download/${NVIM_BUILD}/nvim-linux64.deb"
-RUN apt-get -y install --no-install-recommends ./nvim-linux64.deb && rm ./nvim-linux64.deb
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
