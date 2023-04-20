@@ -33,7 +33,6 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     unzip \
     wget \
     zip \
-    neovim \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
@@ -42,6 +41,11 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --fronten
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+
+RUN git clone https://github.com/neovim/neovim
+WORKDIR /neovim
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo && git checkout stable
+RUN make install
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
     fzf \
