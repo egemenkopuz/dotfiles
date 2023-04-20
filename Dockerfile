@@ -33,6 +33,7 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     unzip \
     wget \
     zip \
+    openssh-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
@@ -44,8 +45,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
 RUN git clone https://github.com/neovim/neovim
 WORKDIR /neovim
-RUN make CMAKE_BUILD_TYPE=RelWithDebInfo && git checkout stable
-RUN make install
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo && git checkout stable && make install
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
     fzf \
@@ -67,12 +67,17 @@ RUN adduser --disabled-password --gecos '' ${USER_NAME} \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && chsh -s "$(which zsh)" ${USER_NAME}
 
+RUN mkdir /home/${USER_NAME}/.ssh
+RUN chown -R ${USER_NAME}:${USER_NAME} /home/${USER_NAME}/.ssh \
+   && chmod 700 /home/${USER_NAME}/.ssh
+
 USER ${USER_NAME}
 WORKDIR /home/${USER_NAME}
 
 ENV PATH=/home/${USER_NAME}/.local/bin:/usr/local/bin/go/bin:/home/${USER_NAME}/go/bin:/home/${USER_NAME}/.cargo/bin:$PATH
 
 COPY --chown=${USER_NAME}:${USER_NAME} . ./.config
+# COPY --chown=${USER_NAME}:${USER_NAME} id_rsa /home/${USER_NAME}/.ssh
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
