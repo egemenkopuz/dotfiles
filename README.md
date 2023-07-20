@@ -20,7 +20,7 @@
 <img src="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_split.png">
 
 <div align="center">
-<span> more images </span>
+<span> (outdated - 20.07.2023) more images </span>
  <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_alpha.png">1</a>
  <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_lazygit.png">2</a>
  <a href="https://raw.githubusercontent.com/egemenkopuz/egemenkopuz.github.io/master/static/images/ss_telescope.png">3</a>

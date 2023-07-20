@@ -44,6 +44,7 @@ return {
         "nvim-tree/nvim-web-devicons",
         opts = {
             color_icons = false,
+            override_by_extension = { ["txt"] = { icon = "", name = "Txt" } },
             override_by_filename = {
                 ["dockerfile"] = { icon = "", name = "Dockerfile" },
                 ["Dockerfile"] = { icon = "", name = "Dockerfile" },
