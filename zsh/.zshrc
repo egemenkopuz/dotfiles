@@ -38,7 +38,10 @@ alias vim="nvim"
 alias l="exa"
 alias la="exa -a --icons"
 alias ll="exa -lah --icons --git"
+alias llg="exa --grid -lah --icons --git"
 alias ls="exa --color=auto --icons"
+
+alias lg="lazygit"
 
 alias t="tmux"
 alias g="lazygit"
