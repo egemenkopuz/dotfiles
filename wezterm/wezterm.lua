@@ -42,11 +42,6 @@ wezterm.on("gui-startup", function(cmd) -- set startup Window position
 end)
 
 config.audible_bell = "Disabled"
-config.visual_bell = {
-	fade_in_duration_ms = 75,
-	fade_out_duration_ms = 75,
-	target = "BackgroundColor",
-}
 config.inactive_pane_hsb = {
 	saturation = 0.9,
 	brightness = 0.8,
