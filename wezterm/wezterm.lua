@@ -78,6 +78,8 @@ config.keys = {
 	{ key = "w", mods = "SHIFT|CTRL", action = act.CloseCurrentPane({ confirm = false }) },
 	{ key = "l", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(1) },
 	{ key = "h", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
+	{ key = "+", mods = "CTRL", action = act.IncreaseFontSize },
+	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
 }
 
 return config
