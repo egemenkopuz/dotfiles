@@ -40,6 +40,8 @@ M.mason_packages = {
     "clang-format",
     "debugpy",
     "codelldb",
+    "shfmt",
+    "mdformat",
 }
 
 M.nulls_packages = {
@@ -52,6 +54,8 @@ M.nulls_packages = {
         "stylua",
         "clang_format",
         "rustfmt",
+        "shfmt",
+        "mdformat",
     },
     diagnostics = {
         "flake8",
