@@ -78,8 +78,10 @@ config.keys = {
 	{ key = "w", mods = "SHIFT|CTRL", action = act.CloseCurrentPane({ confirm = false }) },
 	{ key = "l", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(1) },
 	{ key = "h", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
-	{ key = "+", mods = "CTRL", action = act.IncreaseFontSize },
-	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
+	{ key = "_", mods = "SHIFT|CTRL", action = act.DecreaseFontSize },
+	{ key = "+", mods = "SHIFT|CTRL", action = act.IncreaseFontSize },
+	{ key = "C", mods = "SHIFT|CTRL", action = act.CopyTo("Clipboard") },
+	{ key = "V", mods = "SHIFT|CTRL", action = act.PasteFrom("Clipboard") },
 }
 
 return config
