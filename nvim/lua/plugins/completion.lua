@@ -99,8 +99,8 @@ return {
                     end),
                 },
                 sources = cmp.config.sources {
+                    { name = "copilot", group_index = 2 },
                     { name = "nvim_lsp" },
-                    { name = "copilot" },
                     { name = "luasnip" },
                     { name = "buffer" },
                     { name = "nvim_lua" },
@@ -119,6 +119,8 @@ return {
                 sorting = {
                     priority_weight = 2,
                     comparators = {
+                        require("copilot_cmp.comparators").prioritize,
+                        require("copilot_cmp.comparators").score,
                         cmp.config.compare.offset,
                         cmp.config.compare.exact,
                         cmp.config.compare.score,
@@ -128,8 +130,6 @@ return {
                         cmp.config.compare.sort_text,
                         cmp.config.compare.length,
                         cmp.config.compare.order,
-                        require("copilot_cmp.comparators").prioritize,
-                        require("copilot_cmp.comparators").score,
                     },
                 },
                 experimental = { ghost_text = { hl_group = "LspCodeLens" } },
