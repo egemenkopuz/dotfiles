@@ -19,12 +19,11 @@ apps=(
 	'git-delta'
 	'bat'
 	'fastfetch'
-
-	# tools
 	'fzf'
 	'fd'
 	'fzf'
 	'ripgrep'
+	'diffutils'
 	'procs'
 	'duf'
 	'btop'
@@ -35,7 +34,7 @@ apps=(
 	'npm'
 	'python'
 	'python-pip'
-    'python-pynvim'
+	'python-pynvim'
 	'docker'
 	'docker-compose'
 )
@@ -50,6 +49,11 @@ install_package() {
 
 if [ "$EUID" -ne 0 ]; then
 	echo "Please run as root"
+	exit 1
+fi
+
+if ! command -v pacman &>/dev/null; then
+	echo "pacman is not installed"
 	exit 1
 fi
 
