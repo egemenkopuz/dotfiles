@@ -49,6 +49,7 @@ alias ps="ps -ef"
 alias cat="bat"
 alias df="duf"
 alias ps="procs"
+alias nf="fastfetch"
 
 source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
