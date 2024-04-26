@@ -1,4 +1,6 @@
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 export COLORTERM="truecolor"
 export TERM="xterm-256color"
 export EDITOR="nvim"
@@ -20,6 +22,7 @@ export GOPATH="$HOME/.go"
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 export PYENV_ROOT="$HOME/.pyenv"
+export NVM_DIR="$HOME/.config/nvm"
 
 export PATH="$HOME/.local/bin:/usr/local/bin/go/bin:$GOPATH/bin:$CARGO_HOME/bin:$NPM_HOME/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"

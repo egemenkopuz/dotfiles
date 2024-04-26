@@ -1,4 +1,8 @@
 nvim/plugin
 zsh/.zcompdump*
 zsh/.zsh_history
+zsh/plugins
 tmux/plugins
+github-copilot
+nvm
+

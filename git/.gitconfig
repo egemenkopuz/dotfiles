@@ -4,13 +4,12 @@
 [user]
     email = egemenkopuz@hotmail.com
     name = Egemen Kopuz
-    signingkey = ECFA76CC0DA4B634D6511DA52E42738DAC09603A
 
 [init]
     defaultBranch = main
 
 [commit]
-    gpgsign = true
+    gpgsign = false
 
 [core]
     pager = delta

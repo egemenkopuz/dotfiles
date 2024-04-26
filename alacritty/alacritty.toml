@@ -1,0 +1,63 @@
+[font]
+size = 11.0
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[window]
+dynamic_padding = true
+startup_mode = "Maximized"
+decorations = "None"
+opacity = 0.9
+
+[window.padding]
+x = 2
+y = 0
+
+[cursor.style]
+shape = "Beam"
+blinking = "Never"
+
+[cursor.vi_mode_style]
+shape = "Block"
+blinking = "Never"
+
+# [shell]
+# program = 'C:\Windows\system32\wsl.exe --cd ~'
+
+[colors.primary]
+background = '#1b202a'
+foreground = '#9aa7bd'
+
+[colors.cursor]
+text = '#232936'
+cursor = '#51617d'
+
+[colors.normal]
+black = '#1b202a'
+red = '#b15e7c'
+green = '#709d6c'
+yellow = '#b5a262'
+blue = '#608cc3'
+magenta = '#8f72bf'
+cyan = '#56adb7'
+white = '#9aa7bd'
+
+[colors.bright]
+black = '#232936'
+red = '#b3785d'
+green = '#709d6c'
+yellow = '#d5b875'
+blue = '#608cc3'
+magenta = '#c47ebd'
+cyan = '#51617d'
+white = '#9aa7bd'
