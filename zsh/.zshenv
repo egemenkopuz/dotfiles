@@ -22,7 +22,7 @@ export GOPATH="$HOME/.go"
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 export PYENV_ROOT="$HOME/.pyenv"
-export NVM_DIR="$HOME/.config/nvm"
+export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/.local/bin:/usr/local/bin/go/bin:$GOPATH/bin:$CARGO_HOME/bin:$NPM_HOME/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"

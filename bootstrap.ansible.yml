@@ -1,7 +1,18 @@
 - name: Dev env setup
+  # TODO: add roles folder and add necessary checkings
   hosts: localhost
+  vars:
+    nvm_ver: 0.39.7
+    nodejs_ver: 20.9.0
+    nodejs_pkgs:
+      - neovim
+    python_pkgs:
+      - pynvim
+    pkg_eza_ver: 0.18.13
+    pkg_delta_ver: 0.17.0
+    pkg_lazygit_ver: 0.41.0
   tasks:
-    - name: Install main Packages
+    - name: DEBIAN | packages
       become: true
       ansible.builtin.apt:
         name:
@@ -10,7 +21,17 @@
           - curl
           - wget
           - openssl
+          - make
+          - cmake
           - gnupg
+          - g++
+          - pkg-config
+          - ninja-build
+          - gettext
+          - libtool
+          - libtool-bin
+          - autoconf
+          - automake
           - zsh
           - bat
           - fzf
@@ -19,119 +40,137 @@
           - diffutils
           - duf
           - btop
+          - unzip
+          - ccache
           - python3-venv
           - python3-pip
-          - fswatch
           - cppcheck
+          - bat
         state: present
       when: ansible_os_family == "Debian"
 
-    - name: Install nvim deps
-      become: true
-      ansible.builtin.apt:
-        name:
-          - ninja-build
-          - gettext
-          - libtool
-          - libtool-bin
-          - autoconf
-          - automake
-          - cmake
-          - g++
-          - pkg-config
-          - unzip
-          - curl
-        state: present
-      when: ansible_os_family == "Debian"
+    - name: TMP | directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/tmp_ansible"
+        state: directory
+        mode: "0777"
 
-    - name: Clone nvim
+    - name: BIN | directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.local/bin"
+        state: directory
+        mode: "0755"
+
+    # - name: PIP | packages
+    #   ansible.builtin.shell: "python3 -m pip install --no-cache-dir  {{ item }}"
+    #   args:
+    #     executable: /bin/bash
+    #   loop: "{{ python_pkgs }}"
+
+    - name: NVM - NODEJS
       become: false
-      git:
-        repo: https://github.com/neovim/neovim
-        dest: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
-        clone: true
-        depth: 1
+      block:
+        - name: NVM | installation
+          ansible.builtin.shell: >
+            set -o pipefail && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_ver }}/install.sh | bash
+          args:
+            executable: /bin/bash
+            chdir: "{{ ansible_env.HOME }}"
+            creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
 
-    - name: Build nvim
-      community.general.make:
-        chdir: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
-        params:
-          CMAKE_BUILD_TYPE: Release
+        - name: NODEJS | installation via NVM
+          ansible.builtin.shell: "source {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install {{ nodejs_ver }}"
+          args:
+            executable: /bin/bash
+            chdir: "{{ ansible_env.HOME }}"
+            creates: "{{ ansible_env.HOME }}/.nvm/versions/node/v{{ nodejs_ver }}"
 
-    - name: Install nvim
-      become: true
-      community.general.make:
-        chdir: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
-        target: install
+        - name: NODEJS | packages
+          ansible.builtin.shell: |
+            source {{ ansible_env.HOME }}/.nvm/nvm.sh
+            npm install -g {{ item }}
+          args:
+            executable: /bin/bash
+          loop: "{{ nodejs_pkgs }}"
+          changed_when: false
 
-    - name: Dotfiles make
+    - name: PKGS
       become: false
-      community.general.make:
-        chdir: "{{ ansible_env.HOME  }}/.config"
-        target: symlinks
+      block:
+        - name: PKGS | eza
+          ansible.builtin.shell: |
+            curl -Lo eza.tar.gz "https://github.com/eza-community/eza/releases/download/v{{ pkg_eza_ver }}/eza_x86_64-unknown-linux-gnu.tar.gz"
+            tar xf eza.tar.gz ./eza
+            cp -f eza "{{ ansible_env.HOME }}/.local/bin"
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible"
+            creates: "{{ ansible_env.HOME }}/.local/bin/eza"
 
-    - name: Zsh export
+        - name: PKGS | delta
+          ansible.builtin.shell: |
+            curl -Lo delta.tar.gz "https://github.com/dandavison/delta/releases/download/{{ pkg_delta_ver }}/delta-{{ pkg_delta_ver }}-x86_64-unknown-linux-gnu.tar.gz"
+            tar xf delta.tar.gz delta-{{ pkg_delta_ver }}-x86_64-unknown-linux-gnu/delta
+            cp -f delta-{{ pkg_delta_ver }}-x86_64-unknown-linux-gnu/delta "{{ ansible_env.HOME }}/.local/bin"
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible"
+            creates: "{{ ansible_env.HOME }}/.local/bin/delta"
+
+        - name: PKGS | lazygit
+          ansible.builtin.shell: |
+            curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v{{ pkg_lazygit_ver }}/lazygit_{{ pkg_lazygit_ver }}_Linux_x86_64.tar.gz"
+            tar xf lazygit.tar.gz lazygit
+            install lazygit "{{ ansible_env.HOME }}/.local/bin"
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible"
+            creates: "{{ ansible_env.HOME }}/.local/bin/lazygit"
+
+    - name: DOTFILES
       become: false
-      ansible.builtin.blockinfile:
-        insertbefore: BOF
-        path: "{{ ansible_env.HOME }}/.bashrc"
-        block: |
-          export SHELL=`which zsh`
-          [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+      block:
+        - name: DOTFILES | make
+          ansible.builtin.shell: "make -C {{ ansible_env.HOME }}/.config all"
 
-    - name: Install cargo
+        - name: DOTFILES | set ZSH as default
+          ansible.builtin.blockinfile:
+            insertbefore: BOF
+            path: "{{ ansible_env.HOME }}/.bashrc"
+            block: |
+              export SHELL=`which zsh`
+              [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l
+
+    - name: NVIM
       become: false
-      ansible.builtin.shell: |
-        curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none -y 
-        rustup default stable
+      block:
+        - name: NVIM | clone
+          ansible.builtin.git:
+            repo: https://github.com/neovim/neovim
+            dest: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
+            clone: true
+            depth: 1
 
-    - name: Install nvm
+        - name: NVIM | build
+          ansible.builtin.command: make CMAKE_BUILD_TYPE=Release
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
+
+        - name: NVIM | installation
+          ansible.builtin.command: make CMAKE_INSTALL_PREFIX="{{ ansible_env.HOME }}/nvim" install
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible/nvim"
+            creates: "{{ ansible_env.HOME }}/nvim/bin/nvim"
+
+        - name: NVIM | create symlink
+          ansible.builtin.file:
+            src: "{{ ansible_env.HOME }}/nvim/bin/nvim"
+            dest: "{{ ansible_env.HOME }}/.local/bin/nvim"
+            state: link
+
+        - name: NVIM | sync plugins
+          ansible.builtin.command:
+            cmd: "{{ ansible_env.HOME }}/.local/bin/nvim --headless '+Lazy! sync' +qa"
+
+    - name: TMP | cleanup
       become: false
-      ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-      args:
-        executable: /bin/bash
-        chdir: "{{ ansible_env.HOME }}"
-        creates: "{{ ansible_env.HOME }}/.config/nvm/nvm.sh"
-
-    - name: Install node
-      become: false
-      shell: >
-        . {{ ansible_env.HOME }}/.config/nvm/nvm.sh && nvm install {{ item }}
-      args:
-        executable: /bin/zsh
-        chdir: "{{ ansible_env.HOME }}"
-        creates: "{{ ansible_env.HOME }}/.config/nvm/versions/{{ item }}"
-      loop:
-        - 20.9.0
-
-    - name: Install cargo plugins
-      become: false
-      community.general.cargo:
-        name: [eza, git-delta, bat]
-
-    - name: Install node plugins
-      become: false
-      community.general.npm:
-        name: neovim
-        global: true
-
-    - name: Install lazygit
-      become: true
-      ansible.builtin.shell: |
-        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v0.41.0/lazygit_0.41.0_Linux_x86_64.tar.gz"
-        tar xf lazygit.tar.gz lazygit
-        install lazygit /usr/local/bin
-      args:
-        chdir: "{{ ansible_env.HOME }}/tmp_ansible"
-
-    - name: Sync Nvim Plugins
-      become: false
-      ansible.builtin.command:
-        chdir: "{{ ansible_env.HOME  }}/.config"
-        cmd: nvim --headless "+Lazy! sync" +qa
-
-    - name: Remove tmp
-      become: false
-      file:
+      ansible.builtin.file:
         path: "{{ ansible_env.HOME }}/tmp_ansible"
         state: absent
