@@ -34,6 +34,7 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     zip \
     openssh-client \
     python3-pip \
+    openssh-server \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
@@ -46,6 +47,8 @@ RUN ansible-playbook /root/.config/bootstrap.ansible.yml
 RUN chsh -s "$(which zsh)" root
 
 RUN mkdir -p /root/workspace
-WORKDIR /root/workspace
+
+# EXPOSE 22
+# RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 CMD ["tail", "-f", "/dev/null"]
