@@ -11,6 +11,7 @@
     pkg_eza_ver: 0.18.13
     pkg_delta_ver: 0.17.0
     pkg_lazygit_ver: 0.41.0
+    pkg_procs_ver: 0.14.5
   tasks:
     - name: DEBIAN | packages
       become: true
@@ -21,6 +22,7 @@
           - curl
           - wget
           - openssl
+          - sshfs
           - make
           - cmake
           - gnupg
@@ -38,7 +40,6 @@
           - fd-find
           - ripgrep
           - diffutils
-          - duf
           - btop
           - unzip
           - ccache
@@ -60,12 +61,6 @@
         path: "{{ ansible_env.HOME }}/.local/bin"
         state: directory
         mode: "0755"
-
-    # - name: PIP | packages
-    #   ansible.builtin.shell: "python3 -m pip install --no-cache-dir  {{ item }}"
-    #   args:
-    #     executable: /bin/bash
-    #   loop: "{{ python_pkgs }}"
 
     - name: NVM - NODEJS
       become: false
@@ -123,6 +118,15 @@
           args:
             chdir: "{{ ansible_env.HOME }}/tmp_ansible"
             creates: "{{ ansible_env.HOME }}/.local/bin/lazygit"
+
+        - name: PKGS | procs
+          ansible.builtin.shell: |
+            curl -Lo procs.zip "https://github.com/dalance/procs/releases/download/v{{ pkg_procs_ver }}/procs-v0.14.5-x86_64-linux.zip"
+            unzip procs.zip
+            cp -f procs "{{ ansible_env.HOME }}/.local/bin"
+          args:
+            chdir: "{{ ansible_env.HOME }}/tmp_ansible"
+            creates: "{{ ansible_env.HOME }}/.local/bin/procs"
 
     - name: DOTFILES
       become: false
