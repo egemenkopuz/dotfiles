@@ -27,7 +27,7 @@ jobs:
       - name: Commit changes
         run: |
           git add nvim
-          git commit -m "Update nvim submodule"
+          git commit -m "build(nvim) update nvim submodule to latest commit"
           git push origin master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
