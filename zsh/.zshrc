@@ -2,6 +2,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# install plugins
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
 
@@ -26,9 +27,27 @@ setopt HIST_VERIFY               # do not execute immediately upon history expan
 alias h="history"
 alias hf="history | grep"
 
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias cls="clear"
+alias count="find . -type f | wc -l"
+alias chmod="chmod -c --preserve-root"
+alias chown="chown -c --preserve-root"
+alias chgrp="chgrp -c --preserve-root"
+alias chmox="chmod +x --preserve-root"
 alias rm="rm -iv"
 alias cp="cp -iv"
 alias mv="mv -iv"
+
+if hash rsync 2>/dev/null; then
+  alias cpv="rsync -ah --info=progress2 --no-inc-recursive --stats"    # progress bar
+  alias rcopy="rsync -av --progress -h"
+  alias rmove="rsync -av --progress -h --remove-source-files"
+  alias rupdate="rsync -avu --progress -h"
+  alias rsynchronize="rsync -avu --delete --progress -h"
+fi
 
 alias vi="nvim"
 alias vim="nvim"
@@ -45,23 +64,41 @@ alias g="lazygit"
 alias python="python3"
 alias grep="grep -n --color"
 alias mkdir="mkdir -pv"
-alias ps="ps -ef"
-alias cat="bat"
-alias df="duf"
+alias cat="bat -P"
 alias ps="procs"
 alias nf="fastfetch"
+alias df="df -h"
+alias du="du -hs"
 
-source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
-source "$ZDOTDIR/.p10k.zsh"
+alias new="/usr/bin/ls -lth | head -15"
+alias big="command du -a -BM | sort -n -r | head -n 10"
+
+alias d="docker"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias dim="docker images"
+alias drun="docker run -it"
+alias dl="docker logs -f"
+alias ds="docker stop"
+alias dr="docker rm"
+alias dsp="docker system prune --all"
+function dsr() { docker stop $1;docker rm $1 }
+
+alias ve="python3 -m venv ./venv"
+function va() {
+  if [ -d "./.venv" ]; then
+    source ./.venv/bin/activate
+  elif [ -d "./venv" ]; then
+    source ./venv/bin/activate
+  else
+    echo "No virtual environment found"
+  fi
+}
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# if ; then
-#     . "$HOME/miniconda3/etc/profile.d/conda.sh"
-# else
-#     export PATH="$HOME/miniconda3/bin:$PATH"
-# fi
-#
-# while [ ! -z $CONDA_PREFIX ]; do conda deactivate; done
+# load plugins
+source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
+source "$ZDOTDIR/.p10k.zsh"
