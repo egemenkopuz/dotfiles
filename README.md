@@ -13,6 +13,9 @@
     <a href="https://github.com/egemenkopuz/dotfiles">
       <img alt="Size" src="https://img.shields.io/github/repo-size/egemenkopuz/dotfiles?color=F5E0DC&label=SIZE&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" />
     </a>
+    <a href="">
+        <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/egemenkopuz/dotfiles/ansible-lint.yml?branch=dev&style=for-the-badge&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41&label=ansible-lint" />
+    </a>
 </div>
 
 # Installation

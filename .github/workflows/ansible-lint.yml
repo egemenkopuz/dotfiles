@@ -1,0 +1,19 @@
+name: ansible-lint
+on:
+  push:
+    paths:
+      - "setup.ansible.yml"
+      - "setup.ansible.yaml"
+      - "ansible/**/*.yml"
+      - "ansible/**/*.yaml"
+  pull_request:
+    branches: ["master", "dev"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    name: Ansible Lint # Naming the build is important to use it as a status check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@v6

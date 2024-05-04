@@ -8,7 +8,7 @@
     # target_procs_ver: "v0.14.5"
     # target_delta_ver: "0.17.0"
     # target_nodejs_ver: "v20.12.0"
-    target_nvim_ver: "nightly"
+    # target_nvim_ver: "nightly"
     target_local_path: "/usr/local"
     target_local_lib_path: "/usr/local/lib"
     target_local_share_path: "/usr/local/share"
