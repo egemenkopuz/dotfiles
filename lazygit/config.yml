@@ -3,4 +3,4 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never -s --syntax-theme Dracula
+    useConfig: true
