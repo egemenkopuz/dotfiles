@@ -1,6 +1,12 @@
 [font]
 size = 11.0
 
+[font.offset]
+y = 1
+
+[font.glyph_offset]
+y = 1
+
 [font.bold]
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
@@ -17,7 +23,7 @@ style = "Regular"
 dynamic_padding = true
 startup_mode = "Maximized"
 decorations = "None"
-opacity = 0.9
+opacity = 0.95
 
 [window.padding]
 x = 2
