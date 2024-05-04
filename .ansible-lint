@@ -1,9 +1,9 @@
 ---
 exclude_paths:
-    - .git
     - .github
-    - git
-    - lazygit
-    - zsh
-    - tmux
-    - nvim
+    - /tmux/
+    - /nvim/
+    - /zsh/
+    - /tmux/
+    - /lazygit/
+verbosity: 1
