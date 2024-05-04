@@ -1,0 +1,12 @@
+---
+- name: Install dependencies using apt
+  become: true
+  ansible.builtin.apt:
+    name:
+      - ninja-build
+      - gettext
+      - unzip
+      - curl
+      - build-essential
+      - ccache
+      # - cmake # will be installed via pip

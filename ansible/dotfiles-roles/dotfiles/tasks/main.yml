@@ -1,0 +1,14 @@
+---
+- name: Ensure .bashrc exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    state: touch
+    mode: "0644"
+
+- name: Change shell to zsh
+  ansible.builtin.blockinfile:
+    insertbefore: BOF
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: |
+      export SHELL=`which zsh`
+      [ -z "$ZSH_VERSION" ] && exec "$SHELL" -l

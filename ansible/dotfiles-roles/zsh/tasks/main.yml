@@ -1,0 +1,19 @@
+---
+- name: Install using apt
+  become: true
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Create symlink for .zshenv
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/zsh/.zshenv"
+    dest: "{{ ansible_env.HOME }}/.zshenv"
+    state: link
+
+- name: Create symlink for .zshrc
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/zsh/.zshrc"
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    state: link

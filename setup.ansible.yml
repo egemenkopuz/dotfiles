@@ -1,0 +1,60 @@
+---
+- name: Development environment setup
+  hosts: localhost
+  connection: local
+  vars:
+    # target_eza_ver: "v0.18.13"
+    # target_lazygit_ver: "v0.41.0"
+    # target_procs_ver: "v0.14.5"
+    # target_delta_ver: "0.17.0"
+    # target_nodejs_ver: "v20.12.0"
+    target_nvim_ver: "nightly"
+    target_local_path: "/usr/local"
+    target_local_lib_path: "/usr/local/lib"
+    target_local_share_path: "/usr/local/share"
+    target_local_bin_path: "/usr/local/bin"
+    python_pkgs:
+      - cmake
+      - pynvim
+      # - conan
+    default_roles:
+      - core
+      - python
+      - nodejs
+      - lazygit
+      - eza
+      - procs
+      - delta
+      - git
+      - zsh
+      - nvim
+      - dotfiles
+  tasks:
+    - name: Roles
+      block:
+        - name: Init
+          ansible.builtin.include_role:
+            name: init
+          tags:
+            - always
+
+        - name: Get selected roles
+          ansible.builtin.set_fact:
+            selected_roles: "{{ default_roles }}"
+          tags:
+            - always
+
+        - name: Run selected roles
+          ansible.builtin.include_role:
+            name: "{{ role }}"
+          loop: "{{ selected_roles }}"
+          loop_control:
+            loop_var: role
+          tags:
+            - always
+      always:
+        - name: Cleanup
+          ansible.builtin.include_role:
+            name: cleanup
+          tags:
+            - always

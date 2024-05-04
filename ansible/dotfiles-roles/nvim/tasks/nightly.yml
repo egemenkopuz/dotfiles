@@ -1,0 +1,21 @@
+---
+- name: Clone source repo
+  ansible.builtin.git:
+    repo: https://github.com/neovim/neovim.git
+    dest: "{{ tmp_folder_path }}/nvim"
+    single_branch: true
+    version: master
+    depth: 1
+  register: git_nvim_repo_result
+
+- name: Build from source
+  ansible.builtin.make:
+    chdir: "{{ tmp_folder_path }}/nvim"
+    params:
+      CMAKE_BUILD_TYPE: Release
+
+- name: Install to {{ target_local_bin_path }}
+  become: true
+  ansible.builtin.make:
+    chdir: "{{ tmp_folder_path }}/nvim"
+    target: install

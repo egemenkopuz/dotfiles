@@ -1,0 +1,30 @@
+---
+- name: Create random name for tmp folder
+  ansible.builtin.set_fact:
+    tmp_folder_name: "tmp-ansible-{{ lookup('password', '/dev/null length=16 chars=ascii_letters,digits') }}"
+  tags:
+    - always
+
+- name: Set tmp folder path
+  ansible.builtin.set_fact:
+    tmp_folder_path: "{{ ansible_env.HOME }}/{{ tmp_folder_name }}"
+  tags:
+    - always
+
+- name: Tmp folder debug data
+  ansible.builtin.debug:
+    msg:
+      - "Tmp folder name: {{ tmp_folder_name }}"
+      - "Tmp folder path: {{ tmp_folder_path }}"
+
+- name: Tmp folder creation
+  ansible.builtin.file:
+    path: "{{ tmp_folder_path }}"
+    state: directory
+    mode: "0755"
+
+- name: Local bin folder creation
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: "0755"

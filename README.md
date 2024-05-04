@@ -15,7 +15,6 @@
     </a>
 </div>
 
-
 # Installation
 
 The following command clones the repository into .config in home directory.
@@ -28,7 +27,7 @@ cd ${HOME}/.config
 You can run the following command to use ansible to install the necessary packages.
 
 ```zsh
-ansible-playbook -K bootstrap.ansible.yml
+ansible-playbook -K setup.ansible.yml
 ```
 
 If you would like to install inside a container, you can use the following commands.

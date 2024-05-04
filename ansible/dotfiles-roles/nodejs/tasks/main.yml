@@ -1,0 +1,59 @@
+---
+- name: Get and register latest stable version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -sL https://nodejs.org/dist/index.json | jq -r '.[] | select(.lts) | .version' | head -n 1
+  args:
+    executable: /bin/bash
+  register: latest_nodejs_ver
+  changed_when: false
+
+- name: Get current version on the system
+  ansible.builtin.shell:
+    cmd: node --version
+  args:
+    executable: /bin/bash
+  register: curr_nodejs_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version to latest stable {{ latest_nodejs_ver.stdout }}
+  ansible.builtin.set_fact:
+    target_nodejs_ver: "{{ latest_nodejs_ver.stdout }}"
+  when: target_nodejs_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    nodejs_install: "{{ curr_nodejs_ver.stdout != target_nodejs_ver }}"
+
+- name: Get system architecture
+  ansible.builtin.set_fact:
+    nodejs_arch: "{{ ansible_machine | replace('x86_64', 'x64') | replace('aarch64', 'arm64') }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "Current version: {{ curr_nodejs_ver.stdout | default('Not installed') }}"
+      - "Latest stable version: {{ latest_nodejs_ver.stdout }}"
+      - "Target version: {{ target_nodejs_ver }}"
+      - "Install: {{ nodejs_install }}"
+
+- name: Installation
+  when: nodejs_install
+  block:
+    - name: Register download package name with architecture {{ nodejs_arch }}
+      ansible.builtin.set_fact:
+        nodejs_package_name: "node-{{ target_nodejs_ver }}-{{ ansible_system | lower }}-{{ nodejs_arch }}"
+
+    - name: Download with target version {{ target_nodejs_ver }}
+      ansible.builtin.get_url:
+        url: "https://nodejs.org/dist/{{ target_nodejs_ver }}/{{ nodejs_package_name }}.tar.gz"
+        dest: "{{ tmp_folder_path }}/{{ nodejs_package_name }}.tar.gz"
+        mode: "0755"
+
+    - name: Extract from archive
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ tmp_folder_path }}/{{ nodejs_package_name }}.tar.gz"
+        dest: "{{ target_local_path }}"
+        remote_src: true
+        extra_opts: "--strip-components=1"

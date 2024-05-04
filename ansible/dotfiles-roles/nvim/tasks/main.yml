@@ -1,0 +1,53 @@
+---
+- name: Get latest stable version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/neovim/neovim/releases/latest
+  register: latest_nvim_raw_data
+  changed_when: false
+
+- name: Register latest stable version
+  ansible.builtin.set_fact:
+    latest_nvim_stable_ver: "{{ latest_nvim_raw_data.json.tag_name }}"
+
+- name: Get current version on the system
+  ansible.builtin.shell:
+    cmd: set -o pipefail && nvim --version | grep -oP 'v\d+\.\d+\.\d+'
+  args:
+    executable: /bin/bash
+  register: curr_nvim_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set the target version to latest stable {{ latest_nvim_stable_ver }}
+  ansible.builtin.set_fact:
+    target_nvim_ver: "{{ latest_nvim_stable_ver }}"
+  when: target_nvim_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    nvim_install: "{{ curr_nvim_ver.stdout != target_nvim_ver or 'nightly' in target_nvim_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "Current nvim version: {{ curr_nvim_ver.stdout }}"
+      - "Latest nvim stable version: {{ latest_nvim_stable_ver }}"
+      - "Target nvim version: {{ target_nvim_ver }}"
+      - "Install: {{ nvim_install }}"
+
+- name: Install dependencies for Debian
+  ansible.builtin.include_tasks: deps-debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Run install for nightly version
+  when: target_nvim_ver == "nightly" and nvim_install
+  ansible.builtin.include_tasks: nightly.yml
+
+- name: Run install for stable version
+  when: target_nvim_ver != "nightly" and nvim_install
+  ansible.builtin.include_tasks: stable.yml
+
+- name: Sync plugins for the first time
+  ansible.builtin.command: "nvim --headless '+Lazy! sync' +qa"
+  when: nvim_install
+  changed_when: false

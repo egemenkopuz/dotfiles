@@ -1,0 +1,8 @@
+---
+- name: Remove tmp folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/{{ tmp_folder_name }}"
+    state: absent
+  tags:
+    - always

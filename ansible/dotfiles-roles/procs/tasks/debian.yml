@@ -1,0 +1,60 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/dalance/procs/releases/latest
+  register: latest_procs_raw_data
+  changed_when: false
+
+- name: Register latest version
+  ansible.builtin.set_fact:
+    latest_procs_ver: "{{ latest_procs_raw_data.json.tag_name }}"
+
+- name: Get current version on the system
+  ansible.builtin.shell:
+    cmd: set -o pipefail && $(which procs) --version | grep -oP '\d+\.\d+\.\d+' | awk 'NR==1' | sed 's/^/v/'
+  args:
+    executable: /bin/bash
+  register: curr_procs_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set the target version to latest {{ latest_procs_ver }}
+  ansible.builtin.set_fact:
+    target_procs_ver: "{{ latest_procs_ver }}"
+  when: target_procs_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    procs_install: "{{ curr_procs_ver.stdout != target_procs_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "Current version: {{ curr_procs_ver.stdout | default('not installed') }}"
+      - "Latest version: {{ latest_procs_ver }}"
+      - "Target version: {{ target_procs_ver }}"
+      - "Install: {{ procs_install }}"
+
+- name: Download target version {{ target_procs_ver }}
+  ansible.builtin.get_url:
+    url: "https://github.com/dalance/procs/releases/download/{{ target_procs_ver }}/procs-{{ target_procs_ver }}-x86_64-linux.zip"
+    dest: "{{ tmp_folder_path }}/procs.zip"
+    mode: "0644"
+  when: procs_install
+
+- name: Extract from archive
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/procs.zip"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/procs"
+  when: procs_install
+
+- name: Copy to {{ target_local_bin_path }}
+  become: true
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ tmp_folder_path }}/procs"
+    dest: "{{ target_local_bin_path }}"
+    mode: "0755"
+  when: procs_install
