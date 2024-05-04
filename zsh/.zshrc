@@ -24,8 +24,8 @@ setopt HIST_IGNORE_SPACE         # do not record an event starting with a space
 setopt HIST_SAVE_NO_DUPS         # do not write a duplicate event to the history file
 setopt HIST_VERIFY               # do not execute immediately upon history expansion
 
-alias h="history"
-alias hf="history | grep"
+alias h="history 1"
+alias hf="history 1 | grep"
 
 alias ..="cd .."
 alias ...="cd ../.."
