@@ -9,4 +9,4 @@
       - curl
       - build-essential
       - ccache
-      # - cmake # will be installed via pip
+      - cmake
