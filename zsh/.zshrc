@@ -8,7 +8,7 @@ fi
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
 
-if hash zoxide 2>/dev/null; then
+if hash fzf 2>/dev/null; then
   eval "$(fzf --zsh)"
   zstyle ':autocomplete:tab:*' fzf-completion yes
 fi
@@ -114,7 +114,6 @@ function va() {
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# if zoxide is installed, load it
 if command -v zoxide > /dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
