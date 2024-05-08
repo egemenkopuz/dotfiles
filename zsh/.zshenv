@@ -28,3 +28,7 @@ export PATH="$HOME/.local/bin:/usr/local/bin/go/bin:$GOPATH/bin:$CARGO_HOME/bin:
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$XDG_CONFIG_HOME/bin:$PATH"
 export PATH="$XDG_DATA_HOME/nvim/mason/bin:$PATH"
+
+if [ -f /etc/debian_version ]; then
+    skip_global_compinit=1
+fi

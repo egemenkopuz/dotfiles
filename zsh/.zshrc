@@ -1,3 +1,5 @@
+[ -f /usr/local/bin/fastfetch ] && /usr/local/bin/fastfetch
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -6,9 +8,10 @@ fi
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
 
-# zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# zstyle ':autocomplete:*' min-input 1
-# zstyle ':autocomplete:*' fzf-completion yes
+if hash zoxide 2>/dev/null; then
+  eval "$(fzf --zsh)"
+  zstyle ':autocomplete:tab:*' fzf-completion yes
+fi
 
 HISTSIZE=100000
 HISTFILESIZE=$HISTSIZE
@@ -41,6 +44,9 @@ alias rm="rm -iv"
 alias cp="cp -iv"
 alias mv="mv -iv"
 
+alias vi="nvim"
+alias vim="nvim"
+
 if hash rsync 2>/dev/null; then
   alias cpv="rsync -ah --info=progress2 --no-inc-recursive --stats"    # progress bar
   alias rcopy="rsync -av --progress -h"
@@ -49,23 +55,33 @@ if hash rsync 2>/dev/null; then
   alias rsynchronize="rsync -avu --delete --progress -h"
 fi
 
-alias vi="nvim"
-alias vim="nvim"
+if hash eza 2>/dev/null; then
+  alias l="eza"
+  alias la="eza -a --icons"
+  alias ll="eza -lah --icons --git"
+  alias llg="eza --grid -lah --icons --git"
+  alias ls="eza --color=auto --icons"
+else
+  alias l="ls"
+  alias ll="ls -lah"
+  alias la="ls -a"
+  alias ls="ls --color=auto"
+fi
 
-alias l="eza"
-alias la="eza -a --icons"
-alias ll="eza -lah --icons --git"
-alias llg="eza --grid -lah --icons --git"
-alias ls="eza --color=auto --icons"
+if hash procs 2>/dev/null; then
+  alias ps="procs"
+fi
+
+if hash bat 2>/dev/null; then
+  alias cat="bat -P"
+fi
 
 alias lg="lazygit"
-alias t="tmux"
 alias g="lazygit"
+alias t="tmux"
 alias python="python3"
 alias grep="grep -n --color"
 alias mkdir="mkdir -pv"
-alias cat="bat -P"
-alias ps="procs"
 alias nf="fastfetch"
 alias df="df -h"
 alias du="du -hs"
@@ -98,7 +114,14 @@ function va() {
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# if zoxide is installed, load it
+if command -v zoxide > /dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
 # load plugins
 source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 source "$ZDOTDIR/.p10k.zsh"
+
+zstyle ':autocomplete:*' delay 0.1

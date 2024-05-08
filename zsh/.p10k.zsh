@@ -119,11 +119,11 @@
   typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
   typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3
 
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=3
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=3
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=2
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=0
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=0
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=0
   typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=1
-  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=0
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
 
@@ -136,12 +136,11 @@
     fi
 
     # Styling for different parts of Git status.
-    local       meta='%7F'
-    local      clean='%0F'
-    local   modified='%0F'
-    local  untracked='%0F'
-    local conflicted='%1F'
-
+    local       meta='%250F'
+    local      clean='%250F'
+    local   modified='%250F'
+    local  untracked='%250F'
+    local conflicted='%250F'
     local res
 
     if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
@@ -226,16 +225,16 @@
   typeset -g POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND=8
 
   # Context color when running with privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=0
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND=255
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=1
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND=0
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@%m'
   # Context color in SSH without privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=0
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=255
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=1
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=0
   typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%B%n@%m'
   # Default context color (no privileges, no SSH).
-  typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=0
-  typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND=255
+  typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=1
+  typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND=0
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%B%n@%m'
 
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=0
@@ -246,11 +245,6 @@
   typeset -g POWERLEVEL9K_ANACONDA_FOREGROUND=3
   typeset -g POWERLEVEL9K_ANACONDA_BACKGROUND=
   typeset -g POWERLEVEL9K_ANACONDA_CONTENT_EXPANSION='${${${${CONDA_PROMPT_MODIFIER#\(}% }%\)}:-${CONDA_PREFIX:t}}'
-
-  function instant_prompt_example() {  }
-  typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=3
-  typeset -g POWERLEVEL9K_EXAMPLE_BACKGROUND=1
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
 
   # off - quiet - verbose
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
