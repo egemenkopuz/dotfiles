@@ -101,10 +101,3 @@
     value: "{{ git_user_email }}"
   when: git_user_email is defined
   no_log: true
-
-# - name: "Git | Set tag.gpgsign"
-#   community.general.git_config:
-#     name: tag.gpgsign
-#     scope: global
-#     value: true
-

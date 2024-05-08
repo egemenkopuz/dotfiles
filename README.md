@@ -30,7 +30,7 @@ cd ${HOME}/.config
 You can run the following command to use ansible to install the necessary packages.
 
 ```zsh
-ansible-playbook -K setup.ansible.yml
+ansible-playbook -K setup.ansible.yml --extra-vars "git_user_name='your_name' git_user_email='your_email'"
 ```
 
 If you would like to install inside a container, you can use the following commands.
