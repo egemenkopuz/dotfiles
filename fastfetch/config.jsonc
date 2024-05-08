@@ -1,0 +1,86 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": { "type": "none" },
+  "display": { "separator": "->   " },
+  "modules": [
+    "break",
+    { "type": "title", "format": "                                {6}{7}{8}" },
+    "break",
+    {
+      "type": "custom",
+      "format": "┌───────────────────────────── \u001b[1mSystem Information\u001b[0m ─────────────────────────────┐" // `\u001b` is `\033`, or `\e`
+    },
+    "break",
+    {
+      "key": "     OS           ",
+      "keyColor": "red",
+      "type": "os"
+    },
+    {
+      "key": "     Machine      ",
+      "keyColor": "red",
+      "type": "host"
+    },
+    {
+      "key": "     Kernel       ",
+      "keyColor": "red",
+      "type": "kernel"
+    },
+    {
+      "key": "     Uptime       ",
+      "keyColor": "red",
+      "type": "uptime"
+    },
+    {
+      "key": "     WM           ",
+      "keyColor": "red",
+      "type": "wm"
+    },
+    {
+      "key": "     Shell        ",
+      "keyColor": "red",
+      "type": "shell"
+    },
+    {
+      "key": "     Terminal     ",
+      "keyColor": "red",
+      "type": "terminal"
+    },
+    {
+      "key": "     Packages     ",
+      "keyColor": "red",
+      "type": "packages"
+    },
+    {
+      "key": "     CPU          ",
+      "keyColor": "red",
+      "type": "cpu"
+    },
+    {
+      "key": "     GPU          ",
+      "keyColor": "red",
+      "type": "gpu"
+    },
+    {
+      "key": "     Memory       ",
+      "keyColor": "red",
+      "type": "memory"
+    },
+    {
+      "key": "     Local IP     ",
+      "keyColor": "red",
+      "type": "localip",
+      "compact": true
+    },
+    {
+      "key": "     Public IP    ",
+      "keyColor": "red",
+      "type": "publicip"
+    },
+    "break",
+    {
+      "type": "custom",
+      "format": "└──────────────────────────────────────────────────────────────────────────────┘" // `\u001b` is `\033`, or `\e`
+    }
+  ]
+}
