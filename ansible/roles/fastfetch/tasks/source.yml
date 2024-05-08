@@ -1,0 +1,36 @@
+---
+- name: Install source archive file
+  ansible.builtin.get_url:
+    url: "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{{ target_fastfetch_ver }}.tar.gz"
+    dest: "{{ tmp_folder_path }}/fastfetch.tar.gz"
+    mode: "0644"
+
+- name: Extract source archive file
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/fastfetch.tar.gz"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/fastfetch-{{ target_fastfetch_ver }}"
+
+- name: Create build folder
+  ansible.builtin.file:
+    path: "{{ tmp_folder_path }}/fastfetch-{{ target_fastfetch_ver }}/build"
+    state: directory
+    mode: "0755"
+
+- name: Build
+  ansible.builtin.shell:
+    cmd: "cmake .. && cmake --build . --target fastfetch"
+  args:
+    executable: /bin/bash
+    chdir: "{{ tmp_folder_path }}/fastfetch-{{ target_fastfetch_ver }}/build"
+    creates:
+      - "{{ tmp_folder_path }}/fastfetch-{{ target_fastfetch_ver }}/build/fastfetch"
+
+- name: Copy fastfetch to {{ target_local_bin_path }}
+  become: true
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ tmp_folder_path }}/fastfetch-{{ target_fastfetch_ver }}/build/fastfetch"
+    dest: "{{ target_local_bin_path }}"
+    mode: "0755"

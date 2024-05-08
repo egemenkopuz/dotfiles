@@ -1,0 +1,110 @@
+---
+- name: Ensure .gitconfig exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.gitconfig"
+    state: touch
+    mode: "0644"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+
+- name: Set init.defaultBranch
+  community.general.git_config:
+    name: init.defaultBranch
+    scope: global
+    value: master
+
+- name: Set include.path
+  community.general.git_config:
+    name: include.path
+    scope: global
+    value: "{{ playbook_dir }}/git/themes.config"
+
+- name: Set gpg.program
+  community.general.git_config:
+    name: gpg.program
+    scope: global
+    value: ssh
+
+# TODO: add proper automated gpg key setup
+- name: Set commit.gpgSign
+  community.general.git_config:
+    name: commit.gpgSign
+    scope: global
+    value: false
+
+- name: Set interactive.diffFilter
+  community.general.git_config:
+    name: interactive.diffFilter
+    scope: global
+    value: delta --color-only
+
+- name: Set delta.features
+  community.general.git_config:
+    name: delta.features
+    scope: global
+    value: collared-trogon
+
+- name: Set delta.navigate
+  community.general.git_config:
+    name: delta.navigate
+    scope: global
+    value: true
+
+- name: Set delta.light
+  community.general.git_config:
+    name: delta.light
+    scope: global
+    value: false
+
+- name: Set delta.side-by-side
+  community.general.git_config:
+    name: delta.side-by-side
+    scope: global
+    value: true
+
+- name: Set delta.paging
+  community.general.git_config:
+    name: delta.paging
+    scope: global
+    value: never
+
+- name: Set pull.ff
+  community.general.git_config:
+    name: pull.ff
+    scope: global
+    value: only
+
+- name: Set merge.conflictStyle
+  community.general.git_config:
+    name: merge.conflictStyle
+    scope: global
+    value: diff3
+
+- name: Set diff.colorMoved
+  community.general.git_config:
+    name: diff.colorMoved
+    scope: global
+    value: default
+
+- name: Set user.name if var is given
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_user_name }}"
+  when: git_user_name is defined
+  no_log: true
+
+- name: Set user.email if var is given
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_user_email }}"
+  when: git_user_email is defined
+  no_log: true
+
+# - name: "Git | Set tag.gpgsign"
+#   community.general.git_config:
+#     name: tag.gpgsign
+#     scope: global
+#     value: true
+

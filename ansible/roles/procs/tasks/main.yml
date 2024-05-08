@@ -1,0 +1,46 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/dalance/procs/releases/latest
+  register: latest_procs_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_procs_ver: "{{ latest_procs_raw_data.json.tag_name }}"
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && $(which procs) --version | grep -oP '\d+\.\d+\.\d+' | awk 'NR==1' | sed 's/^/v/'
+  args:
+    executable: /bin/bash
+  register: sys_procs_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_procs_ver: "{{ procs.version }}"
+  when: procs.version is defined and procs.version != 'latest'
+
+- name: Set target version to latest {{ latest_procs_ver }}
+  ansible.builtin.set_fact:
+    target_procs_ver: "{{ latest_procs_ver }}"
+  when: target_procs_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_procs: "{{ sys_procs_ver.stdout != target_procs_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ procs.version if procs.version is defined else '' }}"
+      - "system version             : {{ sys_procs_ver.stdout }}"
+      - "latest version             : {{ latest_procs_ver }}"
+      - "should install/update      : {{ install_procs }}"
+      - "install version            : {{ target_procs_ver if install_procs else '' }}"
+
+- name: Run debian based setup
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_os_family == 'Debian' and install_procs

@@ -6,37 +6,18 @@ ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
-    apt-transport-https \
-    autoconf \
-    automake \
-    ca-certificates \
-    cmake \
-    coreutils \
-    curl \
     locales \
-    doxygen \
-    g++ \
-    gettext \
     git \
-    gnupg \
-    libtool \
-    libtool-bin \
-    make \
-    pkg-config \
     sudo \
-    tar \
-    unzip \
-    wget \
-    zip \
-    openssh-client \
     python3-pip \
+    openssh-client \
     openssh-server \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
 
 ENV PIP_BREAK_SYSTEM_PACKAGES 1
-RUN python3 -m pip install --no-cache-dir ansible==9.5.1  pynvim
+RUN python3 -m pip install --no-cache-dir ansible==9.5.1
 
 COPY . /root/.config
 
@@ -54,3 +35,4 @@ WORKDIR /root
 EXPOSE 8080 8081 8082 8083 8084 8085
 
 CMD ["tail", "-f", "/dev/null"]
+

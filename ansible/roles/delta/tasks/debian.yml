@@ -1,0 +1,32 @@
+---
+- name: Set target architecture
+  ansible.builtin.set_fact:
+    target_arch: "{{ ansible_architecture }}"
+
+- name: Set target os
+  ansible.builtin.set_fact:
+    target_os: "{{ ansible_os_family | replace('Debian', 'unknown-linux-gnu') | replace('Darwin', 'apple-darwin') }}"
+
+- name: Set archive file name
+  ansible.builtin.set_fact:
+    target_archive_name: "delta-{{ target_delta_ver }}-{{ target_arch }}-{{ target_os }}"
+
+- name: Download target version {{ target_delta_ver }}
+  ansible.builtin.get_url:
+    url: "https://github.com/dandavison/delta/releases/download/{{ target_delta_ver }}/{{ target_archive_name }}.tar.gz"
+    dest: "{{ tmp_folder_path }}/delta.tar.gz"
+    mode: "0644"
+
+- name: Extract from archive
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/delta.tar.gz"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/{{ target_archive_name }}/delta"
+
+- name: Copy to {{ target_local_bin_path }}
+  become: true
+  ansible.builtin.copy:
+    src: "{{ tmp_folder_path }}/{{ target_archive_name }}/delta"
+    dest: "{{ target_local_bin_path }}"
+    mode: "0755"

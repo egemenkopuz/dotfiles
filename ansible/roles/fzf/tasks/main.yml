@@ -1,0 +1,75 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/junegunn/fzf/releases/latest
+  register: fzf_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_fzf_ver: "{{ fzf_raw_data.json.tag_name }}"
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && fzf --version | awk '{print $1}'
+  args:
+    executable: /bin/bash
+  register: sys_fzf_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_fzf_ver: "{{ fzf.version }}"
+  when: fzf.version is defined and fzf.version != 'latest'
+
+- name: Set target version to latest {{ latest_fzf_ver }}
+  ansible.builtin.set_fact:
+    target_fzf_ver: "{{ latest_fzf_ver }}"
+  when: target_fzf_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_fzf: "{{ sys_fzf_ver.stdout != target_fzf_ver }}"
+  changed_when: false
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ fzf.version if fzf.version is defined else '' }}"
+      - "system version             : {{ sys_fzf_ver.stdout }}"
+      - "latest version             : {{ latest_fzf_ver }}"
+      - "should install/update      : {{ install_fzf }}"
+      - "install version            : {{ target_fzf_ver if install_fzf else '' }}"
+
+- name: Installation
+  when: install_fzf
+  block:
+    - name: Set target architecture
+      ansible.builtin.set_fact:
+        target_arch: "{{ ansible_architecture | replace('x86_64', 'amd64') }}"
+
+    - name: Set target os
+      ansible.builtin.set_fact:
+        target_os: "{{ ansible_os_family | replace('Debian', 'linux') | replace('Darwin', 'darwin') }}"
+
+    - name: Download target version {{ target_fzf_ver }}
+      ansible.builtin.get_url:
+        url: "https://github.com/junegunn/fzf/releases/download/{{ target_fzf_ver }}/fzf-{{ target_fzf_ver }}-{{ target_os }}_{{ target_arch }}.tar.gz"
+        dest: "{{ tmp_folder_path }}/fzf.tar.gz"
+        mode: "0644"
+
+    - name: Extract from archive
+      ansible.builtin.unarchive:
+        src: "{{ tmp_folder_path }}/fzf.tar.gz"
+        dest: "{{ tmp_folder_path }}"
+        remote_src: true
+        creates: "{{ tmp_folder_path }}/fzf"
+
+    - name: Copy to {{ target_local_bin_path }}
+      become: true
+      ansible.builtin.copy:
+        remote_src: true
+        src: "{{ tmp_folder_path }}/fzf"
+        dest: "{{ target_local_bin_path }}"
+        mode: "0755"

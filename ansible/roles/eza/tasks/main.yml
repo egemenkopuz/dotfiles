@@ -1,0 +1,46 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/eza-community/eza/releases/latest
+  register: latest_eza_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_eza_ver: "{{ latest_eza_raw_data.json.tag_name }}"
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && $(which eza) --version | grep -oP 'v\d+\.\d+\.\d+'
+  args:
+    executable: /bin/bash
+  register: sys_eza_ver
+  changed_when: false
+  failed_when: false
+
+- name: Get target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_eza_ver: "{{ eza.version }}"
+  when: eza.version is defined and eza.version != 'latest'
+
+- name: Set target version to latest {{ latest_eza_ver }}
+  ansible.builtin.set_fact:
+    target_eza_ver: "{{ latest_eza_ver }}"
+  when: target_eza_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_eza: "{{ sys_eza_ver.stdout != target_eza_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ eza.version if eza.version is defined else '' }}"
+      - "system version             : {{ sys_eza_ver.stdout }}"
+      - "latest version             : {{ latest_eza_ver }}"
+      - "should install/update      : {{ install_eza }}"
+      - "install version            : {{ target_eza_ver if install_eza else '' }}"
+
+- name: Run debian based setup
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_os_family == 'Debian' and install_eza

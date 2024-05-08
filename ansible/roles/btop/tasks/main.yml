@@ -1,0 +1,53 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/aristocratos/btop/releases/latest
+  register: btop_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_btop_ver: "{{ btop_raw_data.json.tag_name }}"
+  changed_when: false
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && btop --version | grep -oP '\d+\.\d+\.\d+' | sed 's/^/v/'
+  args:
+    executable: /bin/bash
+  register: sys_btop_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_btop_ver: "{{ btop.version }}"
+  when: btop.version is defined and btop.version != 'latest'
+
+- name: Set the target version to latest {{ latest_btop_ver }}
+  ansible.builtin.set_fact:
+    target_btop_ver: "{{ latest_btop_ver }}"
+  when: target_btop_ver is not defined
+
+- name: Set the target version to latest {{ latest_btop_ver }}
+  ansible.builtin.set_fact:
+    target_btop_ver: "{{ latest_btop_ver }}"
+  when: target_btop_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_btop: "{{ sys_btop_ver.stdout != target_btop_ver }}"
+  changed_when: false
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ btop.version if btop.version is defined else '' }}"
+      - "system version             : {{ sys_btop_ver.stdout }}"
+      - "latest version             : {{ latest_btop_ver }}"
+      - "should install/update      : {{ install_btop }}"
+      - "install version            : {{ target_btop_ver if install_btop else '' }}"
+
+- name: Run debian based setup
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_os_family == "Debian" and install_btop

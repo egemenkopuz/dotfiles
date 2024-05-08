@@ -1,0 +1,65 @@
+---
+- name: Get latest version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -sL https://nodejs.org/dist/index.json | jq -r '.[] | select(.lts) | .version' | head -n 1
+  args:
+    executable: /bin/bash
+  register: latest_nodejs_ver
+  changed_when: false
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: node --version
+  args:
+    executable: /bin/bash
+  register: sys_nodejs_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_nodejs_ver: "{{ nodejs.version }}"
+  when: nodejs.version is defined and nodejs.version != 'latest'
+
+- name: Set target version to latest stable {{ latest_nodejs_ver.stdout }}
+  ansible.builtin.set_fact:
+    target_nodejs_ver: "{{ latest_nodejs_ver.stdout }}"
+  when: target_nodejs_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_nodejs: "{{ sys_nodejs_ver.stdout != target_nodejs_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ nodejs.version if nodejs.version is defined else '' }}"
+      - "system version             : {{ sys_nodejs_ver.stdout }}"
+      - "latest version             : {{ latest_nodejs_ver.stdout }}"
+      - "should install/update      : {{ install_nodejs }}"
+      - "install version            : {{ target_nodejs_ver if install_nodejs else '' }}"
+
+- name: Installation by extracting binaries
+  when: install_nodejs
+  block:
+    - name: Set target architecture
+      ansible.builtin.set_fact:
+        target_arch: "{{ ansible_machine | replace('x86_64', 'x64') | replace('aarch64', 'arm64') }}"
+
+    - name: Register download package name with architecture {{ target_arch }}
+      ansible.builtin.set_fact:
+        nodejs_package_name: "node-{{ target_nodejs_ver }}-{{ ansible_system | lower }}-{{ target_arch }}"
+
+    - name: Download with target version {{ target_nodejs_ver }}
+      ansible.builtin.get_url:
+        url: "https://nodejs.org/dist/{{ target_nodejs_ver }}/{{ nodejs_package_name }}.tar.gz"
+        dest: "{{ tmp_folder_path }}/{{ nodejs_package_name }}.tar.gz"
+        mode: "0755"
+
+    - name: Extract from archive to {{ target_local_path }}
+      become: true
+      ansible.builtin.unarchive:
+        src: "{{ tmp_folder_path }}/{{ nodejs_package_name }}.tar.gz"
+        dest: "{{ target_local_path }}"
+        remote_src: true
+        extra_opts: "--strip-components=1"

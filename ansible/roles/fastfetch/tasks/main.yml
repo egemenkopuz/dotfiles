@@ -1,0 +1,48 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/fastfetch-cli/fastfetch/releases/latest
+  register: fastfetch_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_fastfetch_ver: "{{ fastfetch_raw_data.json.tag_name }}"
+  changed_when: false
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && fastfetch --version | awk '{print $2}'
+  args:
+    executable: /bin/bash
+  register: sys_fastfetch_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_fastfetch_ver: "{{ fastfetch.version }}"
+  when: fastfetch.version is defined and fastfetch.version != 'latest'
+
+- name: Set target version to latest {{ latest_fastfetch_ver }}
+  ansible.builtin.set_fact:
+    target_fastfetch_ver: "{{ latest_fastfetch_ver }}"
+  when: target_fastfetch_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_fastfetch: "{{ sys_fastfetch_ver.stdout != target_fastfetch_ver }}"
+  changed_when: false
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ fastfetch.version if fastfetch.version is defined else '' }}"
+      - "system version             : {{ sys_fastfetch_ver.stdout }}"
+      - "latest version             : {{ latest_fastfetch_ver }}"
+      - "should install/update      : {{ install_fastfetch }}"
+      - "install version            : {{ target_fastfetch_ver if install_fastfetch else '' }}"
+
+- name: Installation from source
+  ansible.builtin.include_tasks: source.yml
+  when: install_fastfetch and fastfetch.build_from_source

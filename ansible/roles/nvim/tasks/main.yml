@@ -1,0 +1,59 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/neovim/neovim/releases/latest
+  register: latest_nvim_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_nvim_stable_ver: "{{ latest_nvim_raw_data.json.tag_name }}"
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && nvim --version | grep -oP 'v\d+\.\d+\.\d+'
+  args:
+    executable: /bin/bash
+  register: sys_nvim_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_nvim_ver: "{{ nvim.version }}"
+  when: nvim.version is defined and nvim.version != 'latest'
+
+- name: Set target version to latest stable {{ latest_nvim_stable_ver }}
+  ansible.builtin.set_fact:
+    target_nvim_ver: "{{ latest_nvim_stable_ver }}"
+  when: target_nvim_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_nvim: "{{ sys_nvim_ver.stdout != target_nvim_ver or 'nightly' in target_nvim_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version         : {{ nvim.version if nvim.version is defined else '' }}"
+      - "system version         : {{ sys_nvim_ver.stdout }}"
+      - "latest version         : {{ latest_nvim_stable_ver }}"
+      - "should install/update  : {{ install_nvim }}"
+      - "install version        : {{ target_nvim_ver if install_nvim else '' }}"
+
+- name: Install dependencies for Debian
+  ansible.builtin.include_tasks: deps-debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Run install from source
+  when: install_nvim and nvim.build_from_source
+  ansible.builtin.include_tasks: source.yml
+
+- name: Run install by extracting binaries
+  when: install_nvim and not nvim.build_from_source
+  ansible.builtin.include_tasks: stable.yml
+
+- name: Sync plugins for the first time
+  ansible.builtin.command: "nvim --headless '+Lazy! sync' +qa"
+  when: install_nvim
+  changed_when: false

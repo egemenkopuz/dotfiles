@@ -1,0 +1,54 @@
+---
+- name: Set target architecture
+  ansible.builtin.set_fact:
+    target_arch: "{{ ansible_architecture }}"
+
+- name: Set archive file name
+  ansible.builtin.set_fact:
+    target_archive_name: "eza_{{ target_arch }}-unknown-linux-gnu.tar.gz"
+
+- name: Download target version {{ target_eza_ver }}
+  ansible.builtin.get_url:
+    url: "https://github.com/eza-community/eza/releases/download/{{ target_eza_ver }}/eza_{{ target_arch }}-unknown-linux-gnu.tar.gz"
+    dest: "{{ tmp_folder_path }}/eza.tar.gz"
+    mode: "0644"
+
+- name: Extract from archive
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/eza.tar.gz"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/eza"
+
+- name: Copy to {{ target_local_bin_path }}
+  become: true
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ tmp_folder_path }}/eza"
+    dest: "{{ target_local_bin_path }}"
+    mode: "0755"
+
+- name: Download completions archive
+  ansible.builtin.get_url:
+    url: https://github.com/eza-community/eza/releases/download/{{ target_eza_ver }}/completions-{{ target_eza_ver | regex_replace('^v', '') }}.tar.gz
+    dest: "{{ tmp_folder_path }}/completions.tar.gz"
+    mode: "0644"
+  ignore_errors: true
+  register: eza_check
+
+- name: Unarchive completions archive
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/completions.tar.gz"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/target/completions-{{ target_eza_ver | regex_replace('^v', '') }}"
+  when: eza_check is succeeded
+
+- name: Copy completions to {{ zsh_completion_path }}
+  become: true
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ tmp_folder_path }}/target/completions-{{ target_eza_ver | regex_replace('^v', '') }}/_eza"
+    dest: "{{ zsh_completion_path }}"
+    mode: "0644"
+  when: eza_check is succeeded

@@ -1,0 +1,46 @@
+---
+- name: Get latest raw data
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/dandavison/delta/releases/latest
+  register: latest_delta_raw_data
+  changed_when: false
+
+- name: Get latest version
+  ansible.builtin.set_fact:
+    latest_delta_ver: "{{ latest_delta_raw_data.json.tag_name }}"
+
+- name: Get system version
+  ansible.builtin.shell:
+    cmd: set -o pipefail && $(which delta) --version | grep -oP 'delta\s+\K[\d.]+'
+  args:
+    executable: /bin/bash
+  register: sys_delta_ver
+  changed_when: false
+  failed_when: false
+
+- name: Set target version according to locked configuration
+  ansible.builtin.set_fact:
+    target_delta_ver: "{{ delta.version }}"
+  when: delta.version is defined and delta.version != 'latest'
+
+- name: Set target version to latest {{ latest_delta_ver }}
+  ansible.builtin.set_fact:
+    target_delta_ver: "{{ latest_delta_ver }}"
+  when: target_delta_ver is not defined
+
+- name: Set validity for installation
+  ansible.builtin.set_fact:
+    install_delta: "{{ sys_delta_ver.stdout != target_delta_ver }}"
+
+- name: Show versions and installation status
+  ansible.builtin.debug:
+    msg:
+      - "locked version             : {{ delta.version if delta.version is defined else '' }}"
+      - "system version             : {{ sys_delta_ver.stdout }}"
+      - "latest version             : {{ latest_delta_ver }}"
+      - "should install/update      : {{ install_delta }}"
+      - "install version            : {{ target_delta_ver if install_delta else '' }}"
+
+- name: Run debian based setup
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_os_family == 'Debian' and install_delta

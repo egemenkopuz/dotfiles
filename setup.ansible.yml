@@ -3,55 +3,95 @@
   hosts: localhost
   connection: local
   vars:
-    # target_eza_ver: "v0.18.13"
-    # target_lazygit_ver: "v0.41.0"
-    # target_procs_ver: "v0.14.5"
-    # target_delta_ver: "0.17.0"
-    # target_nodejs_ver: "v20.12.0"
-    # target_nvim_ver: "nightly"
+    # default version -> latest
+    nodejs:
+      version: latest # alternative: v20.12.0
+    nvim:
+      version: nightly # alternative: v0.9.5
+      build_from_source: true
+    fastfetch:
+      version: latest # alternative: 2.11.4
+      build_from_source: true # false not implemented
+    eza:
+      version: latest # alternative: v0.18.13
+      build_from_source: false # true not implemented, requires cargo
+    bat:
+      version: latest # alternative: v0.24.0
+      build_from_source: false # true not implemented, requires cargp
+    lazygit:
+      version: latest # alternative: v0.41.0
+      build_from_source: false # true not implemented, requires go
+    procs:
+      version: latest # alternative: v0.14.5
+      build_from_source: false # true not implemented, requires go
+    delta:
+      version: latest # alternative: 0.17.0
+      build_from_source: false # true not implemented, requires cargo
+    fzf:
+      version: latest # alternative: 0.27.2
+      build_from_source: false # true not implemented, requires go
+    ripgrep:
+      version: latest # alternative: 14.1.0
+      build_from_source: false # true not implemented, requires cargo
+    btop:
+      version: latest # alternative: v1.3.2 **no macos**
+      build_from_source: false # true not implemented
+    fd:
+      version: latest # alternative: v10.0.0
+      build_from_source: false # true not implemented, requires cargo
+    # target paths
     target_local_path: "/usr/local"
     target_local_lib_path: "/usr/local/lib"
     target_local_share_path: "/usr/local/share"
     target_local_bin_path: "/usr/local/bin"
+    zsh_completion_path: "/usr/share/zsh/vendor-completions"
+    # python packages
     python_pkgs:
-      - cmake
-      - pynvim
-      # - conan
-    default_roles:
+      - cmake # or cmake==3.29.2
+      - pynvim # or pynvim==0.5.0
+    # roles
+    essential_roles:
       - core
       - python
       - nodejs
+      - zsh
+      - ripgrep
+      - fzf
+      - bat
+      - fd
       - lazygit
       - eza
+    opt_roles:
       - procs
       - delta
       - git
-      - zsh
+      - fastfetch
+      - btop
       - nvim
       - dotfiles
   tasks:
     - name: Roles
       block:
-        - name: Init
+        - name: Initialize
           ansible.builtin.include_role:
             name: init
           tags:
             - always
 
-        - name: Get selected roles
-          ansible.builtin.set_fact:
-            selected_roles: "{{ default_roles }}"
-          tags:
-            - always
-
-        - name: Run selected roles
+        - name: Run essential roles
           ansible.builtin.include_role:
-            name: "{{ role }}"
-          loop: "{{ selected_roles }}"
+            name: "{{ essential_role }}"
+          loop: "{{ essential_roles if essential_roles is iterable else [] }}"
           loop_control:
-            loop_var: role
-          tags:
-            - always
+            loop_var: essential_role
+
+        - name: Run optional roles
+          ansible.builtin.include_role:
+            name: "{{ opt_role }}"
+          loop: "{{ opt_roles if opt_roles is iterable else [] }}"
+          loop_control:
+            loop_var: opt_role
+
       always:
         - name: Cleanup
           ansible.builtin.include_role:

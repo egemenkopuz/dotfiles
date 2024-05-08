@@ -1,0 +1,26 @@
+---
+- name: Download source archive
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/archive/refs/tags/{{ target_nvim_ver }}.tar.gz"
+    dest: "{{ tmp_folder_path }}/nvim.tar.gz"
+    mode: "0644"
+
+- name: Extract source archive
+  ansible.builtin.unarchive:
+    src: "{{ tmp_folder_path }}/nvim.tar.gz"
+    dest: "{{ tmp_folder_path }}"
+    remote_src: true
+    creates: "{{ tmp_folder_path }}/neovim-{{ target_nvim_ver }}"
+  register: archive_contents
+
+- name: Build from source
+  community.general.make:
+    chdir: "{{ tmp_folder_path }}/neovim-{{ target_nvim_ver }}"
+    params:
+      CMAKE_BUILD_TYPE: Release
+
+- name: Install to {{ target_local_bin_path }}
+  become: true
+  community.general.make:
+    chdir: "{{ tmp_folder_path }}/neovim-{{ target_nvim_ver }}"
+    target: install
