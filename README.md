@@ -20,7 +20,7 @@
 The following command clones the repository into .config in home directory.
 
 ```zsh
-git clone --depth 1 --recursive git@github.com:egemenkopuz/dotfiles.git ${HOME}/.config
+git clone --depth 1 --recursive https://github.com/egemenkopuz/dotfiles.git ${HOME}/.config
 cd ${HOME}/.config
 ```
 
