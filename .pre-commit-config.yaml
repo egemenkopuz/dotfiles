@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: mixed-line-ending
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.28.3
+    hooks:
+      - id: check-github-workflows
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v24.2.3
+    hooks:
+      - id: ansible-lint
+        files: roles/.*\.(yml|yaml)|playbooks/.*\.(yml|yaml)
+  - repo: local
+    hooks:
+      - id: test-ubuntu
+        name: Test dotfiles on Ubuntu Docker container
+        entry: bash
+        language: system
+        args: [scripts/test-dotfiles-docker.sh, ubuntu]
+        stages: [manual]
