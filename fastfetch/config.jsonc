@@ -66,17 +66,6 @@
       "keyColor": "red",
       "type": "memory"
     },
-    {
-      "key": "     Local IP     ",
-      "keyColor": "red",
-      "type": "localip",
-      "compact": true
-    },
-    {
-      "key": "     Public IP    ",
-      "keyColor": "red",
-      "type": "publicip"
-    },
     "break",
     {
       "type": "custom",
