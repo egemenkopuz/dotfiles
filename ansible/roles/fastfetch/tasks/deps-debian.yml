@@ -1,0 +1,7 @@
+---
+- name: Install dependencies using apt
+  become: true
+  ansible.builtin.apt:
+    name:
+      - cmake
+      - pkg-config

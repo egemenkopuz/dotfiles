@@ -41,10 +41,6 @@
       - "should install/update  : {{ install_nvim }}"
       - "install version        : {{ target_nvim_ver if install_nvim else '' }}"
 
-- name: Install dependencies for Debian
-  ansible.builtin.include_tasks: deps-debian.yml
-  when: ansible_os_family == "Debian"
-
 - name: Run install from source
   when: install_nvim and nvim.build_from_source
   ansible.builtin.include_tasks: source.yml

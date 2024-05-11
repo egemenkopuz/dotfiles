@@ -1,4 +1,8 @@
 ---
+- name: Install dependencies for Debian
+  ansible.builtin.include_tasks: deps-debian.yml
+  when: ansible_os_family == "Debian"
+
 - name: Install source archive file
   ansible.builtin.get_url:
     url: "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{{ target_fastfetch_ver }}.tar.gz"

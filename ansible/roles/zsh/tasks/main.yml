@@ -6,6 +6,22 @@
     state: present
   when: ansible_os_family == "Debian"
 
+- name: Copy zsh config file to remote
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/zsh/.zshenv"
+    dest: "{{ playbook_dir }}/zsh/.zshenv"
+    mode: "0644"
+    remote_src: false
+    force: false
+
+- name: Copy zsh config file to remote
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/zsh/.zshrc"
+    dest: "{{ playbook_dir }}/zsh/.zshrc"
+    mode: "0644"
+    remote_src: false
+    force: false
+
 - name: Create symlink for .zshenv
   ansible.builtin.file:
     src: "{{ playbook_dir }}/zsh/.zshenv"

@@ -50,7 +50,7 @@
 
     - name: Set target os
       ansible.builtin.set_fact:
-        target_os: "{{ ansible_os_family | replace('Debian', 'unknown-linux-musl') | replace('Darwin', 'apple-darwin') }}"
+        target_os: "{{ ansible_os_family | replace('Debian', 'unknown-linux-gnu') | replace('Darwin', 'apple-darwin') }}"
 
     - name: Set archive file name
       ansible.builtin.set_fact:
@@ -77,10 +77,10 @@
         dest: "{{ target_local_bin_path }}/bat"
         mode: "0755"
 
-    - name: Copy zsh completion file to {{ zsh_completion_path }}
+    - name: Copy zsh completion file to {{ zsh_completions_path }}
       become: true
       ansible.builtin.copy:
         remote_src: true
         src: "{{ tmp_folder_path }}/bat-{{ target_bat_ver }}-{{ target_arch }}-{{ target_os }}/autocomplete/bat.zsh"
-        dest: "{{ zsh_completion_path }}/_bat"
+        dest: "{{ zsh_completions_path }}/_bat"
         mode: "0644"

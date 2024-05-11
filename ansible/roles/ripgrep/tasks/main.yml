@@ -77,10 +77,10 @@
         dest: "{{ target_local_bin_path }}"
         mode: "0755"
 
-    - name: Copy zsh completion file to {{ zsh_completion_path }}
+    - name: Copy zsh completion file to {{ zsh_completions_path }}
       become: true
       ansible.builtin.copy:
         remote_src: true
         src: "{{ tmp_folder_path }}/ripgrep-{{ target_ripgrep_ver }}-{{ target_arch }}-{{ target_os }}/complete/_rg"
-        dest: "{{ zsh_completion_path }}"
+        dest: "{{ zsh_completions_path }}"
         mode: "0644"

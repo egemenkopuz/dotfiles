@@ -1,9 +1,17 @@
 ---
-- name: Development environment setup
-  hosts: localhost
-  connection: local
+- name: Dotfiles setup
+  hosts: "{{ target_group | default('localhost') }}"
   vars:
-    # default version -> latest
+    # ------------- Meta -------------
+    target_local_path: "/usr/local"
+    target_local_lib_path: "/usr/local/lib"
+    target_local_share_path: "/usr/local/share"
+    target_local_bin_path: "/usr/local/bin"
+    zsh_completions_path: "/usr/share/zsh/vendor-completions"
+    log_dir_base_path: "{{ playbook_dir }}/tests/logs"
+    log_filename: "ansible.log"
+    # ------------- Roles' versions -------------
+    # NOTE: default: version -> latest, build_from_source -> false
     nodejs:
       version: latest # alternative: v20.12.0
     nvim:
@@ -14,43 +22,33 @@
       build_from_source: true # false not implemented
     eza:
       version: latest # alternative: v0.18.13
-      build_from_source: false # true not implemented, requires cargo
     bat:
       version: latest # alternative: v0.24.0
-      build_from_source: false # true not implemented, requires cargp
     lazygit:
       version: latest # alternative: v0.41.0
-      build_from_source: false # true not implemented, requires go
     procs:
       version: latest # alternative: v0.14.5
-      build_from_source: false # true not implemented, requires go
     delta:
       version: latest # alternative: 0.17.0
-      build_from_source: false # true not implemented, requires cargo
     fzf:
       version: latest # alternative: 0.27.2
-      build_from_source: false # true not implemented, requires go
     ripgrep:
       version: latest # alternative: 14.1.0
-      build_from_source: false # true not implemented, requires cargo
     btop:
       version: latest # alternative: v1.3.2 **no macos**
-      build_from_source: false # true not implemented
     fd:
       version: latest # alternative: v10.0.0
-      build_from_source: false # true not implemented, requires cargo
-    # target paths
-    target_local_path: "/usr/local"
-    target_local_lib_path: "/usr/local/lib"
-    target_local_share_path: "/usr/local/share"
-    target_local_bin_path: "/usr/local/bin"
-    zsh_completion_path: "/usr/share/zsh/vendor-completions"
-    # python packages
+    zoxide:
+      version: latest # alternative: v0.9.4
+    # ------------- Python Packages to download -------------
+    # NOTE: comment out to disable a package
     python_pkgs:
       - cmake # or cmake==3.29.2
       - pynvim # or pynvim==0.5.0
-    # roles
-    essential_roles:
+      - pre-commit # or pre-commit==3.7.0
+    # ------------- Roles -------------
+    # NOTE: comment out to disable a role
+    active_roles:
       - core
       - python
       - nodejs
@@ -61,12 +59,12 @@
       - fd
       - lazygit
       - eza
-    opt_roles:
       - procs
       - delta
       - git
       - fastfetch
       - btop
+      - zoxide
       - nvim
       - dotfiles
   tasks:
@@ -78,20 +76,50 @@
           tags:
             - always
 
-        - name: Run essential roles
+        - name: Run active roles
           ansible.builtin.include_role:
-            name: "{{ essential_role }}"
-          loop: "{{ essential_roles if essential_roles is iterable else [] }}"
+            name: "{{ active_role }}"
+          loop: "{{ active_roles if active_roles is iterable else [] }}"
           loop_control:
-            loop_var: essential_role
+            loop_var: active_role
 
-        - name: Run optional roles
-          ansible.builtin.include_role:
-            name: "{{ opt_role }}"
-          loop: "{{ opt_roles if opt_roles is iterable else [] }}"
-          loop_control:
-            loop_var: opt_role
+      rescue:
+        - name: Handle failure
+          when: ansible_failed_result is defined
+          become: true
+          block:
+            - name: Print failed task
+              ansible.builtin.debug:
+                msg: "{{ ansible_failed_result }}"
 
+            - name: Create a temp file for failed task details
+              ansible.builtin.tempfile:
+                state: file
+                suffix: .log
+              register: tempfile_failed_task
+
+            - name: Save failed task details
+              ansible.builtin.copy:
+                content: "{{ ansible_failed_result }}"
+                dest: "{{ tempfile_failed_task.path }}"
+                mode: "0644"
+
+            - name: Create log directory
+              ansible.builtin.file:
+                path: "{{ log_dir_base_path }}"
+                state: directory
+                mode: "0755"
+
+            - name: Fetch failed task details
+              ansible.builtin.fetch:
+                src: "{{ tempfile_failed_task.path }}"
+                dest: "{{ log_dir_base_path }}/{{ log_filename }}"
+                flat: true
+
+            - name: Delete temp file
+              ansible.builtin.file:
+                path: "{{ tempfile_failed_task.path }}"
+                state: absent
       always:
         - name: Cleanup
           ansible.builtin.include_role:

@@ -7,7 +7,7 @@
   ansible.builtin.pip:
     name: "{{ python_pkg }}"
     state: present
-    # extra_args: --break-system-packages
+    extra_args: "{{ '--break-system-packages' if pip_break_system_packages is defined else '' }}"
   loop: "{{ python_pkgs }}"
   loop_control:
     loop_var: python_pkg

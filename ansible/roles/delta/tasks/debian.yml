@@ -27,6 +27,7 @@
 - name: Copy to {{ target_local_bin_path }}
   become: true
   ansible.builtin.copy:
+    remote_src: true
     src: "{{ tmp_folder_path }}/{{ target_archive_name }}/delta"
     dest: "{{ target_local_bin_path }}"
     mode: "0755"

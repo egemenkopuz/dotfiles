@@ -2,3 +2,12 @@
 - name: Run debian based setup
   ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == "Debian"
+
+- name: Clone dotfiles repo
+  ansible.builtin.git:
+    repo: "https://github.com/egemenkopuz/dotfiles"
+    dest: "{{ ansible_env.HOME }}/.config"
+    version: master
+    force: false
+    recursive: true
+    update: false

@@ -44,11 +44,11 @@
     creates: "{{ tmp_folder_path }}/target/completions-{{ target_eza_ver | regex_replace('^v', '') }}"
   when: eza_check is succeeded
 
-- name: Copy completions to {{ zsh_completion_path }}
+- name: Copy completions to {{ zsh_completions_path }}
   become: true
   ansible.builtin.copy:
     remote_src: true
     src: "{{ tmp_folder_path }}/target/completions-{{ target_eza_ver | regex_replace('^v', '') }}/_eza"
-    dest: "{{ zsh_completion_path }}"
+    dest: "{{ zsh_completions_path }}"
     mode: "0644"
   when: eza_check is succeeded

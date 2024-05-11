@@ -1,4 +1,8 @@
 ---
+- name: Install dependencies for Debian
+  ansible.builtin.include_tasks: deps-debian.yml
+  when: ansible_os_family == "Debian"
+
 - name: Download source archive
   ansible.builtin.get_url:
     url: "https://github.com/neovim/neovim/archive/refs/tags/{{ target_nvim_ver }}.tar.gz"
