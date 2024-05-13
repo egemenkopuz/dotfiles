@@ -5,4 +5,4 @@ zsh/plugins
 tmux/plugins
 github-copilot
 tests/logs
-null-ls*
+.null-ls*.yml
