@@ -1,5 +1,15 @@
 gui:
-  sidePanelWidth: 0.2
+  sidePanelWidth: 0.25
+  theme:
+    selectedLineBgColor:
+      - reverse
+  branchColors:
+    "master": "#E2DFD0"
+    "main": "#E2DFD0"
+    "dev": "#F97300"
+    "develop": "#F97300"
+    "feat": "#FFD700"
+    "feature": "#FFD700"
 git:
   paging:
     colorArg: always

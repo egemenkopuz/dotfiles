@@ -7,6 +7,12 @@
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
 
+- name: Set core.pager
+  community.general.git_config:
+    name: core.pager
+    scope: global
+    value: delta
+
 - name: Set init.defaultBranch
   community.general.git_config:
     name: init.defaultBranch
@@ -17,7 +23,7 @@
   community.general.git_config:
     name: include.path
     scope: global
-    value: "{{ playbook_dir }}/git/themes.config"
+    value: "{{ playbook_dir }}/git/themes.gitconfig"
 
 - name: Set gpg.program
   community.general.git_config:
