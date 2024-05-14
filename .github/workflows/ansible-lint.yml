@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    name: Ansible Lint # Naming the build is important to use it as a status check
+    name: Ansible Lint
     steps:
       - uses: actions/checkout@v4
       - name: Run ansible-lint
