@@ -15,7 +15,7 @@
     nodejs:
       version: latest # alternative: v20.12.0
     nvim:
-      version: nightly # alternative: v0.9.5
+      version: stable # alternative: v0.10.0
       build_from_source: true
     fastfetch:
       version: latest # alternative: 2.11.4
@@ -68,8 +68,8 @@
       - btop
       - zoxide
       - nvim
-      - dotfiles
       - lf
+      - dotfiles
   tasks:
     - name: Roles
       block:
