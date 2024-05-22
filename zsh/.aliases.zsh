@@ -31,6 +31,13 @@ if _exists procs; then
   alias ps="procs"
 fi
 
+if _exists lf; then
+  lfcd() {
+    cd "$(command lf -print-last-dir "$@")"
+  }
+  alias lf="lfcd"
+fi
+
 alias h="history 1"
 alias hf="history 1 | grep"
 
@@ -75,7 +82,8 @@ alias dr="docker rm"
 alias dsp="docker system prune --all"
 function dsr() { docker stop $1;docker rm $1 }
 
-alias ve="python3 -m venv ./venv"
+alias ve="python3 -m venv ./.venv"
+alias vd="deactivate"
 function va() {
   if [ -d "./.venv" ]; then
     source ./.venv/bin/activate

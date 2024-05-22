@@ -1,0 +1,8 @@
+set icons
+set drawbox
+set period 1
+set hidden!
+set shell zsh
+set shellopts '-euy'
+set ifs "\n"
+set filesep "\n"
