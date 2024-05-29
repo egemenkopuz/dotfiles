@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+DOTFILES_DIR=$(cd $(dirname $0)/.. && pwd)
+ANSIBLE_PLAYBOOK=$DOTFILES_DIR/setup.ansible.yml
+ANSIBLE_CMD="ansible-playbook $ANSIBLE_PLAYBOOK -K"
+
+cd $DOTFILES_DIR
+
+case $1 in
+update)
+	CMD="update"
+	;;
+*)
+	printf "Usage: $0 [update]\n"
+	exit 1
+	;;
+esac
+
+if [[ $CMD == "update" ]]; then
+	if [[ $# -gt 1 ]]; then
+		for i in $(seq 2 $#); do
+			ANSIBLE_CMD="$ANSIBLE_CMD -t ${!i}"
+		done
+	fi
+	eval $ANSIBLE_CMD
+fi
