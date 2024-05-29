@@ -2,20 +2,42 @@
 
 <div align="center">
     <a href="https://github.com/egemenkopuz/dotfiles/pulse">
-      <img alt="Last commit" src="https://img.shields.io/github/last-commit/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41"/>
+        <img alt="last-commit" src="https://img.shields.io/github/last-commit/egemenkopuz/dotfiles?style=for-the-badge&labelColor=3b3b3b"/>
+    </a>
+    <a href="https://github.com/egemenkopuz/dotfiles/commits/main">
+        <img alt="commit-freq" src="https://img.shields.io/github/commit-activity/m/egemenkopuz/dotfiles?style=for-the-badge&labelColor=3b3b3b"/>
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles/stargazers">
-      <img alt="Stars" src="https://img.shields.io/github/stars/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&&logoColor=D9E0EE&labelColor=302D41" />
+        <img alt="star-count" src="https://img.shields.io/github/stars/egemenkopuz/dotfiles?style=for-the-badge&labelColor=3b3b3b"/>
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles/issues">
-      <img alt="Issues" src="https://img.shields.io/github/issues/egemenkopuz/dotfiles?style=for-the-badge&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" />
+        <img alt="issue-count" src="https://img.shields.io/github/issues/egemenkopuz/dotfiles?style=for-the-badge&labelColor=3b3b3b"/>
     </a>
     <a href="https://github.com/egemenkopuz/dotfiles">
-      <img alt="Size" src="https://img.shields.io/github/repo-size/egemenkopuz/dotfiles?color=F5E0DC&label=SIZE&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" />
+        <img alt="repo-size" src="https://img.shields.io/github/repo-size/egemenkopuz/dotfiles?style=for-the-badge&labelColor=3b3b3b"/>
+    </a>
+    <a href="https://github.com/egemenkopuz/dotfiles/actions/workflows/ansible-lint.yml">
+        <img alt="ansible-lint" src="https://img.shields.io/github/actions/workflow/status/egemenkopuz/dotfiles/ansible-lint.yml?label=ansible-lint&style=for-the-badge&labelColor=3b3b3b">
     </a>
 </div>
 
 # Installation
+
+> \[!IMPORTANT\]
+> Currently, only Debian based systems (ex: Ubuntu) are supported. Arch and MacOS are not fully tested, and thus not supported. Support for these systems will be added soon.
+
+## Interactively
+
+You can run the [setup-dotfiles](./scripts//setup-dotfiles.sh) script to setup the dotfiles Interactively.
+
+```zsh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/scripts/setup-dotfiles.sh)"
+```
+
+## Manually
+
+> \[!IMPORTANT\]
+> You need to have `git` and `ansible` installed on your system.
 
 The following command clones the repository into .config in home directory.
 
@@ -27,13 +49,41 @@ cd ${HOME}/.config
 You can run the following command to use ansible to install the necessary packages.
 
 ```zsh
-ansible-playbook -K setup.ansible.yml --extra-vars "git_user_name='your_name' git_user_email='your_email'"
+ansible-playbook -K setup.ansible.yml
 ```
 
-If you would like to install inside a container, you can use the following commands.
+If you would like to use with a docker container, you can run the following commands.
 
 ```zsh
 docker build -t "dev-env:latest" .
 docker run --name dev-env -d -it dev-env
 docker exec -it dev-env zsh
 ```
+
+# Packages
+
+> \[!NOTE\]
+> If the system has already installed a package and its version matches the default version, the setup script will skip the installation of that package.
+
+Below is the full list of packages that are installed by the setup script together with their default versions and installation methods.
+
+| Package                                                 | Default Config Version | Debian Supp.               | Arch Supp. | MacOS Supp. | amd64 Supp.        | arm64 Supp.        |
+| :------------------------------------------------------ | :--------------------: | :------------------------- | :--------: | :---------: | ------------------ | ------------------ |
+| [ansible](https://github.com/ansible/ansible)           |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [python](https://www.python.org)                        |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [nodejs](https://nodejs.org/en)                         |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [zsh](https://www.zsh.org)                              |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [tmux](https://github.com/tmux/tmux)                    |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [neovim](https://github.com/neovim/neovim)              |        `stable`        | `binary or compile source` |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [fastfetch](https://github.com/fastfetch-cli/fastfetch) |        `latest`        | `binary or compile source` |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [ripgrep](https://github.com/BurntSushi/ripgrep)        |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [fzf](https://github.com/junegunn/fzf)                  |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [fd](https://github.com/sharkdp/fd)                     |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [bat](https://github.com/sharkdp/bat)                   |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [eza](https://github.com/eza-community/eza)             |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [lazygit](https://github.com/jesseduffield/lazygit)     |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [procs](https://github.com/dalance/procs)               |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [delta](https://github.com/dandavison/delta)            |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [btop](https://github.com/aristocratos/btop)            |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [zoxide](https://github.com/ajeetdsouza/zoxide)         |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| [lf](https://github.com/gokcehan/lf)                    |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
