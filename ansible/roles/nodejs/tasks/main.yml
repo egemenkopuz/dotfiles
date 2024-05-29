@@ -16,6 +16,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    nodejs:
+      version: "v{{ nodejs.version }}"
+  when: nodejs.version is defined and nodejs.version | regex_search('^\d')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_nodejs_ver: "{{ nodejs.version }}"
@@ -63,3 +69,13 @@
         dest: "{{ target_local_path }}"
         remote_src: true
         extra_opts: "--strip-components=1"
+
+- name: Install packages via npm
+  community.general.npm:
+    name: "{{ nodejs_package }}"
+    global: true
+    state: present
+  loop: "{{ nodejs_pkgs }}"
+  loop_control:
+    loop_var: nodejs_package
+  when: nodejs_pkgs is defined

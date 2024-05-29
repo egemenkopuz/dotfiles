@@ -15,9 +15,7 @@
       - openssl
       - sshfs
       - gnupg
-      - zsh
       - diffutils
-      - cppcheck
       - jq
       - build-essential
     state: present

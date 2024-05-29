@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    zoxide:
+      version: "v{{ zoxide.version }}"
+  when: zoxide.version is defined and zoxide.version | regex_search('^\d')
+
 - name: Get target version according to locked configuration
   ansible.builtin.set_fact:
     target_zoxide_ver: "{{ zoxide.version }}"

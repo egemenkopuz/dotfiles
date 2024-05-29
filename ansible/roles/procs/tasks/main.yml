@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    procs:
+      version: "v{{ procs.version }}"
+  when: procs.version is defined and procs.version | regex_search('^\d')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_procs_ver: "{{ procs.version }}"

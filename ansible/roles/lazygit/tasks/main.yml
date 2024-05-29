@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    lazygit:
+      version: "v{{ lazygit.version }}"
+  when: lazygit.version is defined and lazygit.version | regex_search('^\d')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_lazygit_ver: "{{ lazygit.version }}"

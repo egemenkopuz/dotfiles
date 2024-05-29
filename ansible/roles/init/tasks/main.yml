@@ -16,15 +16,21 @@
     msg:
       - "Tmp folder name: {{ tmp_folder_name }}"
       - "Tmp folder path: {{ tmp_folder_path }}"
+  tags:
+    - always
 
 - name: Tmp folder creation
   ansible.builtin.file:
     path: "{{ tmp_folder_path }}"
     state: directory
     mode: "0755"
+  tags:
+    - always
 
 - name: Local bin folder creation
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/bin"
     state: directory
     mode: "0755"
+  tags:
+    - always

@@ -19,6 +19,13 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by removing 'v' prefix
+  ansible.builtin.set_fact:
+    fastfetch:
+      version: "{{ fastfetch.version | regex_replace('^v', '') }}"
+      build_from_source: "{{ fastfetch.build_from_source | default(false) }}"
+  when: fastfetch.version is defined and fastfetch.version | regex_search('^v')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_fastfetch_ver: "{{ fastfetch.version }}"
@@ -46,3 +53,7 @@
 - name: Installation from source
   ansible.builtin.include_tasks: source.yml
   when: install_fastfetch and fastfetch.build_from_source
+
+- name: Run install by extracting binaries
+  when: install_fastfetch and not fastfetch.build_from_source
+  ansible.builtin.include_tasks: binary.yml

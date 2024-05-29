@@ -10,44 +10,47 @@
     zsh_completions_path: "/usr/share/zsh/vendor-completions"
     log_dir_base_path: "{{ playbook_dir }}/tests/logs"
     log_filename: "ansible.log"
-    # ------------- Roles' versions -------------
+    # ------------- Role versions -------------
     # NOTE: default: version -> latest, build_from_source -> false
     nodejs:
-      version: latest # alternative: v20.12.0
+      version: latest
     nvim:
-      version: stable # alternative: v0.10.0
-      build_from_source: true
+      version: stable
+      build_from_source: false # true supported
     fastfetch:
-      version: latest # alternative: 2.11.4
-      build_from_source: true # false not implemented
+      version: latest
+      build_from_source: false # true supported
     eza:
-      version: latest # alternative: v0.18.13
+      version: latest
     bat:
-      version: latest # alternative: v0.24.0
+      version: latest
     lazygit:
-      version: latest # alternative: v0.41.0
+      version: latest
     procs:
-      version: latest # alternative: v0.14.5
+      version: latest
     delta:
-      version: latest # alternative: 0.17.0
+      version: latest
     fzf:
-      version: latest # alternative: 0.27.2
+      version: latest
     ripgrep:
-      version: latest # alternative: 14.1.0
+      version: latest
     btop:
-      version: latest # alternative: v1.3.2 **no macos**
+      version: latest
     fd:
-      version: latest # alternative: v10.0.0
+      version: latest
     zoxide:
-      version: latest # alternative: v0.9.4
+      version: latest
     lf:
-      version: latest # alternative: r32
+      version: latest
     # ------------- Python Packages to download -------------
     # NOTE: comment out to disable a package
     python_pkgs:
       - cmake # or cmake==3.29.2
       - pynvim # or pynvim==0.5.0
       - pre-commit # or pre-commit==3.7.0
+    # ------------- Nodejs Packages to download -------------
+    nodejs_pkgs:
+      - neovim
     # ------------- Roles -------------
     # NOTE: comment out to disable a role
     active_roles:
@@ -82,14 +85,21 @@
         - name: Run active roles
           ansible.builtin.include_role:
             name: "{{ active_role }}"
+            apply:
+              tags:
+                - "{{ active_role }}"
           loop: "{{ active_roles if active_roles is iterable else [] }}"
           loop_control:
             loop_var: active_role
+          tags:
+            - always
 
       rescue:
         - name: Handle failure
           when: ansible_failed_result is defined
           become: true
+          tags:
+            - always
           block:
             - name: Print failed task
               ansible.builtin.debug:

@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    bat:
+      version: "v{{ bat.version }}"
+  when: bat.version is defined and bat.version | regex_search('^\d')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_bat_ver: "{{ bat.version }}"

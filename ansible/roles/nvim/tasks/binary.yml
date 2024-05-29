@@ -1,19 +1,23 @@
 ---
 - name: Set nvim build file name
   ansible.builtin.set_fact:
-    target_nvim_filename: "linux64"
+    nvim_archive_name: "linux64"
 
 - name: Set nvim build file name for macOS
   when: ansible_system == "Darwin"
   block:
     - name: Set macos-x86_64
       ansible.builtin.set_fact:
-        target_nvim_filename: "macos-x86_64"
+        nvim_archive_name: "macos-x86_64"
       when: ansible_architecture == "x86_64"
+    - name: Set macos-arm64
+      ansible.builtin.set_fact:
+        nvim_archive_name: "macos-arm64"
+      when: ansible_architecture == "arm64"
 
 - name: Download target release {{ target_nvim_ver }}
   ansible.builtin.get_url:
-    url: "https://github.com/neovim/neovim/releases/download/{{ target_nvim_ver }}/nvim-{{ target_nvim_filename }}.tar.gz"
+    url: "https://github.com/neovim/neovim/releases/download/{{ target_nvim_ver }}/nvim-{{ nvim_archive_name }}.tar.gz"
     dest: "{{ tmp_folder_path }}/nvim.tar.gz"
     mode: "0644"
 
@@ -22,13 +26,13 @@
     src: "{{ tmp_folder_path }}/nvim.tar.gz"
     dest: "{{ tmp_folder_path }}"
     remote_src: true
-    creates: "{{ tmp_folder_path }}/nvim-{{ target_nvim_filename }}"
+    creates: "{{ tmp_folder_path }}/nvim-{{ nvim_archive_name }}"
 
 - name: Copy bin to {{ target_local_bin_path }}
   become: true
   ansible.builtin.copy:
     remote_src: true
-    src: "{{ tmp_folder_path }}/nvim-{{ target_nvim_filename }}/bin/nvim"
+    src: "{{ tmp_folder_path }}/nvim-{{ nvim_archive_name }}/bin/nvim"
     dest: "{{ target_local_bin_path }}"
     mode: "0755"
 
@@ -36,7 +40,7 @@
   become: true
   ansible.builtin.copy:
     remote_src: true
-    src: "{{ tmp_folder_path }}/nvim-{{ target_nvim_filename }}/share/nvim"
+    src: "{{ tmp_folder_path }}/nvim-{{ nvim_archive_name }}/share/nvim"
     dest: "{{ target_local_share_path }}"
     mode: "0755"
 
@@ -44,6 +48,6 @@
   become: true
   ansible.builtin.copy:
     remote_src: true
-    src: "{{ tmp_folder_path }}/nvim-{{ target_nvim_filename }}/lib/nvim"
+    src: "{{ tmp_folder_path }}/nvim-{{ nvim_archive_name }}/lib/nvim"
     dest: "{{ target_local_lib_path }}"
     mode: "0755"

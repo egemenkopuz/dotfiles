@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    eza:
+      version: "v{{ eza.version }}"
+  when: eza.version is defined and eza.version | regex_search('^\d')
+
 - name: Get target version according to locked configuration
   ansible.builtin.set_fact:
     target_eza_ver: "{{ eza.version }}"

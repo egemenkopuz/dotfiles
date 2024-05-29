@@ -18,6 +18,12 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by removing 'v' prefix
+  ansible.builtin.set_fact:
+    delta:
+      version: "{{ delta.version | regex_replace('^v', '') }}"
+  when: delta.version is defined and delta.version | regex_search('^v')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_delta_ver: "{{ delta.version }}"

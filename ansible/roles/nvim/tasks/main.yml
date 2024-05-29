@@ -18,6 +18,13 @@
   changed_when: false
   failed_when: false
 
+- name: Fix locked version by adding 'v' prefix
+  ansible.builtin.set_fact:
+    nvim:
+      version: "v{{ nvim.version }}"
+      build_from_source: "{{ nvim.build_from_source | default(false) }}"
+  when: nvim.version is defined and nvim.version | regex_search('^\d')
+
 - name: Set target version according to locked configuration
   ansible.builtin.set_fact:
     target_nvim_ver: "{{ nvim.version }}"
@@ -47,7 +54,7 @@
 
 - name: Run install by extracting binaries
   when: install_nvim and not nvim.build_from_source
-  ansible.builtin.include_tasks: stable.yml
+  ansible.builtin.include_tasks: binary.yml
 
 - name: Sync plugins for the first time
   ansible.builtin.command: "nvim --headless '+Lazy! sync' +qa"
