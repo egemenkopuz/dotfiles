@@ -67,23 +67,23 @@ docker exec -it dev-env zsh
 
 Below is the full list of packages that are installed by the setup script together with their default versions and installation methods.
 
-| Package                                                 | Default Config Version | Debian Supp.               | Arch Supp. | MacOS Supp. | amd64 Supp.        | arm64 Supp.        |
-| :------------------------------------------------------ | :--------------------: | :------------------------- | :--------: | :---------: | ------------------ | ------------------ |
-| [ansible](https://github.com/ansible/ansible)           |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [python](https://www.python.org)                        |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [nodejs](https://nodejs.org/en)                         |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [zsh](https://www.zsh.org)                              |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [tmux](https://github.com/tmux/tmux)                    |        `latest`        | `via apt`                  |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [neovim](https://github.com/neovim/neovim)              |        `stable`        | `binary or compile source` |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [fastfetch](https://github.com/fastfetch-cli/fastfetch) |        `latest`        | `binary or compile source` |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [ripgrep](https://github.com/BurntSushi/ripgrep)        |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [fzf](https://github.com/junegunn/fzf)                  |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [fd](https://github.com/sharkdp/fd)                     |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [bat](https://github.com/sharkdp/bat)                   |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [eza](https://github.com/eza-community/eza)             |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [lazygit](https://github.com/jesseduffield/lazygit)     |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [procs](https://github.com/dalance/procs)               |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [delta](https://github.com/dandavison/delta)            |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [btop](https://github.com/aristocratos/btop)            |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [zoxide](https://github.com/ajeetdsouza/zoxide)         |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
-| [lf](https://github.com/gokcehan/lf)                    |        `latest`        | `binary`                   |    :x:     |     :x:     | :heavy_check_mark: | :heavy_check_mark: |
+| Package                                                 | Default Config Version | Debian Supp.               |  Arch Supp.  |        MacOS Supp.         | amd64 Supp.        | arm64 Supp.        |
+| :------------------------------------------------------ | :--------------------: | :------------------------- | :----------: | :------------------------: | ------------------ | ------------------ |
+| [ansible](https://github.com/ansible/ansible)           |        `latest`        | `via apt`                  | `via pacman` |         `via brew`         | :heavy_check_mark: | :heavy_check_mark: |
+| [python](https://www.python.org)                        |        `latest`        | `via apt`                  |    `wip`     |         `via brew`         | :heavy_check_mark: | :heavy_check_mark: |
+| [nodejs](https://nodejs.org/en)                         |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [zsh](https://www.zsh.org)                              |        `latest`        | `via apt`                  |    `wip`     |         `built-in`         | :heavy_check_mark: | :heavy_check_mark: |
+| [tmux](https://github.com/tmux/tmux)                    |        `latest`        | `via apt`                  |    `wip`     |         `via brew`         | :heavy_check_mark: | :heavy_check_mark: |
+| [neovim](https://github.com/neovim/neovim)              |        `stable`        | `binary or compile source` |    `wip`     | `binary or compile source` | :heavy_check_mark: | :heavy_check_mark: |
+| [fastfetch](https://github.com/fastfetch-cli/fastfetch) |        `latest`        | `binary or compile source` |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [ripgrep](https://github.com/BurntSushi/ripgrep)        |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [fzf](https://github.com/junegunn/fzf)                  |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [fd](https://github.com/sharkdp/fd)                     |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [bat](https://github.com/sharkdp/bat)                   |        `latest`        | `binary`                   |    `wip`     |         `via brew`         | :heavy_check_mark: | :heavy_check_mark: |
+| [eza](https://github.com/eza-community/eza)             |        `latest`        | `binary`                   |    `wip`     |         `via brew`         | :heavy_check_mark: | :heavy_check_mark: |
+| [lazygit](https://github.com/jesseduffield/lazygit)     |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [procs](https://github.com/dalance/procs)               |        `latest`        | `binary`                   |    `wip`     |            :x:             | :heavy_check_mark: | :x:                |
+| [delta](https://github.com/dandavison/delta)            |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [btop](https://github.com/aristocratos/btop)            |        `latest`        | `binary`                   |    `wip`     |            :x:             | :heavy_check_mark: | :x:                |
+| [zoxide](https://github.com/ajeetdsouza/zoxide)         |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
+| [lf](https://github.com/gokcehan/lf)                    |        `latest`        | `binary`                   |    `wip`     |          `binary`          | :heavy_check_mark: | :heavy_check_mark: |
