@@ -97,7 +97,7 @@
       rescue:
         - name: Handle failure
           when: ansible_failed_result is defined
-          become: true
+          # become: true
           tags:
             - always
           block:
@@ -121,7 +121,7 @@
               ansible.builtin.file:
                 path: "{{ log_dir_base_path }}"
                 state: directory
-                mode: "0755"
+                mode: "0777"
 
             - name: Fetch failed task details
               ansible.builtin.fetch:
