@@ -50,3 +50,7 @@
 - name: Run debian based setup
   ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == 'Debian' and install_eza
+
+- name: Run macos based setup
+  ansible.builtin.include_tasks: macos.yml
+  when: ansible_os_family == 'Darwin' and install_eza

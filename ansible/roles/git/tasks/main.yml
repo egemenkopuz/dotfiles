@@ -5,7 +5,6 @@
     state: touch
     mode: "0644"
     owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
 
 - name: Set core.pager
   community.general.git_config:

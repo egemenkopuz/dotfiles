@@ -1,0 +1,5 @@
+---
+- name: Install eza via homebrew
+  community.general.homebrew:
+    name: eza
+    state: present

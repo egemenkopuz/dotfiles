@@ -52,7 +52,7 @@
   block:
     - name: Set target architecture
       ansible.builtin.set_fact:
-        target_arch: "{{ ansible_architecture }}"
+        target_arch: "{{ ansible_architecture | replace('arm64', 'aarch64') }}"
 
     - name: Set target os
       ansible.builtin.set_fact:

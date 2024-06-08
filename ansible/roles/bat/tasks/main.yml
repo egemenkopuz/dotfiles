@@ -47,8 +47,14 @@
       - "should install/update      : {{ install_bat }}"
       - "install version            : {{ target_bat_ver if install_bat else '' }}"
 
+- name: Installation for macos
+  when: install_bat and ansible_os_family == 'Darwin'
+  community.general.homebrew:
+    name: bat
+    state: present
+
 - name: Installation
-  when: install_bat
+  when: install_bat and ansible_os_family != 'Darwin'
   block:
     - name: Set target architecture
       ansible.builtin.set_fact:

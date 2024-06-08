@@ -3,6 +3,10 @@
   ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == "Debian"
 
+- name: Run macos based setup
+  ansible.builtin.include_tasks: macos.yml
+  when: ansible_os_family == "Darwin"
+
 - name: Clone dotfiles repo
   ansible.builtin.git:
     repo: "https://github.com/egemenkopuz/dotfiles"

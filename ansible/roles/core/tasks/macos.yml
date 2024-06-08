@@ -1,0 +1,18 @@
+---
+- name: Install core packages
+  community.general.homebrew:
+    name: "{{ homebrew_pkg }}"
+    state: present
+  loop:
+    - tmux
+    - curl
+    - wget
+    - gnu-tar
+    - bzip2
+    - zip
+    - unzip
+    - gnupg
+    - diffutils
+    - jq
+  loop_control:
+    loop_var: homebrew_pkg
