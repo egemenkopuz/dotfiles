@@ -23,7 +23,7 @@ style = "Regular"
 dynamic_padding = true
 startup_mode = "Maximized"
 decorations = "None"
-opacity = 0.95
+opacity = 1.0
 option_as_alt = "Both"
 
 [window.padding]
@@ -42,7 +42,7 @@ blinking = "Never"
 # program = 'C:\Windows\system32\wsl.exe --cd ~'
 
 [colors.primary]
-background = '#1b202a'
+#background = '#1b202a'
 foreground = '#9aa7bd'
 
 [colors.cursor]
