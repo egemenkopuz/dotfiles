@@ -1,8 +1,79 @@
-set icons
-set drawbox
-set period 1
-set hidden!
 set shell zsh
-set shellopts '-euy'
+set hidden!
+set shellopts '-eu'
+set ratios 2:2:4
 set ifs "\n"
-set filesep "\n"
+set scrolloff 10
+set icons
+# set drawbox
+set incsearch
+set smartcase
+set ignorecase
+set anchorfind
+set findlen 1
+set tabstop 4
+set info size
+set preview
+set previewer ~/.config/lf/previewer
+set dircounts
+
+cmd extract ${{
+  set -f
+  case $f in
+    *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+    *.tar.gz|*.tgz) tar xzvf $f;;
+    *.tar.xz|*.txz) tar xJvf $f;;
+    *.tar) tar xvf $f;;
+    *.zip) unzip $f;;
+    *.rar) unrar x $f;;
+    *.7z) 7z x $f;;
+    *) echo "Unsupported format";;
+  esac
+}}
+
+cmd tar ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+
+cmd select-all :unselect; invert
+
+# remove some defaults
+map gh
+map d
+map y
+map <space>
+map zh
+
+map g. set hidden!
+map <tab> :toggle;down
+map yy copy
+map <enter> shell
+map d delete
+map x cut
+# navigate among the parent directories
+map [ push hkl
+map ] push hjl
+
+
+# rename
+map r
+map A rename # at the very end
+map I push A<c-a> # at the very beginning
+map rn push A<c-u> # rename the filename
+map re push A<c-f><c-k> # rename the extension
+map <c-r> bulk-rename
+
+cmap <tab> cmd-menu-complete
+cmap <backtab> cmd-menu-complete-back
