@@ -13,6 +13,8 @@ if hash fzf 2>/dev/null; then
   zstyle ':autocomplete:tab:*' fzf-completion yes
 fi
 
+setopt interactivecomments
+
 HISTSIZE=100000
 HISTFILESIZE=$HISTSIZE
 SAVEHIST=$HISTSIZE
