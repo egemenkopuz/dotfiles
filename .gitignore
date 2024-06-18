@@ -7,3 +7,4 @@ github-copilot
 tests/logs
 .null-ls*.yml
 setup.log
+sec

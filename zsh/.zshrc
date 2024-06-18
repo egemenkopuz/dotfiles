@@ -1,3 +1,11 @@
+if command -v /opt/homebrew/bin/brew > /dev/null 2>&1; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if [ -d "${XDG_CONFIG_HOME}/sec" ]; then
+  for file in "${XDG_CONFIG_HOME}"/sec/startup/*.zsh ; do source $file; done
+fi
+
 [ -f /usr/local/bin/fastfetch ] && /usr/local/bin/fastfetch
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
