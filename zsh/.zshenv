@@ -2,10 +2,17 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
+    export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+else
+    export VISUAL="nvim"
+    export EDITOR="nvim"
+fi
+
 export COLORTERM="truecolor"
 export TERM="xterm-256color"
-export EDITOR="nvim"
-export VISUAL="nvim"
 
 export GPG_TTY=$(tty)
 export XDG_CONFIG_HOME="$HOME/.config"

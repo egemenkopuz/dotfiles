@@ -66,6 +66,7 @@ declare -A default_role_build_source=(
 
 declare -A user_python_pkgs=()
 declare -A default_python_pkgs=(
+	[neovim\-remote]="latest"
 	[pynvim]="latest"
 	[pre\-commit]="latest"
 	[cmake]="latest"

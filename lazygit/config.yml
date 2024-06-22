@@ -10,6 +10,8 @@ gui:
     "develop": "#F97300"
     "feat": "#FFD700"
     "feature": "#FFD700"
+os:
+  editPreset: "nvim-remote"
 git:
   paging:
     colorArg: always

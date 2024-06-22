@@ -45,9 +45,10 @@
     # ------------- Python Packages to download -------------
     # NOTE: comment out to disable a package
     python_pkgs:
-      - cmake # or cmake==3.29.2
+      - neovim-remote # or neovim-remote==2.5.1
       - pynvim # or pynvim==0.5.0
       - pre-commit # or pre-commit==3.7.0
+      - cmake # or cmake==3.29.2
     # ------------- Nodejs Packages to download -------------
     nodejs_pkgs:
       - neovim
