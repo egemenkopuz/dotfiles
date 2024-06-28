@@ -16,6 +16,8 @@ fi
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
 
+[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init --path)"
+
 if hash fzf 2>/dev/null; then
   eval "$(fzf --zsh)"
   zstyle ':autocomplete:tab:*' fzf-completion yes
