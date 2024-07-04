@@ -244,7 +244,9 @@ function __detect_os {
 			;;
 		"arch")
 			id="arch"
-
+			;;
+		"debian")
+			id="debian"
 			;;
 		*)
 			if [[ -n $ID_LIKE ]]; then
