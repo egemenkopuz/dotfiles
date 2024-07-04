@@ -14,6 +14,7 @@ fi
 
 # install plugins
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
+[ ! -d "${HOME}/.config/zsh/plugins/zsh-syntax-highlighting" ] && git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.config/zsh/plugins/zsh-syntax-highlighting
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
 
 [[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init --path)"
@@ -51,6 +52,7 @@ fi
 source "$ZDOTDIR/.aliases.zsh"
 
 # load plugins
+source "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 source "$ZDOTDIR/.p10k.zsh"
