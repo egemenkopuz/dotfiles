@@ -31,7 +31,7 @@
 You can run the [setup-dotfiles](./scripts//setup-dotfiles.sh) script to setup the dotfiles Interactively.
 
 ```zsh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/scripts/setup-dotfiles.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/master/scripts/setup-dotfiles.sh)"
 ```
 
 ## Manually
