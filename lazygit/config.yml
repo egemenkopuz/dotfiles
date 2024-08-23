@@ -6,10 +6,14 @@ gui:
   branchColors:
     "master": "#E2DFD0"
     "main": "#E2DFD0"
+    "integration": "#00FFFF"
+    "int": "#00FFFF"
     "dev": "#F97300"
     "develop": "#F97300"
     "feat": "#FFD700"
     "feature": "#FFD700"
+    "fix": "#F93000"
+    "hotfix": "#F93000"
 os:
   editPreset: "nvim-remote"
 git:
