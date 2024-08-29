@@ -65,7 +65,7 @@
 
     - name: Set archive filename
       ansible.builtin.set_fact:
-        archive_filename: "{{ target_fzf_ver }}/fzf-{{ target_fzf_ver }}-{{ target_os }}_{{ target_arch }}.{{ archive_format }}"
+        archive_filename: "{{ target_fzf_ver }}/fzf-{{ target_fzf_ver | regex_replace('^v', '') }}-{{ target_os }}_{{ target_arch }}.{{ archive_format }}"
 
     - name: Download target version {{ target_fzf_ver }}
       ansible.builtin.get_url:
