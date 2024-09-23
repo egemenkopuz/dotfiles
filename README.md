@@ -23,38 +23,37 @@
 
 # Installation
 
-> \[!IMPORTANT\]
-> Currently, only Debian based systems (ex: Ubuntu) are supported. Arch and MacOS are not fully tested, and thus not supported. Support for these systems will be added soon.
+> [!IMPORTANT]
+> Currently, only MacOS and Debian-based systems like Ubuntu are supported. Arch support is pending further testing."
 
 ## Interactively
 
 You can run the [setup-dotfiles](./scripts//setup-dotfiles.sh) script to setup the dotfiles Interactively.
 
-```zsh
+```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/egemenkopuz/dotfiles/master/scripts/setup-dotfiles.sh)"
 ```
 
 ## Manually
 
-> \[!IMPORTANT\]
+> [!IMPORTANT]
 > You need to have `git` and `ansible` installed on your system.
+> The following command clones the repository into .config in home directory.
 
-The following command clones the repository into .config in home directory.
-
-```zsh
+```bash
 git clone --depth 1 --recursive https://github.com/egemenkopuz/dotfiles.git ${HOME}/.config
 cd ${HOME}/.config
 ```
 
 You can run the following command to use ansible to install the necessary packages.
 
-```zsh
+```bash
 ansible-playbook -K setup.ansible.yml
 ```
 
 If you would like to use with a docker container, you can run the following commands.
 
-```zsh
+```bash
 docker build -t "dev-env:latest" .
 docker run --name dev-env -d -it dev-env
 docker exec -it dev-env zsh
@@ -62,7 +61,7 @@ docker exec -it dev-env zsh
 
 # Packages
 
-> \[!NOTE\]
+> [!NOTE]
 > If the system has already installed a package and its version matches the default version, the setup script will skip the installation of that package.
 
 Below is the full list of packages that are installed by the setup script together with their default versions and installation methods.
