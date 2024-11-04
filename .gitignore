@@ -9,3 +9,4 @@ tests/logs
 setup.log
 sec
 gh
+bin/win32yank.exe
