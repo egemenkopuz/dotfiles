@@ -38,6 +38,9 @@ blinking = "Never"
 shape = "Block"
 blinking = "Never"
 
+[keyboard]
+bindings = [{ key = "Space", mods = "Control", chars = "\u0000" }]
+
 # [shell]
 # program = 'C:\Windows\system32\wsl.exe --cd ~'
 
