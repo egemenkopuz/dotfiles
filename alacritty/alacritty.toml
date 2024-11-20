@@ -23,7 +23,8 @@ style = "Regular"
 dynamic_padding = true
 startup_mode = "Maximized"
 decorations = "None"
-opacity = 1.0
+# opacity = 0.75
+# blur = true
 option_as_alt = "Both"
 
 [window.padding]
