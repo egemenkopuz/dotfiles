@@ -56,7 +56,7 @@
 
     - name: Set target os
       ansible.builtin.set_fact:
-        target_os: "{{ ansible_os_family | replace('Debian', 'unknown-linux-gnu') | replace('Darwin', 'apple-darwin') }}"
+        target_os: "{{ ansible_os_family | replace('Debian', 'unknown-linux-musl') | replace('Darwin', 'apple-darwin') }}"
 
     - name: Set ripgrep_archive_name
       ansible.builtin.set_fact:

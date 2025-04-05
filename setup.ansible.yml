@@ -15,7 +15,7 @@
     nodejs:
       version: latest
     nvim:
-      version: stable
+      version: v0.11.0
       build_from_source: false # true supported
     fastfetch:
       version: latest

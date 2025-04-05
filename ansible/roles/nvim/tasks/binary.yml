@@ -1,7 +1,7 @@
 ---
 - name: Set nvim build file name
   ansible.builtin.set_fact:
-    nvim_archive_name: "linux64"
+    nvim_archive_name: "linux-x86_64"
 
 - name: Set nvim build file name for macOS
   when: ansible_system == "Darwin"
