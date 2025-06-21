@@ -17,6 +17,9 @@ set preview
 set previewer ~/.config/lf/previewer
 set dircounts
 
+# Remove the username and hostname from the prompt.
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+
 cmd extract ${{
   set -f
   case $f in
