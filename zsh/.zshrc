@@ -15,13 +15,12 @@ fi
 # install plugins
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-autocomplete" ] && git clone --depth 1 https://github.com/marlonrichert/zsh-autocomplete.git ${HOME}/.config/zsh/plugins/zsh-autocomplete
 [ ! -d "${HOME}/.config/zsh/plugins/zsh-syntax-highlighting" ] && git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.config/zsh/plugins/zsh-syntax-highlighting
+[ ! -d "${HOME}/.config/zsh/plugins/zsh-autosuggestions" ] && git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ${HOME}/.config/zsh/plugins/zsh-autosuggestions
 [ ! -d "${HOME}/.config/zsh/plugins/powerlevel10k" ] && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.config/zsh/plugins/powerlevel10k
-
-[[ -d $PYENV_ROOT/bin ]] && eval "$(pyenv init --path)"
 
 if hash fzf 2>/dev/null; then
   eval "$(fzf --zsh)"
-  zstyle ':autocomplete:tab:*' fzf-completion yes
+  # zstyle ':autocomplete:tab:*' fzf-completion yes
 fi
 
 setopt interactivecomments
@@ -40,7 +39,6 @@ setopt HIST_IGNORE_SPACE         # do not record an event starting with a space
 setopt HIST_SAVE_NO_DUPS         # do not write a duplicate event to the history file
 setopt HIST_VERIFY               # do not execute immediately upon history expansion
 
-
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -53,8 +51,14 @@ source "$ZDOTDIR/.aliases.zsh"
 
 # load plugins
 source "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+source "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 source "$ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source "$ZDOTDIR/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 source "$ZDOTDIR/.p10k.zsh"
 
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#616166,bg=none"
+bindkey '^I' autosuggest-accept
 zstyle ':autocomplete:*' delay 0.1
+
+. "$HOME/.local/share/../bin/env"

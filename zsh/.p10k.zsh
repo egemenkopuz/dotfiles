@@ -16,7 +16,7 @@
 
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    context
+    # context
     vcs
     dir
     virtualenv
