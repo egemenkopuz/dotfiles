@@ -82,6 +82,8 @@ alias dr="docker rm"
 alias dsp="docker system prune --all"
 function dsr() { docker stop $1;docker rm $1 }
 
+alias tmuxkeys="tmux list-keys | fzf"
+
 alias ve="python3 -m venv ./.venv"
 alias vd="deactivate"
 function va() {
